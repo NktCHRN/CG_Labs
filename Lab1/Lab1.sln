@@ -3,11 +3,16 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33205.214
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lab1.ConsoleApp", "Lab1.ConsoleApp\Lab1.ConsoleApp.csproj", "{B725312D-F79F-4380-BF94-E6E645F2D86E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lab1.ConsoleApp", "Lab1.ConsoleApp\Lab1.ConsoleApp.csproj", "{B725312D-F79F-4380-BF94-E6E645F2D86E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lab1.RayTracer", "Lab1.RayTracer\Lab1.RayTracer.csproj", "{42016D22-B859-4003-B930-EF3B0A139128}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lab1.RayTracer", "Lab1.RayTracer\Lab1.RayTracer.csproj", "{42016D22-B859-4003-B930-EF3B0A139128}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lab1.RayTracer.Tests", "Lab1.RayTracer.Tests\Lab1.RayTracer.Tests.csproj", "{0A8A4F45-A32F-4712-AF96-3C0084B46D71}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lab1.RayTracer.Tests", "Lab1.RayTracer.Tests\Lab1.RayTracer.Tests.csproj", "{0A8A4F45-A32F-4712-AF96-3C0084B46D71}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{86670C21-C026-46E2-905C-DD67C17CE758}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
