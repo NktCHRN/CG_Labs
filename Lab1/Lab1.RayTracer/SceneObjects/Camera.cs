@@ -1,5 +1,5 @@
 namespace Lab1.RayTracer;
-class Camera : ABaseSceneObject
+class Camera : BaseSceneObject
 {
     public Camera(Vector3f position, Vector3f rotation) : base(position, rotation) {}
     public Camera() : base() {}

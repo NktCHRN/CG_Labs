@@ -15,24 +15,32 @@ y
 
 public class Scene
 {
+    private readonly int _width;
+    private readonly int _height;
+    private readonly float _resolutionScale = 1;
+
+    private Camera? _camera;
+    private DirectionLight? _directionLight;
+    private readonly IList<ISceneObject> _sceneObjects;
+
     public Scene(int width, int height, float scale = 1)
     {
-        this.width = width;
-        this.height = height;
-        this.resolutionScale = scale;
-        this.sceneObjects = new Lab1.RayTracer.Array<ISceneObject>(5);
+        _width = width;
+        _height = height;
+        _resolutionScale = scale;
+        _sceneObjects = new List<ISceneObject>();
     }
 
     public void TestRender()
     {
-        Camera camera = new Camera(new Vector3f(0, 0, -25), new Vector3f(0));
-        DirectionLight light = new DirectionLight(new Vector3f(0, 5, -5), new Vector3f(0));
+        var camera = new Camera(new Vector3f(0, 0, -25), new Vector3f(0));
+        var light = new DirectionLight(new Vector3f(0, 5, -5), new Vector3f(0));
         
-        this.camera = camera;
-        this.directionLight = light;
+        _camera = camera;
+        _directionLight = light;
         
-        Plane plane = new Plane(new Vector3f(0), new Vector3f(0, 1, 0), new Vector3f(5, 5, 0));
-        this.AddObject(plane);
+        var plane = new Plane(new Vector3f(0), new Vector3f(0, 1, 0), new Vector3f(5, 5, 0));
+        AddObject(plane);
         //Disk disk = new Disk(new Vector3f(0), new Vector3f(0, 0, 0), 10);
         //this.AddObject(disk);
         
@@ -41,32 +49,32 @@ public class Scene
 
     private void Render()
     {
-        if (camera is null)
+        if (_camera is null)
             return;
 
-        int scaledSize = this.width * this.height;
-        string result = "";
-    //    CGArray<Vector3f> result = new CGArray<Vector3f>(width * height);
-        int startX = (int)MathF.Ceiling(-this.width / 2f);
-        int startY = (int)MathF.Ceiling(-this.height / 2f);
-        int endX = (int)MathF.Ceiling(this.width / 2f);
-        int endY = (int)MathF.Ceiling(this.height / 2f);
+        var scaledSize = _width * _height;
+        var result = string.Empty;
+        //    CGArray<Vector3f> result = new CGArray<Vector3f>(width * height);
+        var startX = (int)MathF.Ceiling(-_width / 2f);
+        var startY = (int)MathF.Ceiling(-_height / 2f);
+        var endX = (int)MathF.Ceiling(_width / 2f);
+        var endY = (int)MathF.Ceiling(_height / 2f);
 
-        for (int y = startY; y < endY; y++)
+        for (var y = startY; y < endY; y++)
         {
-            for (int x = startX; x < endX; x++)
+            for (var x = startX; x < endX; x++)
             {
-                for (ulong i = 0; i < this.sceneObjects.size; i++)
+                for (var i = 0; i < _sceneObjects.Count; i++)
                 {
-                    Ray ray = new Ray(this.camera.Position, new Vector3f(x / resolutionScale, y / resolutionScale, 0));
+                    var ray = new Ray(_camera.Position, new Vector3f(x / _resolutionScale, y / _resolutionScale, 0));
                     
-                    if (this.sceneObjects[i].IsIntersectedBy(ray))
+                    if (_sceneObjects[i].IsIntersectedBy(ray))
                         result += " ";
                     else
                         result += "0";
                 }
             }
-            result += "\n";
+            result += Environment.NewLine;
         }
         
         Console.WriteLine(result);
@@ -74,15 +82,7 @@ public class Scene
 
     public void AddObject(ISceneObject obj)
     {
-        this.sceneObjects.append(obj);
+        _sceneObjects.Add(obj);
         obj.ObjectWasPlaced();
     }
-
-    private int width;
-    private int height;
-    private float resolutionScale = 1;
-
-    private Camera? camera;
-    private DirectionLight? directionLight;
-    private Lab1.RayTracer.Array<ISceneObject> sceneObjects;
 }

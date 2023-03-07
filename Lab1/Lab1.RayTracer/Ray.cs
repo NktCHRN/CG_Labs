@@ -1,17 +1,16 @@
 namespace Lab1.RayTracer;
 public struct Ray {
+    public Vector3f StartPoint { get; set; }
+    public Vector3f EndPoint { get; set; }
+    public Vector3f Direction { get => EndPoint - StartPoint; }
     public Ray()
     {
-        this.startPoint = Vector3f.Zero;
-        this.endPoint = Vector3f.One;
+        StartPoint = Vector3f.Zero;
+        EndPoint = Vector3f.One;
     }
     public Ray(Vector3f startPoint, Vector3f endPoint)
     {
-        this.startPoint = startPoint;
-        this.endPoint = endPoint;
+        StartPoint = startPoint;
+        EndPoint = endPoint;
     }
-    
-    public Vector3f startPoint;
-    public Vector3f endPoint;
-    public Vector3f direction { get => endPoint - startPoint; }
 };
