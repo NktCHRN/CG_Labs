@@ -33,13 +33,13 @@ public class Scene
 
     public void TestRender()
     {
-        var camera = new Camera(new Vector3f(0, 0, -25), new Vector3f(0));
-        var light = new DirectionLight(new Vector3f(0, 5, -5), new Vector3f(0));
+        var camera = new Camera(new Vector3F(0, 0, -25), new Vector3F(0));
+        var light = new DirectionLight(new Vector3F(0, 5, -5), new Vector3F(0));
         
         _camera = camera;
         _directionLight = light;
         
-        var plane = new Plane(new Vector3f(0), new Vector3f(0, 1, 0), new Vector3f(5, 5, 0));
+        var plane = new Plane(new Vector3F(0), new Vector3F(0, 1, 0), new Vector3F(5, 5, 0));
         AddObject(plane);
         //Disk disk = new Disk(new Vector3f(0), new Vector3f(0, 0, 0), 10);
         //this.AddObject(disk);
@@ -66,7 +66,7 @@ public class Scene
             {
                 for (var i = 0; i < _sceneObjects.Count; i++)
                 {
-                    var ray = new Ray(_camera.Position, new Vector3f(x / _resolutionScale, y / _resolutionScale, 0));
+                    var ray = new Ray(_camera.Position, new Vector3F(x / _resolutionScale, y / _resolutionScale, 0));
                     
                     if (_sceneObjects[i].IsIntersectedBy(ray))
                         result += " ";

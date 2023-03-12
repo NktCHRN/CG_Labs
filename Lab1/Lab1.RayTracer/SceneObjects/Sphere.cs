@@ -4,9 +4,9 @@ public class Sphere : BaseSceneObject
 {
     private readonly float _radius;
 
-    public Sphere(Vector3f position, Vector3f rotation, float radius) : base(position, rotation) => _radius = radius;
-    public Sphere(Vector3f position, Vector3f rotation) : this(position, rotation, 1) { }
-    public Sphere() : this(new Vector3f(0), new Vector3f(0)) { }
+    public Sphere(Vector3F position, Vector3F rotation, float radius) : base(position, rotation) => _radius = radius;
+    public Sphere(Vector3F position, Vector3F rotation) : this(position, rotation, 1) { }
+    public Sphere() : this(new Vector3F(0), new Vector3F(0)) { }
 
     public override bool IsIntersectedBy(in Ray ray)
     {
