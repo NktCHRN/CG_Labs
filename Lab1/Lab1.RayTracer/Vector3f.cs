@@ -22,39 +22,17 @@ public struct Vector3f
     public Vector3f CrossProduct(in Vector3f b) => new (Y * b.Z - Z * b.Y, Z * b.X - X * b.Z, X * b.Y - Y * b.X);
     public Vector3f Normalized() => this.Length() == 0 ? new Vector3f(0): this / this.Length();
     public Vector3f Abs() => new (Math.Abs(X), Math.Abs(Y), Math.Abs(Z));
-    public Vector3f RotatedBy(Vector3f rotation)
+    public Vector3f Rotation(Quaternion rotation)
     {
-        var radRot = CGMath.DegToRad(rotation);
-        var radX = radRot.X;
-        var radY = radRot.Y;
-        var radZ = radRot.Z;
-        
-        var vX = new Vector3f(1, 0, 0);
-        var vY = new Vector3f(0, 1, 0);
-        var vZ = new Vector3f(0, 0, 1);
+        Vector3f qv = new Vector3f(rotation.X, rotation.Y, rotation.Z);
+        Vector3f cv = this;
 
-        var result = this;
-
-        var cosX = MathF.Cos(radX);
-        var sinX = MathF.Sin(radX);
-        
-        float cosY = MathF.Cos(radY);
-        float sinY = MathF.Sin(radY);
-
-        var cosZ = MathF.Cos(radZ);
-        var sinZ = MathF.Sin(radZ);
-        
-        if (radX != 0)
-            result = ((result * cosX + vX.CrossProduct(result) * sinX + vX * vX.DotProduct(result)) * (1 - cosX)).Normalized();
-        
-        if (radY != 0)
-            result = ((result * cosY + vY.CrossProduct(result) * sinY + vY * vY.DotProduct(result)) * (1 - cosY)).Normalized();
-        
-        if (radZ != 0)
-            result = ((result * cosZ + vZ.CrossProduct(result) * sinZ + vZ * vZ.DotProduct(result)) * (1 - cosZ)).Normalized();
-        
-        return result;
+        return (qv * 2.0f * qv.DotProduct(cv)) + (cv * (rotation.W * rotation.W - qv.DotProduct(qv))) + (qv.CrossProduct(cv) * 2.0f * rotation.W);
     }
+    void Rotate(Quaternion rotation) {
+		Vector3f qv = new Vector3f(rotation.X, rotation.Y, rotation.Z);
+		this = (qv * 2.0f * qv.DotProduct(this)) + (this * (rotation.W * rotation.W - qv.DotProduct(qv))) + (qv.CrossProduct(this) * 2.0f * rotation.W);
+	}
     #endregion
 
     #region Operator Overloading

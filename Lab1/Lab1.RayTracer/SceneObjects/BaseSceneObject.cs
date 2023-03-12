@@ -13,8 +13,7 @@ public abstract class BaseSceneObject : ISceneObject
         set
         {
             _rotation = value;
-
-            Direction = _baseDirection.RotatedBy(_rotation);
+            Direction = _baseDirection.Rotation(Quaternion.FromEulerAngles(_rotation));
         }
     }
 
