@@ -1,15 +1,15 @@
 namespace Lab1.RayTracer;
-class Plane : BaseSceneObject
+public class Plane : BaseSceneObject
 {
-    private readonly Vector3f _size;
+    private readonly Vector3F _size;
 
-    public Plane(Vector3f position, Vector3f rotation, Vector3f size) : base(position, rotation) => _size = size;
-    public Plane(Vector3f position, Vector3f rotation) : this(position, rotation, new Vector3f(0)) {}
-    public Plane() : this(new Vector3f(0), new Vector3f(0)) {}
+    public Plane(Vector3F position, Vector3F rotation, Vector3F size) : base(position, rotation) => _size = size;
+    public Plane(Vector3F position, Vector3F rotation) : this(position, rotation, new Vector3F(0)) {}
+    public Plane() : this(new Vector3F(0), new Vector3F(0)) {}
     
     public override bool IsIntersectedBy(in Ray ray)
     {
-        Vector3f normal = Direction;
+        Vector3F normal = Direction;
 
         float denom = normal.DotProduct(Position);
 
@@ -19,10 +19,10 @@ class Plane : BaseSceneObject
 
         float t = (denom - normal.DotProduct(ray.StartPoint)) / normal.DotProduct(ray.Direction);
 
-        Vector3f newRay = ray.Direction * t;
-        Vector3f contact = ray.StartPoint + newRay;
+        Vector3F newRay = ray.Direction * t;
+        Vector3F contact = ray.StartPoint + newRay;
 
-        Vector3f contactVec = contact - Position;
+        Vector3F contactVec = contact - Position;
 
         return Math.Abs(contactVec.X) <= _size.X / 2 && Math.Abs(contactVec.Y) <= _size.Y / 2;
     }
