@@ -35,8 +35,8 @@ public class Scene
 
         var resolutionScale = 1;        // for further refactoring
 
-        var scaledSize = _width * _height;
-        var resultBuilder = new StringBuilder(scaledSize);
+        var screenSize = _width * _height;
+        var resultBuilder = new StringBuilder(screenSize);
 
         var startX = (int)MathF.Ceiling(-_width / 2f);
         var startY = (int)MathF.Ceiling(-_height / 2f);
