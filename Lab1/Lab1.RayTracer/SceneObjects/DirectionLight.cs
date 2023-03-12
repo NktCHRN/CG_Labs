@@ -1,5 +1,5 @@
 namespace Lab1.RayTracer;
-class DirectionLight : BaseSceneObject
+public class DirectionLight : BaseSceneObject
 {
     public DirectionLight(Vector3F position, Vector3F rotation) : base(position, rotation) {}
     public DirectionLight() : base() {}
