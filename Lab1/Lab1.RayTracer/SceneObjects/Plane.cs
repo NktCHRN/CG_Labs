@@ -24,7 +24,7 @@ class Plane : BaseSceneObject
 
         Vector3f contactVec = contact - Position;
 
-        return Math.Abs(contactVec.X) <= _size.X && Math.Abs(contactVec.Y) <= _size.Y;
+        return Math.Abs(contactVec.X) <= _size.X / 2 && Math.Abs(contactVec.Y) <= _size.Y / 2;
     }
     public override void ObjectWasPlaced() {}
 }
