@@ -27,8 +27,10 @@ public struct Quaternion {
 		);
     }
 
-    public static Quaternion FromEulerAngles(Vector3f v) => Quaternion.FromEulerAngles(v.X, v.Y, v.Z);
-    public static Quaternion FromEulerAngles(float x, float y, float z)
+    public static Quaternion FromEulerAngles(Vector3f v) => Quaternion.FromEulerAnglesRad(CGMath.DegToRad(v));
+    public static Quaternion FromEulerAngles(float x, float y, float z) => Quaternion.FromEulerAngles(CGMath.DegToRad(x), CGMath.DegToRad(y), CGMath.DegToRad(z));
+    public static Quaternion FromEulerAnglesRad(Vector3f v) => Quaternion.FromEulerAnglesRad(v.X, v.Y, v.Z);
+    public static Quaternion FromEulerAnglesRad(float x, float y, float z)
     {
         // roll (x-axis rotation)
         float cx = MathF.Cos(x * 0.5f);
