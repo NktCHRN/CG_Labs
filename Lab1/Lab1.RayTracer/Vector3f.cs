@@ -29,7 +29,7 @@ public struct Vector3f
 
         return (qv * 2.0f * qv.DotProduct(cv)) + (cv * (rotation.W * rotation.W - qv.DotProduct(qv))) + (qv.CrossProduct(cv) * 2.0f * rotation.W);
     }
-    void Rotatate(Quaternion rotation) {
+    void Rotate(Quaternion rotation) {
 		Vector3f qv = new Vector3f(rotation.X, rotation.Y, rotation.Z);
 		this = (qv * 2.0f * qv.DotProduct(this)) + (this * (rotation.W * rotation.W - qv.DotProduct(qv))) + (qv.CrossProduct(this) * 2.0f * rotation.W);
 	}
