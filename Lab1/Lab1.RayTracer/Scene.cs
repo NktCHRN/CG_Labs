@@ -33,15 +33,15 @@ public class Scene
     {
         ArgumentNullException.ThrowIfNull(camera);
 
-        var resolutionScale = 1;        // for further refactoring
+        var scale = MathF.Tan(CGMath.DegToRad(camera.VerticalFieldOfView / 2));
 
         var screenSize = _width * _height;
         var resultBuilder = new StringBuilder(screenSize);
 
-        var startX = (int)MathF.Ceiling(-_width / 2f);
-        var startY = (int)MathF.Ceiling(-_height / 2f);
-        var endX = (int)MathF.Ceiling(_width / 2f);
-        var endY = (int)MathF.Ceiling(_height / 2f);
+        var startX = (int)MathF.Ceiling(-_width / 2F);
+        var startY = (int)MathF.Ceiling(-_height / 2F);
+        var endX = (int)MathF.Ceiling(_width / 2F);
+        var endY = (int)MathF.Ceiling(_height / 2F);
 
         for (var y = startY; y < endY; y++)
         {
@@ -49,7 +49,7 @@ public class Scene
             {
                 for (var i = 0; i < _sceneObjects.Count; i++)
                 {
-                    var ray = new Ray(camera.Position, new Vector3F(x / resolutionScale, y / resolutionScale, 0));
+                    var ray = new Ray(camera.Position, camera.Direction + new Vector3F(x, y, 0));       // fix for another camera position
                     
                     if (_sceneObjects[i].IsIntersectedBy(ray))
                         resultBuilder.Append(' ');
