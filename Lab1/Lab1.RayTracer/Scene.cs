@@ -33,33 +33,37 @@ public class Scene
     {
         ArgumentNullException.ThrowIfNull(camera);
 
-        var scale = MathF.Tan(CGMath.DegToRad(camera.VerticalFieldOfView / 2));
+        var scale = MathF.Tan(CGMath.DegToRad(camera.VerticalFieldOfView / 2));     // For FOV
+
+        var heightToWidthCoefficient = _width / (float)_height;
+        camera.RightCorrection = heightToWidthCoefficient;
+
+        var stepDown = -(camera.Up / (_height / 2));
+        var stepRight = camera.Right / (_width / 2);
+
+        var currentScreenPosition = camera.ScreenCenter + camera.Up - camera.Right;
 
         var screenSize = _width * _height;
         var resultBuilder = new StringBuilder(screenSize + _height * Environment.NewLine.Length);
 
-        var startX = (int)MathF.Ceiling(-_width / 2F);
-        var startY = (int)MathF.Ceiling(-_height / 2F);
-        var endX = (int)MathF.Ceiling(_width / 2F);
-        var endY = (int)MathF.Ceiling(_height / 2F);
-
-        for (var y = startY; y < endY; y++)
+        for (var i = 0; i < _height; i++)
         {
-            for (var x = startX; x < endX; x++)
+            var rowStart = currentScreenPosition;
+            for (var j = 0; j < _width; j++)
             {
-                for (var i = 0; i < _sceneObjects.Count; i++)
-                {
-                    var ray = new Ray(camera.Position, camera.Direction + new Vector3F(x, y, 0));       // fix for another camera position
-                    
-                    if (_sceneObjects[i].IsIntersectedBy(ray))
-                        resultBuilder.Append(' ');
-                    else
-                        resultBuilder.Append('0');
-                }
+                var ray = new Ray(camera.Position, currentScreenPosition);
+
+                if (_sceneObjects[0].IsIntersectedBy(ray))      // hardcoded for now
+                    resultBuilder.Append(' ');
+                else
+                    resultBuilder.Append('0');
+
+                currentScreenPosition += stepRight;
             }
+            currentScreenPosition = rowStart + stepDown;
             resultBuilder.AppendLine();
         }
-        
+
         return resultBuilder.ToString();
     }
 
