@@ -54,9 +54,9 @@ public class Scene
                 var ray = new Ray(camera.Position, currentScreenPosition);
 
                 if (_sceneObjects[0].IsIntersectedBy(ray))      // hardcoded for now
-                    resultBuilder.Append(' ');
+                    resultBuilder.Append('#');
                 else
-                    resultBuilder.Append('0');
+                    resultBuilder.Append(' ');
 
                 currentScreenPosition += stepRight;
             }
