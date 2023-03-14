@@ -1,7 +1,7 @@
 namespace Lab1.RayTracer;
 public class Camera : BaseSceneObject
 {
-    private float _verticalFieldOfView = 45;
+    private float _verticalFieldOfView = 90;
 
     public Vector3F Up { get; private set; }
 
@@ -51,7 +51,7 @@ public class Camera : BaseSceneObject
         }
     }
 
-    public Camera(Vector3F position, Vector3F direction, Vector3F up, Vector3F rotation, float verticalFieldOfView = 45) 
+    public Camera(Vector3F position, Vector3F direction, Vector3F up, Vector3F rotation, float verticalFieldOfView = 90) 
     {
         Direction = direction;
         Up = up;

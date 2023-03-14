@@ -33,15 +33,15 @@ public class Scene
     {
         ArgumentNullException.ThrowIfNull(camera);
 
-        var scale = MathF.Tan(CGMath.DegToRad(camera.VerticalFieldOfView / 2));     // For FOV
+        var verticalScale = MathF.Tan(CGMath.DegToRad(camera.VerticalFieldOfView / 2));
 
         var heightToWidthCoefficient = _width / (float)_height;
         camera.RightCorrection = heightToWidthCoefficient;
 
-        var stepDown = -(camera.Up / (_height / 2));
+        var stepDown = -(camera.Up * verticalScale / (_height / 2));
         var stepRight = camera.Right / (_width / 2);
 
-        var currentScreenPosition = camera.ScreenCenter + camera.Up - camera.Right;
+        var currentScreenPosition = camera.ScreenCenter + camera.Up * verticalScale - camera.Right;
 
         var screenSize = _width * _height;
         var resultBuilder = new StringBuilder(screenSize + _height * Environment.NewLine.Length);
