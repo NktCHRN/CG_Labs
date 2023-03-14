@@ -36,7 +36,7 @@ public class Scene
         var scale = MathF.Tan(CGMath.DegToRad(camera.VerticalFieldOfView / 2));
 
         var screenSize = _width * _height;
-        var resultBuilder = new StringBuilder(screenSize);
+        var resultBuilder = new StringBuilder(screenSize + _height * Environment.NewLine.Length);
 
         var startX = (int)MathF.Ceiling(-_width / 2F);
         var startY = (int)MathF.Ceiling(-_height / 2F);
