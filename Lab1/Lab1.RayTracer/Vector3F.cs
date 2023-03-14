@@ -12,15 +12,15 @@ public struct Vector3F
     public Vector3F(float v) : this(v, v, v) {}
     public Vector3F() : this(0) {}
 
-    public static Vector3F Zero { get { return new Vector3F(); } }
-    public static Vector3F One { get { return new Vector3F(1.0f, 1.0f, 1.0f); } }
+    public static Vector3F Zero => new();
+    public static Vector3F One => new(1, 1, 1);
     #endregion
 
     #region Vector Math
-    public float Length() => MathF.Sqrt(X * X + Y * Y + Z * Z);
+    public float Length => MathF.Sqrt(X * X + Y * Y + Z * Z);
     public float DotProduct(in Vector3F b) => X * b.X + Y * b.Y + Z * b.Z;
     public Vector3F CrossProduct(in Vector3F b) => new (Y * b.Z - Z * b.Y, Z * b.X - X * b.Z, X * b.Y - Y * b.X);
-    public Vector3F Normalized() => this.Length() == 0 ? new Vector3F(0): this / this.Length();
+    public Vector3F Normalized => Length == 0 ? new Vector3F(0) : this / Length;
     public Vector3F Abs() => new (Math.Abs(X), Math.Abs(Y), Math.Abs(Z));
     public Vector3F RotatedBy(Vector3F rotation)
     {
@@ -45,13 +45,13 @@ public struct Vector3F
         var sinZ = MathF.Sin(radZ);
         
         if (radX != 0)
-            result = ((result * cosX + vX.CrossProduct(result) * sinX + vX * vX.DotProduct(result)) * (1 - cosX)).Normalized();
+            result = ((result * cosX + vX.CrossProduct(result) * sinX + vX * vX.DotProduct(result)) * (1 - cosX)).Normalized;
         
         if (radY != 0)
-            result = ((result * cosY + vY.CrossProduct(result) * sinY + vY * vY.DotProduct(result)) * (1 - cosY)).Normalized();
+            result = ((result * cosY + vY.CrossProduct(result) * sinY + vY * vY.DotProduct(result)) * (1 - cosY)).Normalized;
         
         if (radZ != 0)
-            result = ((result * cosZ + vZ.CrossProduct(result) * sinZ + vZ * vZ.DotProduct(result)) * (1 - cosZ)).Normalized();
+            result = ((result * cosZ + vZ.CrossProduct(result) * sinZ + vZ * vZ.DotProduct(result)) * (1 - cosZ)).Normalized;
         
         return result;
     }

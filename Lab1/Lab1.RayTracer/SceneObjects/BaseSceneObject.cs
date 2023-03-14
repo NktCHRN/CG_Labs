@@ -1,13 +1,13 @@
 namespace Lab1.RayTracer;
 public abstract class BaseSceneObject : ISceneObject
 {
-    private readonly Vector3F _baseDirection = new (0, 0, 1);
+    protected readonly Vector3F _baseDirection = new (0, 0, 1);
 
     public Vector3F Position { get; set; }
 
 
-    private Vector3F _rotation;
-    public Vector3F Rotation
+    protected Vector3F _rotation;
+    public virtual Vector3F Rotation
     {
         get => _rotation;
         set
@@ -18,7 +18,7 @@ public abstract class BaseSceneObject : ISceneObject
         }
     }
 
-    public Vector3F Direction { get; private set; }
+    public virtual Vector3F Direction { get; protected set; }
 
     public BaseSceneObject()
     {
