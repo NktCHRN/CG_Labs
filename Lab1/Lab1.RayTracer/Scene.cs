@@ -52,25 +52,7 @@ public class Scene
             for (var j = 0; j < _width; j++)
             {
                 var ray = new Ray(camera.Position, currentScreenPosition);
-                var (hitDistance, nearestIntersectionVector) = (float.PositiveInfinity, null as Vector3F?);
-                foreach (var sceneObject in _sceneObjects)
-                {
-                    var intersectionPoint = sceneObject.GetIntersection(ray);
-
-                    if (intersectionPoint is null)
-                    {
-                        continue;
-                    }
-
-                    Vector3F intersectionVector = intersectionPoint.Value - camera.Position;
-                    var distance = intersectionVector.Length;
-
-                    if (distance < hitDistance)
-                    {
-                        hitDistance = distance;
-                        nearestIntersectionVector = intersectionVector;
-                    }
-                }
+                var nearestIntersectionVector = GetIntersectionVectorWithNearestObject(ray);
 
                 var character = GetResultCharacter(nearestIntersectionVector, light);
                 resultBuilder.Append(character);
@@ -82,6 +64,32 @@ public class Scene
         }
 
         return resultBuilder.ToString();
+    }
+
+    internal Vector3F? GetIntersectionVectorWithNearestObject(Ray ray)
+    {
+        var (hitDistance, nearestIntersectionVector) = (float.PositiveInfinity, null as Vector3F?);
+
+        foreach (var sceneObject in _sceneObjects)
+        {
+            var intersectionPoint = sceneObject.GetIntersection(ray);
+
+            if (intersectionPoint is null)
+            {
+                continue;
+            }
+
+            Vector3F intersectionVector = intersectionPoint.Value - ray.StartPoint;
+            var distance = intersectionVector.Length;
+
+            if (distance < hitDistance)
+            {
+                hitDistance = distance;
+                nearestIntersectionVector = intersectionVector;
+            }
+        }
+
+        return nearestIntersectionVector;
     }
 
     private static char GetResultCharacter(Vector3F? intersectionVector, Vector3F? light)
