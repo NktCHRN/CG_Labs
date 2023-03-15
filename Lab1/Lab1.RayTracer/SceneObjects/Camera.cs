@@ -54,6 +54,9 @@ public class Camera : BaseSceneObject
 
     public Camera(Vector3F position, Vector3F direction, Vector3F up, Vector3F rotation, float verticalFieldOfView = 90) 
     {
+        if (up.DotProduct(direction) != 0)
+            throw new ArgumentOutOfRangeException(nameof(up), "The angle between up and direction must be 90 degrees");
+
         Direction = direction;
         Up = up;
 
@@ -61,9 +64,6 @@ public class Camera : BaseSceneObject
         _baseDirection = direction;
         
         Position = position;
-
-        if (Up.DotProduct(Direction) != 0)
-            throw new ArgumentOutOfRangeException(nameof(up), "The angle between up and direction must be 90 degrees");
 
         Rotation = rotation;
 
