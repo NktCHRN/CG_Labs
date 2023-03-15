@@ -31,6 +31,6 @@ public abstract class BaseSceneObject : ISceneObject
         Rotation = rotation;
     }
 
-    public abstract bool IsIntersectedBy(in Ray ray);
+    public abstract Vector3F? GetIntersection(in Ray ray);
     public abstract void ObjectWasPlaced();
 }

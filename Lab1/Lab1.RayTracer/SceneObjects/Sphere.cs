@@ -8,7 +8,7 @@ public class Sphere : BaseSceneObject
     public Sphere(Vector3F position, Vector3F rotation) : this(position, rotation, 1) { }
     public Sphere() : this(new Vector3F(0), new Vector3F(0)) { }
 
-    public override bool IsIntersectedBy(in Ray ray)
+    public override Vector3F? GetIntersection(in Ray ray)
     {
         var origin = ray.StartPoint;
         var center = Position;
@@ -24,7 +24,27 @@ public class Sphere : BaseSceneObject
 
         var discriminantSquared = b * b - 4 * a * c;
 
-        return discriminantSquared >= 0;
+        float x1, x2 = 0;
+        float t0 = 0;
+        Vector3F? phit;
+
+        if (discriminantSquared < 0)
+            return null;
+
+        x1 = (-b + MathF.Sqrt(discriminantSquared)) / (2 * a);
+        x2 = (-b - MathF.Sqrt(discriminantSquared)) / (2 * a);
+        if (MathF.Abs(x1) > MathF.Abs(x2))
+        {
+            t0 = x2;
+        }
+        else
+        {
+            t0 = x1;
+        }
+
+        phit = ray.StartPoint + ray.Direction * t0;
+
+        return phit;
     }
 
     public override void ObjectWasPlaced() { }

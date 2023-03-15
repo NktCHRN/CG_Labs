@@ -1,4 +1,6 @@
+using System;
 using System.Text;
+using Lab1.RayTracer.SceneObjects;
 
 namespace Lab1.RayTracer;
 
@@ -52,11 +54,32 @@ public class Scene
             for (var j = 0; j < _width; j++)
             {
                 var ray = new Ray(camera.Position, currentScreenPosition);
+                float? hitDistance = float.MaxValue;
+                foreach (var sceneObject in _sceneObjects)
+                {
+                    
+                        Vector3F? a1 = ((sceneObject.GetIntersection(ray)) - camera.Position);
+                        Vector3F? a2 = a1;
+                        a2 = a1 * a2;
+                        if (a2 == null)
+                        {
+                            continue;
+                        }
+                        var distance = a2.Value.Length;
+                    if (distance != null && distance < hitDistance)
+                    {
+                        hitDistance = distance;
+                    }
+                }
 
-                if (_sceneObjects[0].IsIntersectedBy(ray))      // hardcoded for now
-                    resultBuilder.Append('#');
+                if (hitDistance == float.MaxValue)
+                {
+                    resultBuilder.Append(' '); // Render the background
+                }
                 else
-                    resultBuilder.Append(' ');
+                {
+                    resultBuilder.Append('#'); // Render the sphere
+                }
 
                 currentScreenPosition += stepRight;
             }
