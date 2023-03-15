@@ -3,6 +3,7 @@ public class Camera : BaseSceneObject
 {
     private float _verticalFieldOfView = 90;
 
+    private Vector3F _baseUp;
     public Vector3F Up { get; private set; }
 
     public float VerticalFieldOfView
@@ -46,19 +47,23 @@ public class Camera : BaseSceneObject
         {
             _rotation = value;
 
-            Direction = Direction.RotatedBy(_rotation);
-            Up = Up.RotatedBy(_rotation);
+            Direction = _baseDirection.RotatedBy(_rotation);
+            Up = _baseUp.RotatedBy(_rotation);
         }
     }
 
     public Camera(Vector3F position, Vector3F direction, Vector3F up, Vector3F rotation, float verticalFieldOfView = 90) 
     {
+        if (up.DotProduct(direction) != 0)
+            throw new ArgumentOutOfRangeException(nameof(up), "The angle between up and direction must be 90 degrees");
+
         Direction = direction;
         Up = up;
-        Position = position;
 
-        if (Up.DotProduct(Direction) != 0)
-            throw new ArgumentOutOfRangeException(nameof(up), "The angle between up and direction must be 90 degrees");
+        _baseUp = up;
+        _baseDirection = direction;
+        
+        Position = position;
 
         Rotation = rotation;
 
