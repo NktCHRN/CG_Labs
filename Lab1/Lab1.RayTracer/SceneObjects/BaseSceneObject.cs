@@ -32,5 +32,4 @@ public abstract class BaseSceneObject : ISceneObject
     }
 
     public abstract Vector3F? GetIntersection(in Ray ray);
-    public abstract void ObjectWasPlaced();
 }

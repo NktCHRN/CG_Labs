@@ -24,28 +24,14 @@ public class Sphere : BaseSceneObject
 
         var discriminantSquared = b * b - 4 * a * c;
 
-        float x1, x2 = 0;
-        float t0 = 0;
-        Vector3F? phit;
-
         if (discriminantSquared < 0)
             return null;
 
-        x1 = (-b + MathF.Sqrt(discriminantSquared)) / (2 * a);
-        x2 = (-b - MathF.Sqrt(discriminantSquared)) / (2 * a);
-        if (MathF.Abs(x1) > MathF.Abs(x2))
-        {
-            t0 = x2;
-        }
-        else
-        {
-            t0 = x1;
-        }
+        var x1 = (-b + MathF.Sqrt(discriminantSquared)) / (2 * a);
+        var x2 = (-b - MathF.Sqrt(discriminantSquared)) / (2 * a);
 
-        phit = ray.StartPoint + ray.Direction * t0;
+        var t = (MathF.Abs(x1) > MathF.Abs(x2)) ? x2 : x1;
 
-        return phit;
+        return ray.StartPoint + ray.Direction * t;
     }
-
-    public override void ObjectWasPlaced() { }
 }

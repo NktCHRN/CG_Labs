@@ -27,8 +27,6 @@ public class Plane : BaseSceneObject
         if (Math.Abs(contactVec.X) <= _size.X / 2 && Math.Abs(contactVec.Y) <= _size.Y / 2)
             return contact;
 
-        else
         return null;
     }
-    public override void ObjectWasPlaced() { }
 }

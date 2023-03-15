@@ -52,7 +52,7 @@ public class Camera : BaseSceneObject
         }
     }
 
-    public Camera(Vector3F position, Vector3F direction, Vector3F up, Vector3F rotation, float verticalFieldOfView = 90) 
+    public Camera(Vector3F position, Vector3F direction, Vector3F up, Vector3F rotation, float verticalFieldOfView = 90)
     {
         if (up.DotProduct(direction) != 0)
             throw new ArgumentOutOfRangeException(nameof(up), "The angle between up and direction must be 90 degrees");
@@ -62,14 +62,13 @@ public class Camera : BaseSceneObject
 
         _baseUp = up;
         _baseDirection = direction;
-        
+
         Position = position;
 
         Rotation = rotation;
 
         VerticalFieldOfView = verticalFieldOfView;
     }
-    public Camera() : base() {}
+    public Camera() : base() { }
     public override Vector3F? GetIntersection(in Ray ray) { return null; }
-    public override void ObjectWasPlaced() {}
 }

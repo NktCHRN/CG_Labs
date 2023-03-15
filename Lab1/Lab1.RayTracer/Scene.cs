@@ -1,6 +1,4 @@
-using System;
 using System.Text;
-using Lab1.RayTracer.SceneObjects;
 
 namespace Lab1.RayTracer;
 
@@ -31,7 +29,7 @@ public class Scene
         _sceneObjects = new List<ISceneObject>();
     }
 
-    public string Render(Camera camera, DirectionLight? directionLight = null)
+    public string Render(Camera camera, Vector3F? light = null)
     {
         ArgumentNullException.ThrowIfNull(camera);
 
@@ -54,32 +52,28 @@ public class Scene
             for (var j = 0; j < _width; j++)
             {
                 var ray = new Ray(camera.Position, currentScreenPosition);
-                float? hitDistance = float.MaxValue;
+                var (hitDistance, nearestIntersectionVector) = (float.PositiveInfinity, null as Vector3F?);
                 foreach (var sceneObject in _sceneObjects)
                 {
-                    
-                        Vector3F? a1 = ((sceneObject.GetIntersection(ray)) - camera.Position);
-                        Vector3F? a2 = a1;
-                        a2 = a1 * a2;
-                        if (a2 == null)
-                        {
-                            continue;
-                        }
-                        var distance = a2.Value.Length;
-                    if (distance != null && distance < hitDistance)
+                    var intersectionPoint = sceneObject.GetIntersection(ray);
+
+                    if (intersectionPoint is null)
+                    {
+                        continue;
+                    }
+
+                    Vector3F intersectionVector = intersectionPoint.Value - camera.Position;
+                    var distance = intersectionVector.Length;
+
+                    if (distance < hitDistance)
                     {
                         hitDistance = distance;
+                        nearestIntersectionVector = intersectionVector;
                     }
                 }
 
-                if (hitDistance == float.MaxValue)
-                {
-                    resultBuilder.Append(' '); // Render the background
-                }
-                else
-                {
-                    resultBuilder.Append('#'); // Render the sphere
-                }
+                var character = GetResultCharacter(nearestIntersectionVector, light);
+                resultBuilder.Append(character);
 
                 currentScreenPosition += stepRight;
             }
@@ -90,9 +84,34 @@ public class Scene
         return resultBuilder.ToString();
     }
 
+    private static char GetResultCharacter(Vector3F? intersectionVector, Vector3F? light)
+    {
+        if (intersectionVector is null)
+        {
+            return ' ';
+        }
+
+        if (light is null)
+        {
+            return '#';
+        }
+
+        var intersectionNormal = intersectionVector.Value.Normalized;
+        var lightNormal = light.Value.Normalized;
+        var lightCoefficient = lightNormal.DotProduct(intersectionNormal);
+
+        return lightCoefficient switch
+        {
+            < 0 => ' ',
+            < 0.2F => '.',
+            < 0.5F => '*',
+            < 0.8F => 'O',
+            _ => '#'
+        };
+    }
+
     public void AddObject(ISceneObject obj)
     {
         _sceneObjects.Add(obj);
-        obj.ObjectWasPlaced();
     }
 }

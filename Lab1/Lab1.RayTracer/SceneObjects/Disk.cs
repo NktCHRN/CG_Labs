@@ -22,10 +22,9 @@ public class Disk : BaseSceneObject
         Vector3F newRay = ray.Direction * t;
         Vector3F contact = ray.StartPoint + newRay;
 
-        if ((contact - Position).Length >= _radius)
+        if ((contact - Position).Length > _radius)
             return null;
 
         return contact;
     }
-    public override void ObjectWasPlaced() { }
 }
