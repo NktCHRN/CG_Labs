@@ -2,9 +2,9 @@
 
 public class Sphere : BaseSceneObject
 {
-    private readonly float _radius;
+    public float Radius { get; }
 
-    public Sphere(Vector3F position, Vector3F rotation, float radius) : base(position, rotation) => _radius = radius;
+    public Sphere(Vector3F position, Vector3F rotation, float radius) : base(position, rotation) => Radius = radius;
     public Sphere(Vector3F position, Vector3F rotation) : this(position, rotation, 1) { }
     public Sphere() : this(new Vector3F(0), new Vector3F(0)) { }
 
@@ -15,7 +15,7 @@ public class Sphere : BaseSceneObject
         var k = origin - center;
 
         var directionSquared = ray.Direction.DotProduct(ray.Direction);
-        var radiusSquared = _radius * _radius;
+        var radiusSquared = Radius * Radius;
         var kSquared = k.DotProduct(k);
 
         var a = directionSquared;
