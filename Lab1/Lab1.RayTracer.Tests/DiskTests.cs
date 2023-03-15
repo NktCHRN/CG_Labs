@@ -2,20 +2,20 @@
 public class DiskTests
 {
     [Theory]
-    [MemberData(nameof(IsIntersectedBy_IntersectsDisk_Data))]
-    public void IsIntersectedBy_ReturnsTrue_WhenIntersects(Disk sut)
+    [MemberData(nameof(GetIntersection_IntersectsDisk_Data))]
+    public void GetIntersection_ReturnsNotNull_WhenIntersects(Disk sut)
     {
         // Arrange
         var ray = new Ray(new Vector3F(0, 0, -25), Vector3F.Zero);
 
         // Act
-        var actual = sut.IsIntersectedBy(ray);
+        var actual = sut.GetIntersection(ray);
 
         // Assert
-        Assert.True(actual);
+        Assert.NotNull(actual);
     }
 
-    public static IEnumerable<object[]> IsIntersectedBy_IntersectsDisk_Data =>
+    public static IEnumerable<object[]> GetIntersection_IntersectsDisk_Data =>
         new List<object[]>
     {
         new object[] { new Disk(new Vector3F(0, 0, 0), Vector3F.Zero, 3) },
@@ -26,20 +26,20 @@ public class DiskTests
     };
 
     [Theory]
-    [MemberData(nameof(IsIntersectedBy_DoesNotIntersect_Data))]
-    public void IsIntersectedBy_ReturnsFalse_WhenDoesNotIntersect(Disk sut)
+    [MemberData(nameof(GetIntersection_DoesNotIntersect_Data))]
+    public void GetIntersection_ReturnsNull_WhenDoesNotIntersect(Disk sut)
     {
         // Arrange
         var ray = new Ray(new Vector3F(0, 0, -25), Vector3F.Zero);
 
         // Act
-        var actual = sut.IsIntersectedBy(ray);
+        var actual = sut.GetIntersection(ray);
 
         // Assert
-        Assert.False(actual);
+        Assert.Null(actual);
     }
 
-    public static IEnumerable<object[]> IsIntersectedBy_DoesNotIntersect_Data =>
+    public static IEnumerable<object[]> GetIntersection_DoesNotIntersect_Data =>
     new List<object[]>
     {
         new object[] { new Disk(new Vector3F(0, 3.1F, 0), Vector3F.Zero, 3) },

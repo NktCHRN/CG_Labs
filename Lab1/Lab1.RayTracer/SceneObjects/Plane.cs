@@ -6,8 +6,8 @@ public class Plane : BaseSceneObject
     public Plane(Vector3F position, Vector3F rotation, Vector3F size) : base(position, rotation) => _size = size;
     public Plane(Vector3F position, Vector3F rotation) : this(position, rotation, new Vector3F(0)) {}
     public Plane() : this(new Vector3F(0), new Vector3F(0)) {}
-    
-    public override bool IsIntersectedBy(in Ray ray)
+
+    public override Vector3F? GetIntersection(in Ray ray)
     {
         Vector3F normal = Direction;
 
@@ -15,7 +15,7 @@ public class Plane : BaseSceneObject
 
         float v = normal.DotProduct(ray.Direction);
         if (MathF.Abs(v) < 0.001)
-            return false;
+            return null;
 
         float t = (denom - normal.DotProduct(ray.StartPoint)) / normal.DotProduct(ray.Direction);
 
@@ -24,7 +24,11 @@ public class Plane : BaseSceneObject
 
         Vector3F contactVec = contact - Position;
 
-        return Math.Abs(contactVec.X) <= _size.X / 2 && Math.Abs(contactVec.Y) <= _size.Y / 2;
+        if (Math.Abs(contactVec.X) <= _size.X / 2 && Math.Abs(contactVec.Y) <= _size.Y / 2)
+            return contact;
+
+        else
+        return null;
     }
-    public override void ObjectWasPlaced() {}
+    public override void ObjectWasPlaced() { }
 }
