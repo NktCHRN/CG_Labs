@@ -3,6 +3,7 @@ public class Camera : BaseSceneObject
 {
     private float _verticalFieldOfView = 90;
 
+    private Vector3F _baseUp;
     public Vector3F Up { get; private set; }
 
     public float VerticalFieldOfView
@@ -46,8 +47,8 @@ public class Camera : BaseSceneObject
         {
             _rotation = value;
 
-            Direction = Direction.RotatedBy(_rotation);
-            Up = Up.RotatedBy(_rotation);
+            Direction = _baseDirection.RotatedBy(_rotation);
+            Up = _baseUp.RotatedBy(_rotation);
         }
     }
 
@@ -55,6 +56,10 @@ public class Camera : BaseSceneObject
     {
         Direction = direction;
         Up = up;
+
+        _baseUp = up;
+        _baseDirection = direction;
+        
         Position = position;
 
         if (Up.DotProduct(Direction) != 0)
