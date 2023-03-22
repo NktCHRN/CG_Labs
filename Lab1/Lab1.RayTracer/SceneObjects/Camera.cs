@@ -20,7 +20,7 @@ public class Camera : BaseSceneObject
         }
     }
 
-    public Vector3F Right => -Up.CrossProduct(Direction) * RightCorrection;
+    public Vector3F Right => Up.CrossProduct(Direction) * RightCorrection;
 
     private float _rightCorrection;
     public float RightCorrection
