@@ -1,8 +1,8 @@
-﻿namespace Lab1.RayTracer.Tests;
+﻿namespace RayTracer.Tests;
 public class SceneTests
 {
     [Fact]
-    public void Render_ReturnsStringWithAtLeastOneRenderedObject()
+    public void Render_ReturnsMatrixWithAtLeastOneRenderedObject()
     {
         // Arrange
         var scene = new Scene(60, 40);
@@ -11,17 +11,17 @@ public class SceneTests
 
         var object1 = new Rectangle(new Vector3F(0, 0.22F, 6), Vector3F.Zero, Vector3F.One);
         var object2 = new Sphere(new Vector3F(1.5F, 0, 0), new Vector3F(0, 0, 0), 3);
-        var object3 = new Disk(new Vector3F(2, 2F, 0), new Vector3F(90, 6, 0), 7);
+        var object3 = new Disk(new Vector3F(2, 2F, 0), new Vector3F(90, 6, 0), 1);
         scene.AddObject(object1);
         scene.AddObject(object2);
         scene.AddObject(object3);
 
         // Act
-        var render = scene.Render(camera, null);
+        var matrix = scene.Render(camera, null);
 
         // Assert
-        Assert.Contains('#', render); 
-        Assert.Contains(' ', render); 
+        Assert.Equal(0, matrix[39, 0]);
+        Assert.Equal(1, matrix[19, 29]);
     }
 
     [Fact]
@@ -40,7 +40,7 @@ public class SceneTests
         var expectedPoint = expectedNearestObject.Position;
         expectedPoint.Y -= expectedNearestObject.Radius;
 
-        var expectedVector = expectedPoint - ray.StartPoint;
+        var expectedVector = (expectedPoint - expectedNearestObject.Position).Normalized;
 
         // Act
         var actualVector = scene.GetIntersectionNormalWithNearestObject(ray);

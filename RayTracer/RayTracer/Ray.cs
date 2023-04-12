@@ -1,4 +1,4 @@
-namespace Lab1.RayTracer;
+namespace RayTracer;
 public struct Ray {
     public Vector3F StartPoint { get; set; }
     public Vector3F EndPoint { get; set; }

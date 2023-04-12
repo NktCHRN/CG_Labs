@@ -1,4 +1,4 @@
-namespace Lab1.RayTracer;
+namespace RayTracer;
 public class Rectangle : BaseSceneObject
 {
     private readonly Vector3F _size;

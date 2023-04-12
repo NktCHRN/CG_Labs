@@ -1,4 +1,4 @@
-namespace Lab1.RayTracer;
+namespace RayTracer;
 public struct Quaternion {
     private Vector3F V;
     public float X { get => V.X; }

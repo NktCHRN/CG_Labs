@@ -1,4 +1,4 @@
-namespace Lab1.RayTracer;
+namespace RayTracer;
 public class Disk : BaseSceneObject
 {
     public float Radius { get; }

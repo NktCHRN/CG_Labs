@@ -1,4 +1,4 @@
-﻿namespace Lab1.RayTracer;
+﻿namespace RayTracer;
 public struct Vector3F
 {
     public float X { get; set; }

@@ -1,6 +1,4 @@
-using System.Text;
-
-namespace Lab1.RayTracer;
+namespace RayTracer;
 
 //On Scene coordinates are:
 /*
@@ -29,9 +27,11 @@ public class Scene
         _sceneObjects = new List<ISceneObject>();
     }
 
-    public string Render(Camera camera, Vector3F? light = null)
+    public float[,] Render(Camera camera, Vector3F? light = null)
     {
         ArgumentNullException.ThrowIfNull(camera);
+
+        var matrix = new float[_height, _width];
 
         var verticalScale = MathF.Tan(CGMath.DegToRad(camera.VerticalFieldOfView / 2));
         var heightToWidthCoefficient = _width / (float)_height;
@@ -46,9 +46,6 @@ public class Scene
         var upperLeftPixelCoords = new Vector3F(-(planeWidth / 2) + stepRight / 2, planeHeight / 2 - stepDown / 2, 1);
         //var currentScreenPosition = camera.ScreenCenter + camera.Up * verticalScale - camera.Right;
 
-        var screenSize = _width * _height;
-        var resultBuilder = new StringBuilder(screenSize + _height * Environment.NewLine.Length);
-
         for (var i = 0; i < _height; i++)
         {
             for (var j = 0; j < _width; j++)
@@ -56,13 +53,12 @@ public class Scene
                 var ray = new Ray(camera.Position, upperLeftPixelCoords + new Vector3F(stepRight * j, -stepDown * i, 0));
                 var nearestIntersectionNormal = GetIntersectionNormalWithNearestObject(ray);
 
-                var character = GetResultCharacter(nearestIntersectionNormal, light);
-                resultBuilder.Append(character);
+                var character = GetCoefficient(nearestIntersectionNormal, light);
+                matrix[i,j] = character;
             }
-            resultBuilder.AppendLine();
         }
 
-        return resultBuilder.ToString();
+        return matrix;
     }
 
     internal Vector3F? GetIntersectionNormalWithNearestObject(Ray ray)
@@ -91,28 +87,21 @@ public class Scene
         return nearestIntersectionNormal;
     }
 
-    private static char GetResultCharacter(Vector3F? intersectionNormal, Vector3F? light)
+    private static float GetCoefficient(Vector3F? intersectionNormal, Vector3F? light)
     {
         if (intersectionNormal is null)
         {
-            return ' ';
+            return 0;
         }
 
         if (light is null)
         {
-            return '#';
+            return 1;
         }
 
         var lightNormalized = light.Value.Normalized;
         var lightCoefficient = lightNormalized.DotProduct(intersectionNormal.Value);
-        return lightCoefficient switch
-        {
-            < 0 => ' ',
-            < 0.2F => '.',
-            < 0.5F => '*',
-            < 0.8F => 'O',
-            _ => '#'
-        };
+        return lightCoefficient;
     }
 
     public void AddObject(ISceneObject obj)
