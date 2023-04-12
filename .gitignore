@@ -471,3 +471,7 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+
+# ImageConverter
+/Lab1/ImageConvertor/build/*
