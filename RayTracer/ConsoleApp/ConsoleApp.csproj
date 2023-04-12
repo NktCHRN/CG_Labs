@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -8,8 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Lab1.RayTracer\Lab1.RayTracer.csproj" />
-    <ProjectReference Include="..\Lab2.ImageConverterCoreWrapper\Lab2.ImageConverterCoreWrapper.vcxproj" />
+    <ProjectReference Include="..\RayTracer\RayTracer.csproj" />
+    <ProjectReference Include="..\ImageConverterCoreWrapper\ImageConverterCoreWrapper.vcxproj" />
   </ItemGroup>
 
 </Project>
