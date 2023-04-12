@@ -1,4 +1,4 @@
-﻿namespace Lab1.RayTracer.SceneObjects;
+﻿namespace RayTracer.SceneObjects;
 
 public class Sphere : BaseSceneObject
 {

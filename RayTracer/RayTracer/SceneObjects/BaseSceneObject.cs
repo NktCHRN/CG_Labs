@@ -1,4 +1,4 @@
-namespace Lab1.RayTracer;
+namespace RayTracer;
 public abstract class BaseSceneObject : ISceneObject
 {
     protected Vector3F _baseDirection = new (0, 0, 1);

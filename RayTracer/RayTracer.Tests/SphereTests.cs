@@ -1,4 +1,4 @@
-﻿namespace Lab1.RayTracer.Tests;
+﻿namespace RayTracer.Tests;
 public class SphereTests
 {
     [Theory]

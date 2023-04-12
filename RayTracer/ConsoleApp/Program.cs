@@ -1,6 +1,8 @@
 ﻿// See https://aka.ms/new-console-template for more information
-using Lab1.RayTracer;
-using Lab1.RayTracer.SceneObjects;
+using ConsoleApp.Abstractions;
+using ConsoleApp.OutputPrinters;
+using RayTracer;
+using RayTracer.SceneObjects;
 
 var scene = new Scene(60, 40);
 
@@ -15,4 +17,5 @@ var camera = new Camera(new Vector3F(0, 0, 0), new Vector3F(0, 0, 1), new Vector
 var light = new Vector3F(-1, 0, 0);
 
 var renderingResult = scene.Render(camera, light);
-Console.WriteLine(renderingResult);
+IOutputWriter outputWriter = new ConsoleOutputWriter();
+outputWriter.Write(renderingResult);

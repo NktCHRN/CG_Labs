@@ -1,4 +1,4 @@
-namespace Lab1.RayTracer;
+namespace RayTracer;
 public static class CGMath
 {
     public static float Clamp(float low, float high, float value) => Math.Max(low, Math.Min(high, value));
