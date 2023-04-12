@@ -1,11 +1,11 @@
 namespace Lab1.RayTracer;
-public class Plane : BaseSceneObject
+public class Rectangle : BaseSceneObject
 {
     private readonly Vector3F _size;
 
-    public Plane(Vector3F position, Vector3F rotation, Vector3F size) : base(position, rotation) => _size = size;
-    public Plane(Vector3F position, Vector3F rotation) : this(position, rotation, new Vector3F(0)) {}
-    public Plane() : this(new Vector3F(0), new Vector3F(0)) {}
+    public Rectangle(Vector3F position, Vector3F rotation, Vector3F size) : base(position, rotation) => _size = size;
+    public Rectangle(Vector3F position, Vector3F rotation) : this(position, rotation, new Vector3F(0)) {}
+    public Rectangle() : this(new Vector3F(0), new Vector3F(0)) {}
 
     public override Vector3F? GetIntersection(in Ray ray)
     {

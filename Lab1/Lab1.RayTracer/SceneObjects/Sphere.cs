@@ -32,6 +32,6 @@ public class Sphere : BaseSceneObject
 
         var t = (MathF.Abs(x1) > MathF.Abs(x2)) ? x2 : x1;
 
-        return ray.StartPoint + ray.Direction * t;
+        return ray.StartPoint + (ray.Direction * t);
     }
 }
