@@ -17,5 +17,7 @@ var camera = new Camera(new Vector3F(0, 0, 0), new Vector3F(0, 0, 1), new Vector
 var light = new Vector3F(-1, 0, 0);
 
 var renderingResult = scene.Render(camera, light);
-IOutputWriter outputWriter = new ConsoleOutputWriter();
-outputWriter.Write(renderingResult);
+IOutputWriter consoleWriter = new ConsoleOutputWriter();
+IOutputWriter imageWriter = new ImageOutputWriter();
+consoleWriter.Write(renderingResult);
+imageWriter.Write(renderingResult);

@@ -1,6 +1,6 @@
 #include "MaterialWrapper.h"
 
-namespace CLI
+namespace ImageConverter
 {
 	MaterialWrapper::MaterialWrapper(IC::Material * mat) : ManagedObject(mat) {}
 }
