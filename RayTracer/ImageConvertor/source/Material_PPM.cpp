@@ -4,12 +4,25 @@
 
 extern "C"
 {
-    IMG_API IC::Material* Read(const char * file_path)
+    IMG_API IC::Material* ReadPath(const char * file_path)
     {
         std::cout << "Start Read PPM" << std::endl;
         IC::Material * mat = nullptr;
         try {
             mat = new Material_PPM(file_path);
+        } catch (const std::exception& e) {
+            std::cout << e.what() << std::endl;
+        }
+        return mat;
+    }
+
+    IMG_API IC::Material* ReadData(uint8_t * data, int width, int height)
+    {
+        std::cout << "Start Read PPM pixels" << std::endl;
+        std::cout << "Width: " << width << " Height: " << height << std::endl;
+        IC::Material * mat = nullptr;
+        try {
+            mat = new Material_PPM(data, width, height);
         } catch (const std::exception& e) {
             std::cout << e.what() << std::endl;
         }
@@ -43,9 +56,9 @@ Material_PPM::Material_PPM(const char* file_path)
     
     file >> this->rgbMax;
     
-    this->pixels = new Pixel*[this->size.y];
+    this->pixels = new IC::Pixel*[this->size.y];
     for (size_t i = 0; i < this->size.y; i++)
-        this->pixels[i] = new Pixel[this->size.x];
+        this->pixels[i] = new IC::Pixel[this->size.x];
     
     int r, g, b;
     for (size_t y = 0; y < this->size.y; y++)
@@ -67,26 +80,25 @@ Material_PPM::Material_PPM(uint8_t* data, int width, int height)
 {
     this->size.x = width;
     this->size.y = height;
-
     this->rgbMax = 255;
 
-    this->pixels = new Pixel*[this->size.y];
+    this->pixels = new IC::Pixel*[this->size.y];
     for (size_t i = 0; i < this->size.y; i++)
-        this->pixels[i] = new Pixel[this->size.x];
+        this->pixels[i] = new IC::Pixel[this->size.x];
 
     for (size_t y = 0; y < this->size.y; y++)
     {
         for (size_t x = 0; x < this->size.x; x++)
         {
-            size_t index = (x + y) * 3;
-            this->pixels[x][y].b = data[index];
-            this->pixels[x][y].g = data[index + 1];
-            this->pixels[x][y].r = data[index + 2];
+            size_t index = (width * y + x) * 3;
+            this->pixels[y][x].r = data[index];
+            this->pixels[y][x].g = data[index + 1];
+            this->pixels[y][x].b = data[index + 2];
         }
     }
 }
 
-Material_PPM::Material_PPM(Pixel** pixels, int width, int height)
+Material_PPM::Material_PPM(IC::Pixel** pixels, int width, int height)
     : Material(pixels, width, height)
 {
     this->rgbMax = 255;
@@ -107,9 +119,9 @@ void Material_PPM::Export(const char *file_path)
             size_t yf = this->size.y - y - 1;
             for (size_t x = 0; x < this->size.x; x++)
             {
-                file << (int)this->pixels[yf][x].b << " ";
-                file << (int)this->pixels[yf][x].g << " ";
                 file << (int)this->pixels[yf][x].r << " ";
+                file << (int)this->pixels[yf][x].g << " ";
+                file << (int)this->pixels[yf][x].b << " ";
             }
             file << std::endl;
         }

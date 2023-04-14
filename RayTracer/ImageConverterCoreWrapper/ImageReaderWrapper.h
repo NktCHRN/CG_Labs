@@ -3,7 +3,7 @@
 #include "MaterialWrapper.h"
 #include "ImageReader.hpp"
 
-namespace CLI
+namespace ImageConverter
 {
     public ref class ImageReaderWrapper : public ManagedObject<IC::ImageReader>
     {
@@ -11,6 +11,6 @@ namespace CLI
         ImageReaderWrapper();
 
         MaterialWrapper^ Read(String^ file_path);
+        MaterialWrapper^ ReadData(array<uint8_t>^ data, int width, int height);
     };
 }
-

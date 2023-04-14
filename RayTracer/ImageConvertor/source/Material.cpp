@@ -22,8 +22,6 @@ Material::Material(Pixel** pixels, int width, int height)
     for (size_t y = 0; y < this->size.y; y++)
         for (size_t x = 0; x < this->size.x; x++)
         {
-            if (x == 0)
-                std::cout << (int)pixels[y][x].r << " " << (int)pixels[y][x].g << " " << (int)pixels[y][x].b << std::endl;
             this->pixels[y][x].r = pixels[y][x].r;
             this->pixels[y][x].g = pixels[y][x].g;
             this->pixels[y][x].b = pixels[y][x].b;

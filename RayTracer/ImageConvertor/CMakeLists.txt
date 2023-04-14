@@ -33,6 +33,7 @@ add_library(ImageWriter.PPM SHARED ${BASE_SRC} "source/Material_PPM.cpp" "includ
 # target_link_libraries(ImageReader.PNG ZLIB::ZLIB)
 
 add_library(${PROJECT_NAME}_LIB STATIC ${BASE_SRC}
+    "source/LibHandler.cpp"  "include/LibHandler.hpp"
     "source/ImageReader.cpp" "include/ImageReader.hpp"
     "source/ImageWriter.cpp" "include/ImageWriter.hpp"
 )

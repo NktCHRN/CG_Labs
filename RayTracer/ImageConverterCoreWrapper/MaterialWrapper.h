@@ -5,7 +5,7 @@
 
 using namespace System;
 
-namespace CLI
+namespace ImageConverter
 {
     public ref class MaterialWrapper : public ManagedObject<IC::Material>
     {

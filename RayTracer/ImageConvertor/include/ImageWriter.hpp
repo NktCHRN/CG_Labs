@@ -3,6 +3,7 @@
 #include <filesystem>
 #include <map>
 #include "IC.hpp"
+#include "LibHandler.hpp"
 
 namespace fs = std::filesystem;
 
@@ -11,7 +12,7 @@ namespace IC
 
 class Material;
 
-class IMG_API ImageWriter
+class IMG_API ImageWriter : public LibHandler
 {
 public:
     static ImageWriter* GetInstance();

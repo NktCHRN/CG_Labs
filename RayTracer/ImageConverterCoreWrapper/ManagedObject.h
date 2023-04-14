@@ -3,7 +3,8 @@
 using namespace System;
 using namespace System::Runtime::InteropServices;
 
-namespace CLI {
+namespace ImageConverter
+{
 
     static const char* string_to_char_array(String^ string)
     {

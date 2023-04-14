@@ -1,6 +1,9 @@
 #pragma once
 #include <stdint.h>
 
+namespace IC
+{
+
 struct Pixel {
     uint8_t r, g, b, a;
     
@@ -8,3 +11,5 @@ struct Pixel {
     Pixel(uint8_t val);
     Pixel();
 };
+
+}

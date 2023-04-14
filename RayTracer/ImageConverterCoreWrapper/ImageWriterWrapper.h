@@ -3,7 +3,7 @@
 #include "MaterialWrapper.h"
 #include "ImageWriter.hpp"
 
-namespace CLI
+namespace ImageConverter
 {
     public ref class ImageWriterWrapper : public ManagedObject<IC::ImageWriter>
     {
