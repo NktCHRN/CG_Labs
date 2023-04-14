@@ -2,7 +2,11 @@
 
 namespace ImageConverter
 {
-    ImageReaderWrapper::ImageReaderWrapper() : ManagedObject(IC::ImageReader::GetInstance()) {}
+    ImageReaderWrapper::ImageReaderWrapper()
+        : ManagedObject(IC::ImageReader::GetInstance()) {}
+
+    ImageReaderWrapper::ImageReaderWrapper(String^ containerPath)
+        : ManagedObject(IC::ImageReader::GetInstance(string_to_char_array(containerPath))) {}
 
     MaterialWrapper^ ImageReaderWrapper::Read(String^ file_path)
     {

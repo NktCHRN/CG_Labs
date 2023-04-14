@@ -3,7 +3,7 @@ using System.IO;
 using System.Numerics;
 using System.Runtime.Intrinsics;
 
-namespace Lab1.RayTracer;
+namespace RayTracer.RayTracer;
 
 public class OBJHelper
 {

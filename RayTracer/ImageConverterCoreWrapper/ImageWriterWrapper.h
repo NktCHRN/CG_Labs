@@ -9,7 +9,8 @@ namespace ImageConverter
     {
     public:
         ImageWriterWrapper();
+        ImageWriterWrapper(String^ containerPath);
 
-        void Write(MaterialWrapper^ mat, String^ file_path);
+        void Write(MaterialWrapper^ mat, String^ file_path, String^ extension);
     };
 }

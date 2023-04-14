@@ -1,4 +1,4 @@
-﻿namespace Lab1.RayTracer;
+﻿namespace RayTracer.RayTracer;
 public class Vertex
 {
     public Vector3F Position { get; set; }

@@ -1,15 +1,11 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
-#include <iomanip>
-#include <cstdint>
-#include <exception>
-
 #include "Material_BMP.hpp"
 
 extern "C"
 {
-    IC::Material* ReadPath(const char * file_path)
+    IMG_API IC::Material* ReadPath(const char * file_path)
     {
         std::cout << "Start Read BMP" << std::endl;
         IC::Material * mat = nullptr;
@@ -21,7 +17,7 @@ extern "C"
         return mat;
     }
 
-    IC::Material* ReadData(uint8_t * data, int width, int height)
+    IMG_API IC::Material* ReadData(uint8_t * data, int width, int height)
     {
         std::cout << "Start Read BMP pixels" << std::endl;
         std::cout << "Width: " << width << " Height: " << height << std::endl;
@@ -37,7 +33,7 @@ extern "C"
 
 extern "C"
 {
-    bool Write(IC::Material * mat, const char * file_path)
+    bool IMG_API Write(IC::Material * mat, const char * file_path)
     {
         std::cout << "Start Writing BMP" << std::endl;
         Material_BMP new_mat = Material_BMP(mat->GetPixels(), mat->GetSize().x, mat->GetSize().y);

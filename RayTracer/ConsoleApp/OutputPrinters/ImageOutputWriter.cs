@@ -28,7 +28,8 @@ public sealed class ImageOutputWriter : IOutputWriter
             }
         }
 
-        var mat = new ImageReaderWrapper().ReadData(data, width, height);
-        new ImageWriterWrapper().Write(mat, "../../../../test.ppm");
+        string containerPath = "../../../../ImageConverter/build/";
+        var mat = new ImageReaderWrapper(containerPath).ReadData(data, width, height);
+        new ImageWriterWrapper(containerPath).Write(mat, "../../../../test", ".bmp");
     }
 }
