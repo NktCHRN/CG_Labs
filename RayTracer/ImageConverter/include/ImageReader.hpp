@@ -16,14 +16,15 @@ class IMG_API ImageReader : public LibHandler
 {
 public:
     static ImageReader * GetInstance();
+    static ImageReader * GetInstance(const char * container_path);
 
-    Material * ImageReader::ReadPath(const char * file_path);
-    Material * ImageReader::ReadData(uint8_t * data, int width, int height, const char * extension);
+    Material * ReadPath(const char * file_path);
+    Material * ReadData(uint8_t * data, int width, int height, const char * extension);
 
 private:
     static ImageReader * instance;
 
-    ImageReader();
+    ImageReader(const char * container_path);
 };
 
 }

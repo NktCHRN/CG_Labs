@@ -12,12 +12,20 @@ ImageReader *ImageReader::instance = nullptr;
 ImageReader *ImageReader::GetInstance()
 {
     if (!instance)
-        instance = new ImageReader();
+        instance = new ImageReader(".");
     
     return instance;
 }
 
-ImageReader::ImageReader() : LibHandler(".dll", "Reader", ".") {}
+ImageReader *ImageReader::GetInstance(const char * container_path)
+{
+    instance = new ImageReader(container_path);
+    
+    return instance;
+}
+
+ImageReader::ImageReader(const char * container_path)
+    : LibHandler(container_path, "Reader", ".") {}
 
 typedef Material* (*read_file_func) (const char *);
 typedef Material* (*read_data_func) (uint8_t * data, int width, int height);

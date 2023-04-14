@@ -15,16 +15,15 @@ class Material;
 class IMG_API ImageWriter : public LibHandler
 {
 public:
-    static ImageWriter* GetInstance();
+    static ImageWriter * GetInstance();
+    static ImageWriter * GetInstance(const char * container_path);
 
     bool Write(Material * mat, const char * file_path, const char * extension);
 
 private:
     static ImageWriter* instance;
-
-    std::map<fs::path, fs::path> lib_ext_map;
     
-    ImageWriter();
+    ImageWriter(const char * container_path);
 };
 
 }

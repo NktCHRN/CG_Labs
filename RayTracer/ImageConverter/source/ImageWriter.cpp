@@ -7,19 +7,28 @@
 namespace IC
 {
 
-ImageWriter *ImageWriter::instance = nullptr;
+ImageWriter * ImageWriter::instance = nullptr;
 
-ImageWriter *ImageWriter::GetInstance()
+ImageWriter * ImageWriter::GetInstance()
 {
     if (!instance)
-        instance = new ImageWriter();
+        instance = new ImageWriter(".");
     
     return instance;
 }
 
-ImageWriter::ImageWriter() : LibHandler(".dll", "Writer", ".") {}
+ImageWriter * ImageWriter::GetInstance(const char * container_path)
+{
+    instance = new ImageWriter(container_path);
+    
+    return instance;
+}
+
+ImageWriter::ImageWriter(const char * container_path)
+    : LibHandler(container_path, "Writer", ".") {}
 
 typedef bool (*write_func_ptr) (Material *, const char *);
+
 bool ImageWriter::Write(Material * mat, const char * file_path, const char * extension)
 {
     std::cout << "Start writing "<< std::endl;

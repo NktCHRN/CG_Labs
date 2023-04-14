@@ -1,10 +1,3 @@
-//
-//  main.cpp
-//  BulkaImageTool
-//
-//  Created by Hlib Sobolevskyi on 06.01.2023.
-//
-
 #include <iostream>
 #include <unordered_map>
 #include "Material.hpp"
@@ -67,7 +60,7 @@ int main(int argc, const char * argv[])
     auto reader = IC::ImageReader::GetInstance();
     auto writer = IC::ImageWriter::GetInstance();
 
-    auto mat = reader->Read(src.c_str());
+    auto mat = reader->ReadPath(src.c_str());
     if (mat)
     {
         // SampleFilter(*mat);
