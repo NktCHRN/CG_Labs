@@ -2,14 +2,14 @@
 #include <algorithm>
 #include "LibHandler.hpp"
 
-IC::LibHandler::LibHandler(const char * lib_ext, const char * lib_type, const char * lib_delimeter)
-    : lib_ext(lib_ext), lib_type(lib_type), lib_delimeter(lib_delimeter)
+IC::LibHandler::LibHandler(const char * container_path, const char * lib_type, const char * lib_delimeter)
+    : lib_type(lib_type), lib_delimeter(lib_delimeter)
 {
-    for (const auto & entry : fs::directory_iterator("../../../../ImageConvertor/build/"))
+    for (const auto & entry : fs::directory_iterator(container_path))
     {
         auto ext = entry.path().extension();
         auto file_name_str = entry.path().filename().string();
-        if (ext == lib_ext && file_name_str.find(lib_type) != std::string::npos)
+        if (ext == LIB_EXT && file_name_str.find(lib_type) != std::string::npos)
         {
             size_t startPos = file_name_str.find(lib_delimeter);
             size_t endPos = file_name_str.find(lib_delimeter, startPos + 1);
@@ -17,10 +17,8 @@ IC::LibHandler::LibHandler(const char * lib_ext, const char * lib_type, const ch
             if (startPos != std::string::npos && endPos != std::string::npos)
             {
                 std::string sub_str = file_name_str.substr(startPos, endPos - startPos);
-                std::cout << sub_str << std::endl;
                 std::transform(sub_str.begin(), sub_str.end(), sub_str.begin(), [](unsigned char c) { return std::tolower(c); });
                 lib_ext_map.emplace(sub_str, entry.path());
-                std::cout << entry.path() << std::endl;
             }
         }
     }

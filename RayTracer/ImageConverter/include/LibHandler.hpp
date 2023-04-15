@@ -7,9 +7,11 @@
     #define WIN32_LEAN_AND_MEAN
     #include <windows.h>
     typedef HMODULE LIB_HANDLER;
+    #define LIB_EXT ".dll"
 #elif __APPLE__
     #include <dlfcn.h>
     typedef void * LIB_HANDLER;
+    #define LIB_EXT ".dylib"
 #endif
 
 namespace fs = std::filesystem;
@@ -22,11 +24,10 @@ class LibHandler
 public:
     virtual ~LibHandler() {}
 protected:
-    LibHandler(const char * lib_ext, const char * lib_type, const char * lib_delimeter);
+    LibHandler(const char * container_path, const char * lib_type, const char * lib_delimeter);
 
     std::map<fs::path, fs::path> lib_ext_map;
 
-    const char * lib_ext;
     const char * lib_type;
     const char * lib_delimeter;
 

@@ -9,8 +9,9 @@ namespace ImageConverter
     {
     public:
         ImageReaderWrapper();
+        ImageReaderWrapper(String^ container_path);
 
         MaterialWrapper^ Read(String^ file_path);
-        MaterialWrapper^ ReadData(array<uint8_t>^ data, int width, int height);
+        MaterialWrapper^ Read(array<uint8_t>^ data, int width, int height, String^ extension);
     };
 }
