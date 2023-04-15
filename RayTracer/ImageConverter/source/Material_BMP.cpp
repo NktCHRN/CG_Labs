@@ -190,7 +190,7 @@ void Material_BMP::Export(const char *file_path)
         }
         
         for (size_t p = 0; p < padding; p++)
-            pixels_data[(bmp_info_header.width * (y + 1)) * channels + p] = 255;
+            pixels_data[(bmp_info_header.width * (y + 1)) * channels + y * padding + p] = NULL;
     }
     
     ofs.write(reinterpret_cast<char*>(pixels_data.data()), pixels_data.size());
