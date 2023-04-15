@@ -32,10 +32,18 @@ extern "C"
 
 extern "C"
 {
-    IMG_API bool Write(IC::Material * mat, const char * file_path)
+    IMG_API bool WriteMat(IC::Material * mat, const char * file_path)
     {
         std::cout << "Start Writing PPM" << std::endl;
         Material_PPM new_mat = Material_PPM(mat->GetPixels(), mat->GetSize().x, mat->GetSize().y);
+        new_mat.Export(file_path);
+        return true;
+    }
+
+    IMG_API bool WriteData(uint8_t* data, int width, int height, bool has_alpha, const char * file_path)
+    {
+        std::cout << "WriteData BMP" << std::endl;
+        Material_PPM new_mat = Material_PPM(data, width, height);
         new_mat.Export(file_path);
         return true;
     }

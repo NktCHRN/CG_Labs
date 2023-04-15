@@ -18,7 +18,8 @@ public:
     static ImageWriter * GetInstance();
     static ImageWriter * GetInstance(const char * container_path);
 
-    bool Write(Material * mat, const char * file_path, const char * extension);
+    bool WriteMat(Material * mat, const char * file_path, const char * extension);
+    bool WriteData(uint8_t* data, int width, int height, bool has_alpha, const char * file_path, const char * extension);
 
 private:
     static ImageWriter* instance;

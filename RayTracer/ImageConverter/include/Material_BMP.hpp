@@ -26,7 +26,7 @@ struct BMPInfoHeader {
     uint16_t planes { 1 };                // No. of planes for the target device, this is always 1
     uint16_t bits_per_pixel { 24 };        // No. of bits per pixel
     uint32_t compression { 0 };           // 0 or 3 - uncompressed. THIS PROGRAM CONSIDERS ONLY UNCOMPRESSED BMP images
-    uint32_t img_size_bytes { 0 };        // 0 - for uncompressed images
+    uint32_t img_size_bytes { 0 };
     uint32_t x_pixels_per_meter { 320 };
     uint32_t y_pixels_per_meter { 320 };
     uint32_t colors_used { 0 };           // No. color indexes in the color table. Use 0 for the max number of colors allowed by bit_count

@@ -33,10 +33,18 @@ extern "C"
 
 extern "C"
 {
-    IMG_API bool Write(IC::Material * mat, const char * file_path)
+    IMG_API bool WriteMat(IC::Material * mat, const char * file_path)
     {
-        std::cout << "Start Writing BMP" << std::endl;
+        std::cout << "WriteMat BMP" << std::endl;
         Material_BMP new_mat = Material_BMP(mat->GetPixels(), mat->GetSize().x, mat->GetSize().y);
+        new_mat.Export(file_path);
+        return true;
+    }
+
+    IMG_API bool WriteData(uint8_t* data, int width, int height, bool has_alpha, const char * file_path)
+    {
+        std::cout << "WriteData BMP" << std::endl;
+        Material_BMP new_mat = Material_BMP(data, width, height, has_alpha);
         new_mat.Export(file_path);
         return true;
     }
@@ -106,7 +114,12 @@ Material_BMP::Material_BMP(IC::Pixel** pixels, int width, int height)
 
     this->bmp_info_header.bits_per_pixel = 24;
 
-    this->file_header.file_size = sizeof(file_header) + sizeof(bmp_info_header) + width * height * 3;
+    uint32_t headers_size = sizeof(file_header) + sizeof(bmp_info_header);
+    uint16_t channels = this->bmp_info_header.bits_per_pixel / 8;
+    uint32_t data_size = (this->bmp_info_header.width * this->bmp_info_header.height * channels);
+
+    this->bmp_info_header.img_size_bytes = data_size;
+    this->file_header.file_size = headers_size + data_size;
 }
 
 Material_BMP::Material_BMP(uint8_t* data, int width, int height, bool has_alpha)
@@ -142,14 +155,12 @@ Material_BMP::Material_BMP(uint8_t* data, int width, int height, bool has_alpha)
 void Material_BMP::Export(const char *file_path)
 {
     std::cout << "Start export BMP" << std::endl;
-    std::ofstream ofs(file_path);
+    std::ofstream ofs(file_path, std::ios::binary);
 
     int channels = bmp_info_header.bits_per_pixel / 8;
     const int data_size = (bmp_info_header.width * bmp_info_header.height * channels);
     int padding = (4 - (this->size.x * channels) % 4) % 4;
     std::vector<uint8_t> pixels_data(data_size + padding * bmp_info_header.height);
-
-    this->file_header.file_size = (uint8_t)data_size;
     
     ofs.write(reinterpret_cast<char*>(&file_header), sizeof(file_header));
     ofs.write(reinterpret_cast<char*>(&bmp_info_header), sizeof(bmp_info_header));

@@ -66,7 +66,7 @@ int main(int argc, const char * argv[])
         // SampleFilter(*mat);
         std::cout << "Mat info: " << std::endl;
         std::cout << mat->GetSize().x << " " << mat->GetSize().y << std::endl;
-        writer->Write(mat, dst.c_str(), dst_ext.c_str());
+        writer->WriteMat(mat, dst.c_str(), dst_ext.c_str());
     }
 
     return 0;
