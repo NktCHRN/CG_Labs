@@ -138,7 +138,7 @@ Material_BMP::Material_BMP(uint8_t* data, int width, int height, bool has_alpha)
     this->bmp_info_header.img_size_bytes = data_size;
     this->file_header.file_size = headers_size + data_size;
 
-    this->size = Vector_i2(width, height);
+    this->size = Vector2i(width, height);
     
     this->pixels = new IC::Pixel*[this->size.y];
     for (size_t y = 0; y < this->size.y; y++)

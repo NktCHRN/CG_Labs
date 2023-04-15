@@ -127,9 +127,9 @@ void Material_PPM::Export(const char *file_path)
             size_t yf = this->size.y - y - 1;
             for (size_t x = 0; x < this->size.x; x++)
             {
-                file << (int)this->pixels[yf][x].r << " ";
-                file << (int)this->pixels[yf][x].g << " ";
                 file << (int)this->pixels[yf][x].b << " ";
+                file << (int)this->pixels[yf][x].g << " ";
+                file << (int)this->pixels[yf][x].r << " ";
             }
             file << std::endl;
         }
@@ -142,14 +142,14 @@ void Material_PPM::ExportSample(const char* file_path)
 {
     srand(time(0));
 
-    this->size = Vector_i2(256);
+    this->size = Vector2i(256);
 
     for (size_t y = 0; y < size.y; y++)
         for (size_t x = 0; x < size.x; x++)
         {
-            this->pixels[y][x].r = rand() % 255;
-            this->pixels[y][x].g = rand() % 255;
             this->pixels[y][x].b = rand() % 255;
+            this->pixels[y][x].g = rand() % 255;
+            this->pixels[y][x].r = rand() % 255;
         }
 
     this->Export(file_path);

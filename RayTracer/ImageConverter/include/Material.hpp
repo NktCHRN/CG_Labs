@@ -1,7 +1,7 @@
 #pragma once
 #include <stdio.h>
 #include "IC.hpp"
-#include "Vector_i2.hpp"
+#include "Vector2i.hpp"
 #include "Pixel.hpp"
 
 namespace IC
@@ -16,11 +16,11 @@ public:
     virtual void Export(const char* file_path);
     virtual void ExportSample(const char* file_path);
     
-    Vector_i2& GetSize() { return this->size; }
+    Vector2i& GetSize() { return this->size; }
     Pixel** GetPixels() { return this->pixels; }
     
 protected:
-    Vector_i2 size;
+    Vector2i size;
     Pixel** pixels;
     
 };

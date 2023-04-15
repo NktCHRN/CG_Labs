@@ -20,7 +20,7 @@ include_directories(include)
 
 file(GLOB BASE_SRC
     "IC.hpp"
-    "source/Vector_i2.cpp" "include/Vector_i2.hpp"
+    "source/Vector2i.cpp" "include/Vector2i.hpp"
     "source/Pixel.cpp" "include/Pixel.hpp" 
     "source/Material.cpp" "include/Material.hpp"
 )
