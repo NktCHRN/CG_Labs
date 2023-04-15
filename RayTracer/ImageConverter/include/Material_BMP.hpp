@@ -10,7 +10,7 @@ struct BMPFileHeader {
     uint32_t file_size { 0 };     // Size of the file (in bytes)
     uint16_t reserved1 { 0 };     // Reserved, always 0
     uint16_t reserved2 { 0 };     // Reserved, always 0
-    uint32_t offset_data { 0 };   // Start position of pixel data (bytes from the beginning of the file)
+    uint32_t offset_data { 54 };   // Start position of pixel data (bytes from the beginning of the file)
 };
 
 #pragma pack(pop) 
@@ -27,8 +27,8 @@ struct BMPInfoHeader {
     uint16_t bits_per_pixel { 24 };        // No. of bits per pixel
     uint32_t compression { 0 };           // 0 or 3 - uncompressed. THIS PROGRAM CONSIDERS ONLY UNCOMPRESSED BMP images
     uint32_t img_size_bytes { 0 };        // 0 - for uncompressed images
-    uint32_t x_pixels_per_meter { 0 };
-    uint32_t y_pixels_per_meter { 0 };
+    uint32_t x_pixels_per_meter { 320 };
+    uint32_t y_pixels_per_meter { 320 };
     uint32_t colors_used { 0 };           // No. color indexes in the color table. Use 0 for the max number of colors allowed by bit_count
     uint32_t colors_important { 0 };      // No. of colors used for displaying the bitmap. If 0 all colors are required
 };
