@@ -56,6 +56,7 @@ Material_BMP::Material_BMP(const char* file_path)
     std::cout << "Start Reading BMP From File" << std::endl;
     std::vector<uint8_t> pixels_data;
     int channels = 0;
+    int padding = 0;
 
     std::ifstream file(file_path, std::ios::binary);
     {
@@ -79,8 +80,9 @@ Material_BMP::Material_BMP(const char* file_path)
         this->size.y = bmp_info_header.height;
 
         channels = bmp_info_header.bits_per_pixel / 8;
+        padding = (4 - (this->size.x * channels) % 4) % 4;
         const size_t data_size = (bmp_info_header.width * bmp_info_header.height * channels);
-        pixels_data.resize(data_size);
+        pixels_data.resize(data_size + bmp_info_header.height * padding);
 
         file.seekg(file_header.offset_data);
         file.read(reinterpret_cast<char*>(pixels_data.data()), data_size);
@@ -90,12 +92,12 @@ Material_BMP::Material_BMP(const char* file_path)
     this->pixels = new IC::Pixel*[this->size.y];
     for (size_t y = 0; y < this->size.y; y++)
         this->pixels[y] = new IC::Pixel[this->size.x];
-    
+
     for (size_t y = 0; y < this->size.y; y++)
     {
         for (size_t x = 0; x < this->size.x; x++)
         {
-            int index = (y * bmp_info_header.width + x) * channels;
+            int index = (bmp_info_header.width * y + x) * channels + y * padding;
             this->pixels[y][x].r = pixels_data[index];
             this->pixels[y][x].g = pixels_data[index + 1];
             this->pixels[y][x].b = pixels_data[index + 2];
@@ -129,14 +131,19 @@ Material_BMP::Material_BMP(uint8_t* data, int width, int height, bool has_alpha)
     this->bmp_info_header.width = width;
     this->bmp_info_header.height = height;
 
+    uint32_t headers_size = sizeof(file_header) + sizeof(bmp_info_header);
+    uint16_t channels = this->bmp_info_header.bits_per_pixel / 8;
+    uint32_t data_size = (this->bmp_info_header.width * this->bmp_info_header.height * channels);
+
+    this->bmp_info_header.img_size_bytes = data_size;
+    this->file_header.file_size = headers_size + data_size;
+
     this->size = Vector_i2(width, height);
     
     this->pixels = new IC::Pixel*[this->size.y];
     for (size_t y = 0; y < this->size.y; y++)
         this->pixels[y] = new IC::Pixel[this->size.x];
     
-    int channels = bmp_info_header.bits_per_pixel / 8;
-    std::cout << "Channels: " << channels << std::endl;
     for (size_t y = 0; y < this->size.y; y++)
     {
         for (size_t x = 0; x < this->size.x; x++)
@@ -160,7 +167,8 @@ void Material_BMP::Export(const char *file_path)
     int channels = bmp_info_header.bits_per_pixel / 8;
     const int data_size = (bmp_info_header.width * bmp_info_header.height * channels);
     int padding = (4 - (this->size.x * channels) % 4) % 4;
-    std::vector<uint8_t> pixels_data(data_size + padding * bmp_info_header.height);
+    std::cout << "Padding: " << padding << std::endl;
+    std::vector<uint8_t> pixels_data(data_size + bmp_info_header.height * padding);
     
     ofs.write(reinterpret_cast<char*>(&file_header), sizeof(file_header));
     ofs.write(reinterpret_cast<char*>(&bmp_info_header), sizeof(bmp_info_header));
@@ -171,7 +179,7 @@ void Material_BMP::Export(const char *file_path)
     {
         for (size_t x = 0; x < this->size.x; x++)
         {
-            int index = ((bmp_info_header.width + padding) * y + x) * channels;
+            int index = (bmp_info_header.width * y + x) * channels + y * padding;
             
             pixels_data[index    ] = this->pixels[y][x].r;
             pixels_data[index + 1] = this->pixels[y][x].g;
@@ -180,12 +188,9 @@ void Material_BMP::Export(const char *file_path)
             if (channels == 4) 
                 pixels_data[index + 3] = this->pixels[y][x].a;
         }
-    
-        for (int p = 0; p < padding; p++)
-        {
-            pixels_data[(bmp_info_header.width * y + bmp_info_header.width) * channels + p];
-        }
-        // std::cout << "-----" << std::endl;
+        
+        for (size_t p = 0; p < padding; p++)
+            pixels_data[(bmp_info_header.width * (y + 1)) * channels + p] = 255;
     }
     
     ofs.write(reinterpret_cast<char*>(pixels_data.data()), pixels_data.size());
