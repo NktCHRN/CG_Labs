@@ -8,12 +8,12 @@ namespace IC
 Material::Material()
 {
     this->pixels = nullptr;
-    this->size = Vector_i2();
+    this->size = Vector2i();
 }
 
 Material::Material(Pixel** pixels, int width, int height)
 {
-    this->size = Vector_i2(width, height);
+    this->size = Vector2i(width, height);
 
     this->pixels = new Pixel*[this->size.y];
     for (size_t y = 0; y < this->size.y; y++)

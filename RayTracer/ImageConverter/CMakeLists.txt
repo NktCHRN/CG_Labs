@@ -20,7 +20,7 @@ include_directories(include)
 
 file(GLOB BASE_SRC
     "IC.hpp"
-    "source/Vector_i2.cpp" "include/Vector_i2.hpp"
+    "source/Vector2i.cpp" "include/Vector2i.hpp"
     "source/Pixel.cpp" "include/Pixel.hpp" 
     "source/Material.cpp" "include/Material.hpp"
 )
@@ -61,6 +61,7 @@ add_executable( ${PROJECT_NAME}_Test
 target_link_libraries(
     ${PROJECT_NAME}_Test
     GTest::gtest_main
+    GTest::gmock_main
 )
 
 include(GoogleTest)
