@@ -86,6 +86,7 @@ public struct Vector3F
 
     #region Overridings
     public override bool Equals(object? obj) => obj is Vector3F b && X == b.X && Y == b.Y && Z == b.Z;
+    public override string ToString() => $"{X} {Y} {Z}\n";
     public override int GetHashCode() => HashCode.Combine(X, Y, Z);
     #endregion
 }
