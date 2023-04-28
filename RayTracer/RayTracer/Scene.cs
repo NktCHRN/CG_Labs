@@ -87,6 +87,83 @@ public class Scene
         return nearestIntersectionNormal;
     }
 
+    public bool IsTriangleIntersected(Vector3F rayOrigin, Vector3F rayDirection, Vector3F vertex1, Vector3F vertex2, Vector3F vertex3, out float distance)
+    {
+
+        const float eps = 0.000001f;
+        distance = -1.0f;
+        //find vector for two edges sharing vertex1
+        Vector3F edge1 = vertex2 - vertex1;
+        Vector3F edge2 = vertex3 - vertex1;
+
+        //begin calculating determinant - also used to calculate u-parameter
+        Vector3F pvec = rayDirection.CrossProduct(edge2);
+
+        //if determinant is near zero, ray lies in plane of triangle 
+        float det = edge1.DotProduct(pvec);
+
+        if (det < eps)
+        {
+            return false;
+        }
+
+        //calculate distance from vert1 to ray origin 
+        Vector3F tvec = rayOrigin - vertex1;
+
+        // calculate u-parameter and test bounds 
+        float u = tvec.DotProduct(pvec);
+        if (u < 0f || u > 1f)
+        {
+            return false;
+        }
+
+        //prepare to test v-parameter
+        Vector3F qvec = tvec.CrossProduct(edge1);
+
+        // calculate v-parameter and test bounds
+        float v = rayDirection.DotProduct(qvec);
+        if (v < 0f || u + v > det)
+        {
+            return false;
+        }
+
+        distance = edge2.DotProduct(qvec);
+        float inv_det = 1f / det;
+        distance *= inv_det;
+        u *= inv_det;
+        v *= inv_det;
+
+        if (det > -eps && det < eps)
+        {
+            return false;
+        }
+
+        // calculate distance from vert0 to ray origin 
+        tvec = rayOrigin - vertex1;
+        
+        // calculate u parameter and test bounds
+        u = tvec.DotProduct(pvec) * inv_det;
+        if (u < 0f || u > 1f)
+        {
+            return false;
+        }
+        
+        // prepare to test v parameter 
+        qvec = tvec.CrossProduct(edge1);
+        
+        // calculate v parameter and test bounds
+
+        v = rayDirection.DotProduct(qvec) * inv_det;
+        if (v < 0f || u + v > 1f)
+        {
+            return false;
+        }
+
+        // calculate t, ray intersects triangle 
+        distance = edge2.DotProduct(qvec) * inv_det;
+        return true; 
+    }
+
     private static float GetCoefficient(Vector3F? intersectionNormal, Vector3F? light)
     {
         if (intersectionNormal is null)
