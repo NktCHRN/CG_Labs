@@ -45,7 +45,7 @@ add_library(ImageWriter.BMP SHARED ${BASE_SRC} "source/Material_BMP.cpp" "includ
 # include_directories(ZLIB_INCLUDE_DIRS)
 # target_link_libraries(ImageReader.PNG ZLIB::ZLIB)
 
-add_library(${PROJECT_NAME}_LIB STATIC ${BASE_SRC} ${READWRITE_SRC})
+add_library(${PROJECT_NAME}_LIB SHARED ${BASE_SRC} ${READWRITE_SRC})
 
 add_executable(${PROJECT_NAME} ${BASE_SRC} ${READWRITE_SRC}
     "source/main.cpp"
@@ -67,3 +67,11 @@ target_link_libraries(
 include(GoogleTest)
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 gtest_discover_tests(${PROJECT_NAME}_Test)
+
+add_custom_target(all_targets
+    DEPENDS
+    ${PROJECT_NAME} ${PROJECT_NAME}_Test
+    ${PROJECT_NAME}_LIB
+    ImageReader.PPM ImageWriter.PPM
+    ImageReader.BMP ImageWriter.BMP
+)
