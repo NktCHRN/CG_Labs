@@ -104,6 +104,51 @@ public class Scene
         return lightCoefficient;
     }
 
+    public bool IsTriangleIntersected(Vector3F rayOrigin, Vector3F rayDirection, Vector3F vertex1, Vector3F vertex2, Vector3F vertex3, out float distance)
+    {
+        distance = float.MaxValue;
+        //find vector for two edges sharing vertex1
+        Vector3F edge1 = vertex2 - vertex1;
+        Vector3F edge2 = vertex3 - vertex1;
+
+        //begin calculating determinant - also used to calculate u-parameter
+        Vector3F pvec = rayDirection.CrossProduct(edge2);
+
+        //if determinant is near zero, ray lies in plane of triangle 
+        float det = edge1.DotProduct(pvec);
+
+        if (det > -float.Epsilon && det < float.Epsilon)
+        {
+            return false;
+        }
+
+        float inv_det = 1.0f / det;
+
+        //calculate distance from vert1 to ray origin 
+        Vector3F tvec = rayOrigin - vertex1;
+
+        // calculate u-parameter and test bounds 
+        float u = inv_det * tvec.DotProduct(pvec);
+        if (u < 0.0f || u > 1.0f)
+        {
+            return false;
+        }
+
+        //prepare to test v-parameter
+        Vector3F qvec = tvec.CrossProduct(edge1);
+
+        // calculate v-parameter and test bounds
+        float v = inv_det * rayDirection.DotProduct(qvec);
+        if (v < 0f || u + v > 1.0f)
+        {
+            return false;
+        }
+
+        // calculate t, ray intersects triangle 
+        distance = inv_det * edge2.DotProduct(qvec) * inv_det;
+        return true;
+    }
+
     public void AddObject(ISceneObject obj)
     {
         _sceneObjects.Add(obj);
