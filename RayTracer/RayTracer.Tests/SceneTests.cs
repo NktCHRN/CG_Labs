@@ -27,7 +27,7 @@ public class SceneTests
     }
 
     [Fact]
-    public void GetIntersectionWithNearestObject_ReturnsIntersectionWithClosest_MultipleObjects()
+    public void GetIntersectionWithClosestObject_ReturnsIntersectionWithClosest_MultipleObjects()
     {
         // Arrange
         var scene = new Scene(1, 1);
@@ -44,7 +44,7 @@ public class SceneTests
         var expected = new Intersection(expectedPoint, expectedNearestObject);
 
         // Act
-        var actual = scene.GetIntersectionWithNearestObject(ray);
+        var actual = scene.GetIntersectionWithClosestObject(ray);
 
         // Assert
         Assert.Equal(expected, actual);

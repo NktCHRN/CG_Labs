@@ -53,7 +53,7 @@ public class Scene
             for (var j = 0; j < _width; j++)
             {
                 var ray = new Ray(camera.Position, upperLeftPixelCoords + new Vector3F(stepRight * j, -stepDown * i, 0));
-                var nearestIntersection = GetIntersectionWithNearestObject(ray);
+                var nearestIntersection = GetIntersectionWithClosestObject(ray);
 
                 matrix[i,j] = GetLightCoefficient(nearestIntersection, light); 
             }
@@ -62,7 +62,7 @@ public class Scene
         return matrix;
     }
 
-    internal Intersection? GetIntersectionWithNearestObject(Ray ray)
+    internal Intersection? GetIntersectionWithClosestObject(Ray ray)
     {
         var (hitDistance, nearestIntersection) = (float.PositiveInfinity, (Intersection?)null);
 
