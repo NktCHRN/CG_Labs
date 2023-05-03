@@ -1,5 +1,5 @@
 namespace RayTracer.SceneObjects;
-public abstract class BaseSceneObject : ISceneObject
+public abstract class BaseSceneObject
 {
     protected Vector3F _baseDirection = new (0, 0, 1);
 
@@ -30,6 +30,4 @@ public abstract class BaseSceneObject : ISceneObject
         Position = position;
         Rotation = rotation;
     }
-
-    public abstract Vector3F? GetIntersection(in Ray ray);
 }

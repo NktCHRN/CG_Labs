@@ -1,14 +1,22 @@
-﻿namespace RayTracer.SceneObjects;
+﻿using RayTracer.Utility;
 
-public class Triangle : BaseSceneObject
+namespace RayTracer.SceneObjects;
+
+public class Triangle : ISceneObject
 {
-    public Triangle(Vector3F position, Vector3F rotation) : base(position, rotation) { }
-    public Triangle(Vertex[] vertices) : this(new Vector3F(0), new Vector3F(0)) => _vertices = vertices;
+    private Triangle(Vertex[] vertices) => _vertices = vertices;
     public Triangle(Vertex v1, Vertex v2, Vertex v3) : this(new Vertex[]{ v1, v2, v3 }) {}
 
-    public override Vector3F? GetIntersection(in Ray ray)
+    public Intersection? GetIntersection(in Ray ray)
     {
         throw new NotImplementedException();
+    }
+
+    public Vector3F GetNormalAt(Vector3F point)
+    {
+        var sideX = _vertices[0].Position - _vertices[1].Position;
+        var sideY = _vertices[2].Position - _vertices[1].Position;
+        return sideX.CrossProduct(sideY).Normalized;
     }
 
     private readonly Vertex[] _vertices = new Vertex[3];

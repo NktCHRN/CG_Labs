@@ -70,5 +70,4 @@ public class Camera : BaseSceneObject
         VerticalFieldOfView = verticalFieldOfView;
     }
     public Camera() : base() { }
-    public override Vector3F? GetIntersection(in Ray ray) { return null; }
 }

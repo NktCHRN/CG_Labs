@@ -1,13 +1,39 @@
+using RayTracer.Utility;
+
 namespace RayTracer.SceneObjects;
-public class Disk : BaseSceneObject
+public class Disk : BaseSceneObject, ISceneObject
 {
     public float Radius { get; }
+    public Vector3F Up => Direction;
+    public Vector3F Right { get; private set; }
 
-    public Disk(Vector3F position, Vector3F rotation, float radius) : base(position, rotation) => Radius = radius;
-    public Disk(Vector3F position, Vector3F rotation) : this(position, rotation, 1) {}
-    public Disk() : this(new Vector3F(0), new Vector3F(0)) {}
+    public Disk(Vector3F position, Vector3F up, Vector3F right, Vector3F rotation, float radius) 
+    {
+        Radius = radius;
+        Direction = up;
+        Right = right;
 
-    public override Vector3F? GetIntersection(in Ray ray)
+        Position = position;
+        Rotation = rotation;
+    }
+
+    public Disk(Vector3F position, Vector3F up, Vector3F right, Vector3F rotation) : this(position, up, right, rotation, 1) { }
+
+    public Disk() : this(Vector3F.Zero, new Vector3F(0, 0, 1), new Vector3F(0, 1, 0), Vector3F.Zero) {}
+
+    public override Vector3F Rotation
+    {
+        get => _rotation;
+        set
+        {
+            _rotation = value;
+
+            Direction = Direction.RotatedBy(_rotation);
+            Right = Right.RotatedBy(_rotation);
+        }
+    }
+
+    public Intersection? GetIntersection(in Ray ray)
     {
         Vector3F normal = Direction;
 
@@ -25,6 +51,11 @@ public class Disk : BaseSceneObject
         if ((contact - Position).Length > Radius)
             return null;
 
-        return contact;
+        return new Intersection(contact, this);
+    }
+
+    public Vector3F GetNormalAt(Vector3F point)
+    {
+        return Up.CrossProduct(Right).Normalized;
     }
 }
