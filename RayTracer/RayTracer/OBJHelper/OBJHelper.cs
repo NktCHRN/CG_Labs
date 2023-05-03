@@ -1,9 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Numerics;
-using System.Runtime.Intrinsics;
-
-namespace RayTracer.RayTracer;
+﻿namespace RayTracer;
 
 public class OBJHelper
 {

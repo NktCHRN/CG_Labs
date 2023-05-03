@@ -1,4 +1,4 @@
-namespace RayTracer;
+namespace RayTracer.SceneObjects;
 public interface ISceneObject
 {
     Vector3F Position { get; set; }

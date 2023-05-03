@@ -1,5 +1,6 @@
+using System.Diagnostics;
+using RayTracer.SceneObjects;
 using RayTracer.Utility;
-
 namespace RayTracer;
 
 //On Scene coordinates are:
@@ -47,8 +48,10 @@ public class Scene
 
         var upperLeftPixelCoords = new Vector3F(-(planeWidth / 2) + stepRight / 2, planeHeight / 2 - stepDown / 2, 1);
         //var currentScreenPosition = camera.ScreenCenter + camera.Up * verticalScale - camera.Right;
-
-        for (var i = 0; i < _height; i++)
+        
+        Stopwatch stopwatch = new Stopwatch();
+        stopwatch.Start();
+        Parallel.For(0, _height, i =>
         {
             for (var j = 0; j < _width; j++)
             {
@@ -57,7 +60,9 @@ public class Scene
 
                 matrix[i,j] = GetLightCoefficient(nearestIntersection, light); 
             }
-        }
+        });
+        stopwatch.Stop();
+        Console.WriteLine("Render Execution Time: " + stopwatch.Elapsed);
 
         return matrix;
     }

@@ -1,4 +1,4 @@
-namespace RayTracer;
+namespace RayTracer.SceneObjects;
 public class Camera : BaseSceneObject
 {
     private float _verticalFieldOfView = 90;
