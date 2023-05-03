@@ -1,6 +1,8 @@
-﻿namespace RayTracer.SceneObjects;
+﻿using RayTracer.Utility;
 
-public class Mesh : BaseSceneObject
+namespace RayTracer.SceneObjects;
+
+public class Mesh : BaseSceneObject, ISceneObject
 {
     public Mesh(Triangle[] triangles, Vector3F position, Vector3F rotation) : base(position, rotation)
     {
@@ -14,14 +16,14 @@ public class Mesh : BaseSceneObject
         {
             Vertex[] arr = new Vertex[3];
             Array.Copy(vertices, i * 3, arr, 0, 3);
-            _triangles[i] = new Triangle(arr);
+            _triangles[i] = new Triangle(arr[0], arr[1], arr[2]);
         }
     }
     public Mesh(Triangle[] triangles) : this(triangles, new Vector3F(0), new Vector3F(0)) {}
     public Mesh(Vertex[] vertices) : this(vertices, new Vector3F(0), new Vector3F(0)) {}
-    public override Vector3F? GetIntersection(in Ray ray)
+    public Intersection? GetIntersection(in Ray ray)
     {
-        Vector3F? intersection = null;
+        Intersection? intersection = null;
 
         foreach(Triangle triangle in _triangles)
         {
@@ -31,9 +33,18 @@ public class Mesh : BaseSceneObject
         }
 
         if (intersection is not null)
-            return Transformation.ApplyTo((Vector3F)intersection);
+        {
+            return new Intersection(
+                Transformation.ApplyTo(intersection.Value.Point), 
+                intersection.Value.Object);
+        }
 
         return intersection;
+    }
+
+    public Vector3F GetNormalAt(Vector3F point)
+    {
+        throw new NotImplementedException();
     }
 
     public TransformationMatrix3D Transformation { get => new TransformationMatrix3D().TranslatedBy(Position).RotatedBy(Rotation); }

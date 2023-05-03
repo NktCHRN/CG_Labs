@@ -1,6 +1,8 @@
-﻿namespace RayTracer.SceneObjects;
+﻿using RayTracer.Utility;
 
-public class Sphere : BaseSceneObject
+namespace RayTracer.SceneObjects;
+
+public class Sphere : BaseSceneObject, ISceneObject
 {
     public float Radius { get; }
 
@@ -8,7 +10,7 @@ public class Sphere : BaseSceneObject
     public Sphere(Vector3F position, Vector3F rotation) : this(position, rotation, 1) { }
     public Sphere() : this(new Vector3F(0), new Vector3F(0)) { }
 
-    public override Vector3F? GetIntersection(in Ray ray)
+    public Intersection? GetIntersection(in Ray ray)
     {
         var origin = ray.StartPoint;
         var center = Position;
@@ -37,6 +39,8 @@ public class Sphere : BaseSceneObject
             return null;
         }
 
-        return ray.StartPoint + (ray.Direction * t);
+        return new Intersection(ray.StartPoint + (ray.Direction * t), this);
     }
+
+    public Vector3F GetNormalAt(Vector3F point) => (point - Position).Normalized;
 }

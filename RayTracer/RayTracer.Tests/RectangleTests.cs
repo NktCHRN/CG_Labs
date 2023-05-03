@@ -18,9 +18,9 @@ public class RectangleTests
     public static IEnumerable<object[]> GetIntersection_IntersectsPlane_Data =>
         new List<object[]>
     {
-        new object[] { new Rectangle(new Vector3F(0, 0, 0), Vector3F.Zero, Vector3F.One) },
-        new object[] { new Rectangle(new Vector3F(0, 0.5F, 0), Vector3F.Zero, Vector3F.One) },
-        new object[] { new Rectangle(new Vector3F(0, -0.5F, 0), Vector3F.Zero, Vector3F.One) }
+        new object[] { new Rectangle(new Vector3F(0, 0, 0), new Vector3F(0, 0, 1), new Vector3F(0, 1, 0), Vector3F.Zero, Vector3F.One) },
+        new object[] { new Rectangle(new Vector3F(0, 0.5F, 0), new Vector3F(0, 0, 1), new Vector3F(0, 1, 0), Vector3F.Zero, Vector3F.One) },
+        new object[] { new Rectangle(new Vector3F(0, -0.5F, 0), new Vector3F(0, 0, 1), new Vector3F(0, 1, 0), Vector3F.Zero, Vector3F.One) }
     };
 
     [Theory]
@@ -40,9 +40,27 @@ public class RectangleTests
     public static IEnumerable<object[]> GetIntersection_DoesNotIntersectsPlane_Data =>
     new List<object[]>
     {
-        new object[] { new Rectangle(new Vector3F(0, 0.55F, 0), Vector3F.Zero, Vector3F.One) },
-        new object[] { new Rectangle(new Vector3F(0, -0.55F, 0), Vector3F.Zero, Vector3F.One) }
+        new object[] { new Rectangle(new Vector3F(0, 0.55F, 0), new Vector3F(0, 0, 1), new Vector3F(0, 1, 0), Vector3F.Zero, Vector3F.One) },
+        new object[] { new Rectangle(new Vector3F(0, -0.55F, 0), new Vector3F(0, 0, 1), new Vector3F(0, 1, 0), Vector3F.Zero, Vector3F.One) }
     };
+
+    [Theory]
+    [MemberData(nameof(GetNormalTestCases))]
+    public void GetNormalAt_ReturnsNormal(Rectangle rectangle, Vector3F expected)
+    {
+        // Act
+        var actual = rectangle.GetNormalAt(expected);
+
+        // Assert
+        Assert.Equal(expected, actual);
+    }
+
+    public static IEnumerable<object[]> GetNormalTestCases()
+    {
+        yield return new object[] { new Rectangle(Vector3F.Zero, new Vector3F(0, 1, 0), new Vector3F(0, 0, 1), Vector3F.Zero), new Vector3F(1, 0, 0) };
+        yield return new object[] { new Rectangle(Vector3F.Zero, new Vector3F(0, 0, 1), new Vector3F(1, 0, 0), Vector3F.Zero), new Vector3F(0, 1, 0) };
+        yield return new object[] { new Rectangle(Vector3F.Zero, new Vector3F(1, 0, 0), new Vector3F(0, 1, 0), Vector3F.Zero), new Vector3F(0, 0, 1) };
+    }
 }
 
 

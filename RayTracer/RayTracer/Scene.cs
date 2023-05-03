@@ -73,20 +73,20 @@ public class Scene
 
         foreach (var sceneObject in _sceneObjects)
         {
-            var intersectionPoint = sceneObject.GetIntersection(ray);
+            var intersection = sceneObject.GetIntersection(ray);
 
-            if (intersectionPoint is null)
+            if (intersection is null)
             {
                 continue;
             }
 
-            Vector3F intersectionVector = intersectionPoint.Value - ray.StartPoint;
+            Vector3F intersectionVector = intersection.Value.Point - ray.StartPoint;
             var distance = intersectionVector.Length;
 
             if (distance < hitDistance)
             {
                 hitDistance = distance;
-                closestIntersection = new Intersection(intersectionPoint.Value, sceneObject);
+                closestIntersection = intersection;
             }
         }
 
@@ -114,7 +114,7 @@ public class Scene
             return 0;
         }
 
-        var intersectionVectorNormalized = (intersectionPoint - intersection.Value.Object.Position).Normalized;
+        var intersectionVectorNormalized = intersection.Value.Object.GetNormalAt(intersectionPoint);
         var lightCoefficient = (-lightNormalized).DotProduct(intersectionVectorNormalized);
         return lightCoefficient;
     }

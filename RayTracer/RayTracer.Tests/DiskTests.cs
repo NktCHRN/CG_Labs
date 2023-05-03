@@ -18,11 +18,11 @@ public class DiskTests
     public static IEnumerable<object[]> GetIntersection_IntersectsDisk_Data =>
         new List<object[]>
     {
-        new object[] { new Disk(new Vector3F(0, 0, 0), Vector3F.Zero, 3) },
-        new object[] { new Disk(new Vector3F(0, 3F, 0), Vector3F.Zero, 3) },
-        new object[] { new Disk(new Vector3F(-3F, 0, 0), Vector3F.Zero, 3) },
-        new object[] { new Disk(new Vector3F(0, 0, 0), new Vector3F(70, 0, 0), 3) },
-        new object[] { new Disk(new Vector3F(0, -1F, 0), new Vector3F(70, 0, 0), 3) },
+        new object[] { new Disk(new Vector3F(0, 0, 0), new Vector3F(0, 0, 1), new Vector3F(0, 1, 0), Vector3F.Zero, 3) },
+        new object[] { new Disk(new Vector3F(0, 3F, 0), new Vector3F(0, 0, 1), new Vector3F(0, 1, 0), Vector3F.Zero, 3) },
+        new object[] { new Disk(new Vector3F(-3F, 0, 0), new Vector3F(0, 0, 1), new Vector3F(0, 1, 0), Vector3F.Zero, 3) },
+        new object[] { new Disk(new Vector3F(0, 0, 0), new Vector3F(0, 0, 1), new Vector3F(0, 1, 0), new Vector3F(70, 0, 0), 3) },
+        new object[] { new Disk(new Vector3F(0, -1F, 0), new Vector3F(0, 0, 1), new Vector3F(0, 1, 0), new Vector3F(70, 0, 0), 3) },
     };
 
     [Theory]
@@ -42,9 +42,27 @@ public class DiskTests
     public static IEnumerable<object[]> GetIntersection_DoesNotIntersect_Data =>
     new List<object[]>
     {
-        new object[] { new Disk(new Vector3F(0, 3.1F, 0), Vector3F.Zero, 3) },
-        new object[] { new Disk(new Vector3F(-4F, 0, 0), Vector3F.Zero, 3) },
-        new object[] { new Disk(new Vector3F(0, 1.5F, 0), new Vector3F(70, 0, 0), 3) },
-        new object[] { new Disk(new Vector3F(0, -1.5F, 0), new Vector3F(70, 0, 0), 3) },
+        new object[] { new Disk(new Vector3F(0, 3.1F, 0), new Vector3F(0, 0, 1), new Vector3F(0, 1, 0), Vector3F.Zero, 3) },
+        new object[] { new Disk(new Vector3F(-4F, 0, 0), new Vector3F(0, 0, 1), new Vector3F(0, 1, 0), Vector3F.Zero, 3) },
+        new object[] { new Disk(new Vector3F(0, 1.5F, 0), new Vector3F(0, 0, 1), new Vector3F(0, 1, 0), new Vector3F(70, 0, 0), 3) },
+        new object[] { new Disk(new Vector3F(0, -1.5F, 0), new Vector3F(0, 0, 1), new Vector3F(0, 1, 0), new Vector3F(70, 0, 0), 3) },
     };
+
+    [Theory]
+    [MemberData(nameof(GetNormalTestCases))]
+    public void GetNormalAt_ReturnsNormal(Disk disk, Vector3F expected)
+    {
+        // Act
+        var actual = disk.GetNormalAt(expected);
+
+        // Assert
+        Assert.Equal(expected, actual);
+    }
+
+    public static IEnumerable<object[]> GetNormalTestCases()
+    {
+        yield return new object[] { new Disk(Vector3F.Zero, new Vector3F(0, 1, 0), new Vector3F(0, 0, 1), Vector3F.Zero), new Vector3F(1, 0, 0) };
+        yield return new object[] { new Disk(Vector3F.Zero, new Vector3F(0, 0, 1), new Vector3F(1, 0, 0), Vector3F.Zero), new Vector3F(0, 1, 0) };
+        yield return new object[] { new Disk(Vector3F.Zero, new Vector3F(1, 0, 0), new Vector3F(0, 1, 0), Vector3F.Zero), new Vector3F(0, 0, 1) };
+    }
 }
