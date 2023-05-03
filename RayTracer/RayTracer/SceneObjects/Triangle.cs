@@ -56,8 +56,8 @@ public class Triangle : ISceneObject
 
     public Vector3F GetNormalAt(Vector3F point)
     {
-        var sideX = _vertices[0].Position - _vertices[1].Position;
-        var sideY = _vertices[2].Position - _vertices[1].Position;
+        var sideX = _vertices[1].Position - _vertices[0].Position;
+        var sideY = _vertices[2].Position - _vertices[0].Position;
         return sideX.CrossProduct(sideY).Normalized;
     }
 
