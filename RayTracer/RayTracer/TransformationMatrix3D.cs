@@ -21,6 +21,13 @@ public class TransformationMatrix3D : Matrix
             }
         ));
     }
+    public TransformationMatrix3D TranslatedBy(Vector3F vec)
+    {
+        var transformation = (TransformationMatrix3D)this.MemberwiseClone();
+        transformation.TranslateBy(vec);
+        return transformation;
+    }
+
     public void ScaleBy(Vector3F vec)
     {
         MultiplyBy(new Matrix(new float[,]
@@ -31,11 +38,29 @@ public class TransformationMatrix3D : Matrix
             {0    , 0    , 0    , 1},
         }));
     }
+    public TransformationMatrix3D ScaledBy(Vector3F vec)
+    {
+        var transformation = (TransformationMatrix3D)this.MemberwiseClone();
+        transformation.ScaleBy(vec);
+        return transformation;
+    }
+
     public void RotateBy(Vector3F vec)
     {
         RotateAroundX(vec.X);
         RotateAroundY(vec.Y);
         RotateAroundZ(vec.Z);
+    }
+
+    public TransformationMatrix3D RotatedBy(Vector3F vec)
+    {
+        var transformation = (TransformationMatrix3D)this.MemberwiseClone();
+
+        transformation.RotateAroundX(vec.X);
+        transformation.RotateAroundY(vec.Y);
+        transformation.RotateAroundZ(vec.Z);
+
+        return transformation;
     }
 
     private void RotateAroundX(float angle)

@@ -30,8 +30,13 @@ public class Mesh : BaseSceneObject
                 break;
         }
 
+        if (intersection is not null)
+            return Transformation.ApplyTo((Vector3F)intersection);
+
         return intersection;
     }
+
+    public TransformationMatrix3D Transformation { get => new TransformationMatrix3D().TranslatedBy(Position).RotatedBy(Rotation); }
 
     private readonly Triangle[] _triangles;
 }
