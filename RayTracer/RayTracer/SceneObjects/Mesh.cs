@@ -4,17 +4,17 @@ public class Mesh : BaseSceneObject
 {
     public Mesh(Triangle[] triangles, Vector3F position, Vector3F rotation) : base(position, rotation)
     {
-        this._triangles = triangles;
+        _triangles = triangles;
     }
     public Mesh(Vertex[] vertices, Vector3F position, Vector3F rotation) : base(position, rotation)
     {
         int triangleCount = vertices.Length / 3;
-        this._triangles = new Triangle[triangleCount];
+        _triangles = new Triangle[triangleCount];
         for (int i = 0; i < triangleCount; i++)
         {
             Vertex[] arr = new Vertex[3];
             Array.Copy(vertices, i * 3, arr, 0, 3);
-            this._triangles[i] = new Triangle(arr);
+            _triangles[i] = new Triangle(arr);
         }
     }
     public Mesh(Triangle[] triangles) : this(triangles, new Vector3F(0), new Vector3F(0)) {}
