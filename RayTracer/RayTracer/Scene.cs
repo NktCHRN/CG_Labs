@@ -64,7 +64,7 @@ public class Scene
 
     internal Intersection? GetIntersectionWithClosestObject(Ray ray)
     {
-        var (hitDistance, nearestIntersection) = (float.PositiveInfinity, (Intersection?)null);
+        var (hitDistance, closestIntersection) = (float.PositiveInfinity, (Intersection?)null);
 
         foreach (var sceneObject in _sceneObjects)
         {
@@ -81,11 +81,11 @@ public class Scene
             if (distance < hitDistance)
             {
                 hitDistance = distance;
-                nearestIntersection = new Intersection(intersectionPoint.Value, sceneObject);
+                closestIntersection = new Intersection(intersectionPoint.Value, sceneObject);
             }
         }
 
-        return nearestIntersection;
+        return closestIntersection;
     }
 
     private float GetLightCoefficient(Intersection? intersection, Vector3F? light)
