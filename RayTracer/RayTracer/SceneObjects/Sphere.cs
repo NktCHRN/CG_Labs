@@ -30,9 +30,9 @@ public class Sphere : BaseSceneObject
         var x1 = (-b + MathF.Sqrt(discriminantSquared)) / (2 * a);
         var x2 = (-b - MathF.Sqrt(discriminantSquared)) / (2 * a);
 
-        var t = (x1 > x2) ? x2 : x1;
+        var t = (x1 > x2 && Math.Round(x2, 2) > 0) ? x2 : x1;
         
-        if (t <= 0)
+        if (Math.Round(t, 2) <= 0)
         {
             return null;
         }
