@@ -49,7 +49,7 @@ public class Scene
         var upperLeftPixelCoords = new Vector3F(-(planeWidth / 2) + stepRight / 2, planeHeight / 2 - stepDown / 2, 1);
         //var currentScreenPosition = camera.ScreenCenter + camera.Up * verticalScale - camera.Right;
         
-        Stopwatch stopwatch = new Stopwatch();
+        Stopwatch stopwatch = new();
         stopwatch.Start();
         Parallel.For(0, _height, i =>
         {
