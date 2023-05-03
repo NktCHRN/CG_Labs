@@ -30,7 +30,12 @@ public class Sphere : BaseSceneObject
         var x1 = (-b + MathF.Sqrt(discriminantSquared)) / (2 * a);
         var x2 = (-b - MathF.Sqrt(discriminantSquared)) / (2 * a);
 
-        var t = (MathF.Abs(x1) > MathF.Abs(x2)) ? x2 : x1;
+        var t = (x1 > x2) ? x2 : x1;
+        
+        if (t <= 0)
+        {
+            return null;
+        }
 
         return ray.StartPoint + (ray.Direction * t);
     }

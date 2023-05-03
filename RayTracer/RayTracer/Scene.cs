@@ -1,3 +1,5 @@
+using RayTracer.Utility;
+
 namespace RayTracer;
 
 //On Scene coordinates are:
@@ -51,19 +53,18 @@ public class Scene
             for (var j = 0; j < _width; j++)
             {
                 var ray = new Ray(camera.Position, upperLeftPixelCoords + new Vector3F(stepRight * j, -stepDown * i, 0));
-                var nearestIntersectionNormal = GetIntersectionNormalWithNearestObject(ray);
+                var nearestIntersection = GetIntersectionWithNearestObject(ray);
 
-                var character = GetCoefficient(nearestIntersectionNormal, light);
-                matrix[i,j] = character;
+                matrix[i,j] = GetLightCoefficient(nearestIntersection, light); 
             }
         }
 
         return matrix;
     }
 
-    internal Vector3F? GetIntersectionNormalWithNearestObject(Ray ray)
+    internal Intersection? GetIntersectionWithNearestObject(Ray ray)
     {
-        var (hitDistance, nearestIntersectionNormal) = (float.PositiveInfinity, null as Vector3F?);
+        var (hitDistance, nearestIntersection) = (float.PositiveInfinity, (Intersection?)null);
 
         foreach (var sceneObject in _sceneObjects)
         {
@@ -80,16 +81,16 @@ public class Scene
             if (distance < hitDistance)
             {
                 hitDistance = distance;
-                nearestIntersectionNormal = (intersectionPoint.Value - sceneObject.Position).Normalized;
+                nearestIntersection = new Intersection(intersectionPoint.Value, sceneObject);
             }
         }
 
-        return nearestIntersectionNormal;
+        return nearestIntersection;
     }
 
-    private static float GetCoefficient(Vector3F? intersectionNormal, Vector3F? light)
+    private float GetLightCoefficient(Intersection? intersection, Vector3F? light)
     {
-        if (intersectionNormal is null)
+        if (intersection is null)
         {
             return 0;
         }
@@ -100,8 +101,32 @@ public class Scene
         }
 
         var lightNormalized = light.Value.Normalized;
-        var lightCoefficient = lightNormalized.DotProduct(intersectionNormal.Value);
+
+        var intersectionPoint = intersection.Value.Point;
+        var reversedLightRay = new Ray(intersectionPoint, intersectionPoint - lightNormalized);
+        if (HasIntersectionWithAnyObject(reversedLightRay))
+        {
+            return 0;
+        }
+
+        var intersectionVectorNormalized = (intersectionPoint - intersection.Value.Object.Position).Normalized;
+        var lightCoefficient = (-lightNormalized).DotProduct(intersectionVectorNormalized);
         return lightCoefficient;
+    }
+
+    internal bool HasIntersectionWithAnyObject(Ray ray)
+    {
+        foreach (var sceneObject in _sceneObjects)
+        {
+            var intersectionPoint = sceneObject.GetIntersection(ray);
+
+            if (intersectionPoint is not null)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public void AddObject(ISceneObject obj)

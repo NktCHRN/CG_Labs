@@ -1,4 +1,6 @@
-﻿namespace RayTracer.Tests;
+﻿using RayTracer.Utility;
+
+namespace RayTracer.Tests;
 public class SceneTests
 {
     [Fact]
@@ -25,7 +27,7 @@ public class SceneTests
     }
 
     [Fact]
-    public void GetIntersectionVectorWithNearestObject_ReturnsIntersectionWithClosest_WhenMultipleObjects()
+    public void GetIntersectionWithNearestObject_ReturnsIntersectionWithClosest_MultipleObjects()
     {
         // Arrange
         var scene = new Scene(1, 1);
@@ -39,13 +41,32 @@ public class SceneTests
 
         var expectedPoint = expectedNearestObject.Position;
         expectedPoint.Y -= expectedNearestObject.Radius;
-
-        var expectedVector = (expectedPoint - expectedNearestObject.Position).Normalized;
+        var expected = new Intersection(expectedPoint, expectedNearestObject);
 
         // Act
-        var actualVector = scene.GetIntersectionNormalWithNearestObject(ray);
+        var actual = scene.GetIntersectionWithNearestObject(ray);
 
         // Assert
-        Assert.Equal(expectedVector, actualVector);
+        Assert.Equal(expected, actual);
+    }
+
+    [Fact]
+    public void HasIntersectionWithAnyObject_ReturnsTrue_HasIntersection()
+    {
+        // Arrange
+        var scene = new Scene(1, 1);
+        var intersectedObject = new Sphere(new Vector3F(3F, 0, 5), Vector3F.Zero, 1);
+        scene.AddObject(intersectedObject);
+
+        var initialIntersectionPoint = new Vector3F(1F, 0, 5);
+        var light = new Vector3F(-1, 0, 0);
+
+        var ray = new Ray(initialIntersectionPoint, initialIntersectionPoint - light);
+
+        // Act
+        var actual = scene.HasIntersectionWithAnyObject(ray);
+
+        // Assert
+        Assert.True(actual);
     }
 }
