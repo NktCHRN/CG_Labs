@@ -4,6 +4,20 @@
 #include "ImageReader.hpp"
 #include "Material.hpp"
 
+extern "C"
+{
+    IMG_API void InitReaderWithPath(const char *path)
+    {
+        IC::ImageReader::GetInstance(path);
+    }
+
+    IMG_API IC::Material* Read(uint8_t* data, int rows, int cols, const char * file_path, const char * ext)
+    {
+        IC::ImageReader* reader = IC::ImageReader::GetInstance();
+        return reader->ReadData(data, rows, cols, ext);
+    }
+}
+
 namespace IC
 {
 

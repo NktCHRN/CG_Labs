@@ -4,6 +4,20 @@
 #include <algorithm>
 #include "ImageWriter.hpp"
 
+extern "C"
+{
+    IMG_API void InitWriterWithPath(const char *path)
+    {
+        IC::ImageWriter::GetInstance(path);
+    }
+
+    IMG_API bool Write(uint8_t* data, int rows, int cols, const char * file_path, const char * ext)
+    {
+        IC::ImageWriter* writer = IC::ImageWriter::GetInstance();
+        return writer->WriteData(data, rows, cols, false, file_path, ext);
+    }
+}
+
 namespace IC
 {
 

@@ -9,7 +9,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\RayTracer\RayTracer.csproj" />
-    <ProjectReference Include="..\ImageConverterCoreWrapper\ImageConverterCoreWrapper.vcxproj" />
   </ItemGroup>
+
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command=
+		  "cd ../
+		  ImageConverterBuild.bat"/>
+  </Target>
 
 </Project>
