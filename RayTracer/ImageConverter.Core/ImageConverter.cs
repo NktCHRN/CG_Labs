@@ -1,5 +1,4 @@
-﻿using ImageConverter.Common;
-using ImageConverter.Core.Abstractions;
+﻿using ImageConverter.Core.Abstractions;
 
 namespace ImageConverter.Core;
 public sealed class ImageConverter

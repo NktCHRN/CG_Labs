@@ -13,7 +13,6 @@ public sealed class PluginManager : IPluginManager
 
     public string PluginsFolderName { get; set; } = "Plugins";
 
-
     public void UpdatePlugins()
     {
         _readers = new();
