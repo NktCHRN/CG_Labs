@@ -9,4 +9,9 @@ public sealed class ImageConverter
     {
         _pluginManager = pluginManager;
     }
+
+    public ConversionResult Convert(string fileName, string resultFormat)
+    {
+        throw new NotImplementedException();
+    }
 }
