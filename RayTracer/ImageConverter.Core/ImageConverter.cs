@@ -1,4 +1,5 @@
-﻿using ImageConverter.Core.Abstractions;
+﻿using ImageConverter.Common;
+using ImageConverter.Core.Abstractions;
 
 namespace ImageConverter.Core;
 public sealed class ImageConverter
@@ -10,7 +11,7 @@ public sealed class ImageConverter
         _pluginManager = pluginManager;
     }
 
-    public ConversionResult Convert(string fileName, string resultFormat)
+    public Result<FileInfo, string> Convert(string fileName, string resultFormat)
     {
         throw new NotImplementedException();
     }
