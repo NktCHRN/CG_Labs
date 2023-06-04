@@ -9,14 +9,14 @@ public sealed class PluginManager : IPluginManager
 
     private List<IImageWriter> _writers = new();
 
-    public string FolderName { get; set; } = "Plugins";
+    public string PluginsFolderName { get; set; } = "Plugins";
 
     public void UpdatePlugins()
     {
         _readers = new();
         _writers = new();
 
-        var files = Directory.GetFiles(FolderName)
+        var files = Directory.GetFiles(PluginsFolderName)
             .Where(f => f.EndsWith(".dll"));
         foreach (var file in files)
         {
