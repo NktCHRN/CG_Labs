@@ -28,7 +28,7 @@ public sealed class PpmReader : IImageReader
         do
         {
             line = reader.ReadLine()!;
-        } while (line.StartsWith("#") is true);
+        } while (line.StartsWith("#"));
 
         // Read image width, height, and maximum pixel value
         var dimensions = line.Trim().Split(' ');
