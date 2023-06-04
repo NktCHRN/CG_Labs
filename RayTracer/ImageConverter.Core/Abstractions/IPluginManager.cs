@@ -1,4 +1,6 @@
-﻿namespace ImageConverter.Core.Abstractions;
+﻿using ImageConverter.Common;
+
+namespace ImageConverter.Core.Abstractions;
 public interface IPluginManager
 {
     IReadOnlyCollection<IImageReader> Readers { get; }

@@ -1,4 +1,5 @@
-﻿using ImageConverter.Core.Abstractions;
+﻿using ImageConverter.Common;
+using ImageConverter.Core.Abstractions;
 
 namespace ImageConverter.Core;
 public sealed class PluginManager : IPluginManager

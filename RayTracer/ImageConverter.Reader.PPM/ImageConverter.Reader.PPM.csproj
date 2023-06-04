@@ -6,8 +6,4 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\ImageConverter.Common\ImageConverter.Common.csproj" />
-  </ItemGroup>
-
 </Project>
