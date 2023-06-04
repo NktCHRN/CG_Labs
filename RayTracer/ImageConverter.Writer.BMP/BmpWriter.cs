@@ -1,5 +1,4 @@
 ﻿using ImageConverter.Common;
-using System.Drawing;
 
 namespace ImageConverter.Writer.BMP;
 public sealed class BmpWriter : IImageWriter
@@ -11,4 +10,3 @@ public sealed class BmpWriter : IImageWriter
         throw new NotImplementedException();
     }
 }
-

@@ -1,6 +1,4 @@
-﻿using System.Drawing;
-
-namespace ImageConverter.Common;
+﻿namespace ImageConverter.Common;
 public interface IImageReader
 {
     string ImageFormat { get; }

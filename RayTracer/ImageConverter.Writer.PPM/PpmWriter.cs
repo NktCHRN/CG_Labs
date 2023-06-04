@@ -1,5 +1,4 @@
 ﻿using ImageConverter.Common;
-using System.Drawing;
 
 namespace ImageConverter.Writer.PPM;
 public sealed class PpmWriter : IImageWriter

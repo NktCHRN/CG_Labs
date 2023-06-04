@@ -1,5 +1,4 @@
 ﻿using ImageConverter.Common;
-using System.Drawing;
 
 namespace ImageConverter.Reader.PPM;
 public sealed class PpmReader : IImageReader

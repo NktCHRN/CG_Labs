@@ -1,5 +1,4 @@
 ﻿using ImageConverter.Common;
-using System.Drawing;
 
 namespace ImageConverter.Reader.BMP;
 public sealed class BmpReader : IImageReader
