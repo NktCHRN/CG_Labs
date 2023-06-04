@@ -1,7 +1,7 @@
 ﻿namespace ImageConverter.Common;
 public interface IImageReader
 {
-    string ImageFormat { get; }
+    string FileExtension { get; }
     bool CanRead(string fileName);
     Result<Image, string> Read(string fileName);
 }

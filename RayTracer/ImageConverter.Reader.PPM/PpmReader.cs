@@ -3,7 +3,7 @@
 namespace ImageConverter.Reader.PPM;
 public sealed class PpmReader : IImageReader
 {
-    public string ImageFormat => "PPM";
+    public string FileExtension => "ppm";
 
     public bool CanRead(string fileName)
     {
@@ -20,7 +20,7 @@ public sealed class PpmReader : IImageReader
         var magicNumber = reader.ReadLine()!.Trim();
         if (magicNumber != "P3")
         {
-            return Result<Image, string>.Failure("Invalid PPM file format. Only P3 format is supported.");
+            return Result<Image, string>.Failure($"You are trying to open P{magicNumber} PPM file, but only P3 is supported");
         }
 
         // Ignore comments
@@ -30,7 +30,6 @@ public sealed class PpmReader : IImageReader
             line = reader.ReadLine()!;
         } while (line.StartsWith("#"));
 
-        // Read image width, height, and maximum pixel value
         var dimensions = line.Trim().Split(' ');
         var width = int.Parse(dimensions[0]);
         var height = int.Parse(dimensions[1]);
@@ -41,7 +40,6 @@ public sealed class PpmReader : IImageReader
             return Result<Image, string>.Failure($"PPM with max values more than {byte.MaxValue} are currently not supported");
         }
 
-        // Read pixel data
         var image = new Image(width, height);
         var colorNumbers = reader.ReadToEnd()
             .ReplaceLineEndings()

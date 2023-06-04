@@ -3,25 +3,25 @@
 namespace ImageConverter.Writer.PPM;
 public sealed class PpmWriter : IImageWriter
 {
-    public string ImageFormat => "PPM";
+    public string FileExtension => "ppm";
 
     public void Write(string fileName, Image image)
     {
         using var stream = new FileStream(fileName, FileMode.Create, FileAccess.Write);
-        using var reader = new StreamWriter(stream);
-        reader.WriteLine("P3");
-        reader.WriteLine($"{image.Width} {image.Height}");
-        reader.WriteLine(byte.MaxValue);
+        using var writer = new StreamWriter(stream);
+        writer.WriteLine("P3");
+        writer.WriteLine($"{image.Width} {image.Height}");
+        writer.WriteLine(byte.MaxValue);
 
         for (var i = 0; i < image.Height; i++)
         {
             for (var j = 0; j < image.Width; j++)
             {
-                reader.Write($"{image[i,j].Red} ");
-                reader.Write($"{image[i, j].Green} ");
-                reader.Write($"{image[i, j].Blue} ");
+                writer.Write($"{image[i,j].Red} ");
+                writer.Write($"{image[i, j].Green} ");
+                writer.Write($"{image[i, j].Blue} ");
             }
-            reader.WriteLine();
+            writer.WriteLine();
         }
     }
 }
