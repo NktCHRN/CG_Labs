@@ -1,7 +1,7 @@
 ﻿namespace ImageConverter.Common;
 public sealed class Image
 {
-    private Color[][] _map { get; }
+    private readonly Color[][] _map;
 
     public int Width { get; }
     public int Height { get; }
