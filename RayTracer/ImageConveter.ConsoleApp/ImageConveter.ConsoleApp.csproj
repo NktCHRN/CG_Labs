@@ -11,10 +11,23 @@
     <ProjectReference Include="..\ImageConverter.Core\ImageConverter.Core.csproj" />
   </ItemGroup>
 
+	<PropertyGroup>
+		<PpmReader>ImageConverter.Reader.PPM</PpmReader>
+		<PpmWriter>ImageConverter.Writer.PPM</PpmWriter>
+		<BmpReader>ImageConverter.Reader.BMP</BmpReader>
+		<BmpWriter>ImageConverter.Writer.BMP</BmpWriter>
+	</PropertyGroup>
+
+	<!--Building and copying default reader/writer plugins-->
     <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-		<Exec Command=
-		  "cd ../
-		  ImageConverterBuild.bat"/>
+		<Exec Command="&quot;$(DevEnvDir)devenv&quot; &quot;$(SolutionDir)RayTracer.sln&quot; /Build $(configuration) /project &quot;$(SolutionDir)$(PpmReader)\$(PpmReader).csproj&quot;&#xD;&#xA;
+			xcopy &quot;$(SolutionDir)$(PpmReader)\$(OutDir)\*&quot; &quot;$(ProjectDir)$(OutDir)Plugins&quot; /Y /I /E" />
+		<Exec Command="&quot;$(DevEnvDir)devenv&quot; &quot;$(SolutionDir)RayTracer.sln&quot; /Build $(configuration) /project &quot;$(SolutionDir)$(PpmWriter)\$(PpmWriter).csproj&quot;&#xD;&#xA;
+			xcopy &quot;$(SolutionDir)$(PpmWriter)\$(OutDir)\*&quot; &quot;$(ProjectDir)$(OutDir)Plugins&quot; /Y /I /E" />
+		<Exec Command="&quot;$(DevEnvDir)devenv&quot; &quot;$(SolutionDir)RayTracer.sln&quot; /Build $(configuration) /project &quot;$(SolutionDir)$(BmpReader)\$(BmpReader).csproj&quot;&#xD;&#xA;
+			xcopy &quot;$(SolutionDir)$(BmpReader)\$(OutDir)\*&quot; &quot;$(ProjectDir)$(OutDir)Plugins&quot; /Y /I /E" />
+		<Exec Command="&quot;$(DevEnvDir)devenv&quot; &quot;$(SolutionDir)RayTracer.sln&quot; /Build $(configuration) /project &quot;$(SolutionDir)$(BmpWriter)\$(BmpWriter).csproj&quot;&#xD;&#xA;
+			xcopy &quot;$(SolutionDir)$(BmpWriter)\$(OutDir)\*&quot; &quot;$(ProjectDir)$(OutDir)Plugins&quot; /Y /I /E" />
 	</Target>
 
 </Project>
