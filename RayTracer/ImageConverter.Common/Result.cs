@@ -10,6 +10,6 @@ public sealed record Result<TResult, KError>
     [MemberNotNullWhen(false, nameof(Error))]
     public bool IsSuccessful { get; private init; }
 
-    internal static Result<TResult, KError> Success(TResult result) => new() { Value = result, IsSuccessful = true };
-    internal static Result<TResult, KError> Failure(KError error) => new() { Error = error, IsSuccessful = false };
+    public static Result<TResult, KError> Success(TResult result) => new() { Value = result, IsSuccessful = true };
+    public static Result<TResult, KError> Failure(KError error) => new() { Error = error, IsSuccessful = false };
 }
