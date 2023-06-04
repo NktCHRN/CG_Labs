@@ -10,7 +10,7 @@ public sealed class PpmReader : IImageReader
         throw new NotImplementedException();
     }
 
-    public Result<Color[,], string> Read(string fileName)
+    public Result<Image, string> Read(string fileName)
     {
         throw new NotImplementedException();
     }
