@@ -2,6 +2,6 @@
 public interface IImageReader
 {
     string FileExtension { get; }
-    bool CanRead(string fileName);
-    Result<Image, string> Read(string fileName);
+    bool CanRead(byte[] byteArray);
+    Result<Image, string> Read(byte[] byteArray);
 }

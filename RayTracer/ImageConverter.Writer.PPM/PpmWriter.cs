@@ -5,9 +5,9 @@ public sealed class PpmWriter : IImageWriter
 {
     public string FileExtension => "ppm";
 
-    public void Write(string fileName, Image image)
+    public byte[] Write(Image image)
     {
-        using var stream = new FileStream(fileName, FileMode.Create, FileAccess.Write);
+        using var stream = new MemoryStream();
         using var writer = new StreamWriter(stream);
         writer.WriteLine("P3");
         writer.WriteLine($"{image.Width} {image.Height}");
@@ -23,5 +23,7 @@ public sealed class PpmWriter : IImageWriter
             }
             writer.WriteLine();
         }
+
+        return stream.ToArray();
     }
 }

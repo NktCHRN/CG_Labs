@@ -5,20 +5,14 @@ public sealed class BmpReader : IImageReader
 {
     public string FileExtension => "bmp";
 
-    public bool CanRead(string fileName)
+    public bool CanRead(byte[] byteArray)
     {
-        using var stream = new FileStream(fileName, FileMode.Open, FileAccess.Read);
-        using var reader = new BinaryReader(stream);
-
-        byte byte1 = reader.ReadByte();
-        byte byte2 = reader.ReadByte();
-
-        return byte1 is (byte)'B' && byte2 is (byte)'M';
+        return byteArray[0] is (byte)'B' && byteArray[1] is (byte)'M';
     }
 
-    public Result<Image, string> Read(string fileName)
+    public Result<Image, string> Read(byte[] byteArray)
     {
-        using var stream = new FileStream(fileName, FileMode.Open, FileAccess.Read);
+        using var stream = new MemoryStream(byteArray);
         using var reader = new BinaryReader(stream);
         reader.BaseStream.Seek(18, SeekOrigin.Begin);
         var width = reader.ReadInt32();

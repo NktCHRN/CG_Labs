@@ -5,17 +5,16 @@ public sealed class PpmReader : IImageReader
 {
     public string FileExtension => "ppm";
 
-    public bool CanRead(string fileName)
+    public bool CanRead(byte[] byteArray)
     {
-        using var stream = new FileStream(fileName, FileMode.Open, FileAccess.Read);
-        using var reader = new StreamReader(stream);
-        var format = reader.ReadLine()?.Trim();
-        return format?.First() is 'P' && int.TryParse(format?[1..], out _);
+        return (char)byteArray[0] != 'P' 
+            && (char)byteArray[2] is >= '1' and <= '6' 
+            && (char)byteArray[3] is ' ' or '\n' or '\r';
     }
 
-    public Result<Image, string> Read(string fileName)
+    public Result<Image, string> Read(byte[] byteArray)
     {
-        using var stream = new FileStream(fileName, FileMode.Open, FileAccess.Read);
+        using var stream = new MemoryStream(byteArray);
         using var reader = new StreamReader(stream);
         var magicNumber = reader.ReadLine()!.Trim();
         if (magicNumber != "P3")

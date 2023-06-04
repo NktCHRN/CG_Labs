@@ -9,17 +9,17 @@ public sealed class BmpWriter : IImageWriter
     private const int _dibHeaderSize = 40;
     private const int _totalHeaderSize = _bmpHeaderSize + _dibHeaderSize;
 
-    public void Write(string fileName, Image image)
+    public byte[] Write(Image image)
     {
         var bytesPerPixel = image.HasAlpha ? 4 : 3; // Assuming 24-bit color depth (BPP)
 
         var rowSize = image.Width * bytesPerPixel;
-        var paddingBytes = rowSize % 4 != 0 ? 4 - (rowSize % 4) : 0;
+        var paddingSize = rowSize % 4 != 0 ? 4 - (rowSize % 4) : 0;
 
-        var dataSize = (rowSize + paddingBytes) * image.Height;
+        var dataSize = (rowSize + paddingSize) * image.Height;
         var fileSize = _totalHeaderSize + dataSize;
 
-        using var stream = new FileStream(fileName, FileMode.Create, FileAccess.Write);
+        using var stream = new MemoryStream(fileSize);
         using var writer = new BinaryWriter(stream);
 
         // Write file header
@@ -58,10 +58,12 @@ public sealed class BmpWriter : IImageWriter
             }
 
             // Write padding bytes
-            for (var j = 0; j < paddingBytes; j++)
+            for (var j = 0; j < paddingSize; j++)
             {
                 writer.Write((byte)0);
             }
         }
+
+        return stream.ToArray();
     }
 }
