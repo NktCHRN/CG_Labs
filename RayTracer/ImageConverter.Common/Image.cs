@@ -10,10 +10,10 @@ public sealed class Image
 
     public Image(int width, int height, bool hasAlpha = false)
     {
-        _map = new Color[width][];
-        for (var i = 0; i < width; i++)
+        _map = new Color[height][];
+        for (var i = 0; i < height; i++)
         {
-            _map[i] = new Color[height];
+            _map[i] = new Color[width];
         }
 
         Width = width;
@@ -25,18 +25,18 @@ public sealed class Image
     {
         get
         {
-            if (i < 0 || i >= Width)
+            if (i < 0 || i >= Height)
                 throw new ArgumentOutOfRangeException(nameof(i));
-            if (j < 0 || j >= Height)
+            if (j < 0 || j >= Width)
                 throw new ArgumentOutOfRangeException(nameof(j));
 
             return _map[i][j];
         }
         set
         {
-            if (i < 0 || i >= Width)
+            if (i < 0 || i >= Height)
                 throw new ArgumentOutOfRangeException(nameof(i));
-            if (j < 0 || j >= Height)
+            if (j < 0 || j >= Width)
                 throw new ArgumentOutOfRangeException(nameof(j));
 
             _map[i][j] = value;

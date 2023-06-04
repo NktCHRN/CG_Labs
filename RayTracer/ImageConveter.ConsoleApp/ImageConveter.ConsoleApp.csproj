@@ -9,6 +9,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ImageConverter.Core\ImageConverter.Core.csproj" />
+    <ProjectReference Include="..\ImageConverter.Reader.PPM\ImageConverter.Reader.PPM.csproj" />
+    <ProjectReference Include="..\ImageConverter.Writer.PPM\ImageConverter.Writer.PPM.csproj" />
   </ItemGroup>
 
 </Project>
