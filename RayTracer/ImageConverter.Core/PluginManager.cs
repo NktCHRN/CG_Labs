@@ -6,10 +6,13 @@ namespace ImageConverter.Core;
 public sealed class PluginManager : IPluginManager
 {
     private List<IImageReader> _readers = new();
-
     private List<IImageWriter> _writers = new();
 
+    public IEnumerable<string> SupportedReaderExtensions => _readers.Select(r => r.FileExtension);
+    public IEnumerable<string> SupportedWriterExtensions => _writers.Select(w => w.FileExtension);
+
     public string PluginsFolderName { get; set; } = "Plugins";
+
 
     public void UpdatePlugins()
     {
@@ -37,8 +40,8 @@ public sealed class PluginManager : IPluginManager
         }
     }
 
-    public IImageReader? GetReaderForFile(string fileName)
-        => _readers.FirstOrDefault(r => r.CanRead(fileName));
+    public IImageReader? GetReaderForByteArray(byte[] byteArray)
+        => _readers.FirstOrDefault(r => r.CanRead(byteArray));
 
     public IImageWriter? GetWriterForFileExtension(string type)
     {

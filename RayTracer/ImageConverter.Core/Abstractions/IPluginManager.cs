@@ -3,8 +3,10 @@
 namespace ImageConverter.Core.Abstractions;
 public interface IPluginManager
 {
+    IEnumerable<string> SupportedReaderExtensions { get; }
+    IEnumerable<string> SupportedWriterExtensions { get; }
     string PluginsFolderName { get; set; }
     void UpdatePlugins();
-    IImageReader? GetReaderForFile(string fileName);
+    IImageReader? GetReaderForByteArray(byte[] byteArray);
     IImageWriter? GetWriterForFileExtension(string type);
 }
