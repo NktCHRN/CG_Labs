@@ -12,14 +12,14 @@ public sealed class PpmReader : IImageReader
             && (char)byteArray[3] is ' ' or '\n' or '\r';
     }
 
-    public Result<Image, string> Read(byte[] byteArray)
+    public Image Read(byte[] byteArray)
     {
         using var stream = new MemoryStream(byteArray);
         using var reader = new StreamReader(stream);
         var magicNumber = reader.ReadLine()!.Trim();
         if (magicNumber != "P3")
         {
-            return Result<Image, string>.Failure($"You are trying to open P{magicNumber} PPM file, but only P3 is supported");
+            throw new NotSupportedException($"You are trying to open P{magicNumber} PPM file, but only P3 is supported");
         }
 
         // Ignore comments
@@ -36,7 +36,7 @@ public sealed class PpmReader : IImageReader
         var maxValue = short.Parse(reader.ReadLine()!.Trim());
         if (maxValue > byte.MaxValue)
         {
-            return Result<Image, string>.Failure($"PPM with max values more than {byte.MaxValue} are currently not supported");
+            throw new NotSupportedException($"PPM with max values more than {byte.MaxValue} are currently not supported");
         }
 
         var image = new Image(width, height);
@@ -58,7 +58,7 @@ public sealed class PpmReader : IImageReader
             }
         }
 
-        return Result<Image, string>.Success(image);
+        return image;
     }
 
     private static byte RoundToByteMaxValue(byte colorValue, short maxValue)

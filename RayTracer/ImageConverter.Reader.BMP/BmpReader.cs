@@ -10,7 +10,7 @@ public sealed class BmpReader : IImageReader
         return byteArray[0] is (byte)'B' && byteArray[1] is (byte)'M';
     }
 
-    public Result<Image, string> Read(byte[] byteArray)
+    public Image Read(byte[] byteArray)
     {
         using var stream = new MemoryStream(byteArray);
         using var reader = new BinaryReader(stream);
@@ -22,7 +22,7 @@ public sealed class BmpReader : IImageReader
 
         if (bpp is not 24 or 32)
         {
-            return Result<Image, string>.Failure($"You are trying to open {bpp}bit BMP file, but only BMP24 and BMP32 are supported");
+            throw new NotSupportedException($"You are trying to open {bpp}bit BMP file, but only BMP24 and BMP32 are supported");
         }
 
         var hasAlpha = bpp == 32;
@@ -57,6 +57,6 @@ public sealed class BmpReader : IImageReader
             }
         }
 
-        return Result<Image, string>.Success(image);
+        return image;
     }
 }

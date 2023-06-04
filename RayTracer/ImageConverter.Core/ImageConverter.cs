@@ -11,7 +11,7 @@ public sealed class ImageConverter
         _pluginManager = pluginManager;
     }
 
-    public Result<FileInfo, string> Convert(string fileName, string resultFormat)
+    public FileInfo Convert(string fileName, string resultFormat)
     {
         throw new NotImplementedException();
     }
