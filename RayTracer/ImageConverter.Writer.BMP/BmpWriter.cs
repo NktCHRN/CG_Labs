@@ -42,9 +42,9 @@ public sealed class BmpWriter : IImageWriter
         writer.Write(0); // Number of colors in the color palette
         writer.Write(0); // Number of important colors
 
-        for (int i = image.Height - 1; i >= 0; i--)
+        for (var i = image.Height - 1; i >= 0; i--)
         {
-            for (int j = 0; j < image.Width; j++)
+            for (var j = 0; j < image.Width; j++)
             {
                 var pixelValue = image[i, j];
                 writer.Write(pixelValue.Blue);
@@ -58,7 +58,7 @@ public sealed class BmpWriter : IImageWriter
             }
 
             // Write padding bytes
-            for (int j = 0; j < paddingBytes; j++)
+            for (var j = 0; j < paddingBytes; j++)
             {
                 writer.Write((byte)0);
             }
