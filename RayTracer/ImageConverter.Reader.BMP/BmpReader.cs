@@ -10,7 +10,7 @@ public sealed class BmpReader : IImageReader
         throw new NotImplementedException();
     }
 
-    public Color[,] Read(string fileName)
+    public Result<Color[,], string> Read(string fileName)
     {
         throw new NotImplementedException();
     }

@@ -3,5 +3,5 @@ public interface IImageReader
 {
     string ImageFormat { get; }
     bool CanRead(string fileName);
-    Color[,] Read(string fileName);
+    Result<Color[,], string> Read(string fileName);
 }
