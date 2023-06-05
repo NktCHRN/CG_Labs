@@ -49,7 +49,7 @@ public sealed class ImageOutputWriter : IOutputWriter
                 $"Supported formats: {string.Join(", ", _pluginManager.SupportedWriterExtensions)}");
         var byteArray = writer.Write(image);
 
-        var filePath = Path.Combine(OutputFolder, fileName);
+        var filePath = Path.Combine(OutputFolder, fileName);        // consider that path may be absolute
         File.WriteAllBytes(filePath, byteArray);
     }
 }
