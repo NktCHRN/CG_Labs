@@ -6,7 +6,6 @@ public sealed class ImageConverter
 {
     private readonly IPluginManager _pluginManager;
 
-    public string InputFolder { get; set; } = "Input";
     public string OutputFolder { get; set; } = "Output";
 
     public ImageConverter(IPluginManager pluginManager)
@@ -15,29 +14,28 @@ public sealed class ImageConverter
         _pluginManager.UpdatePlugins();
     }
 
-    public FileInfo Convert(string fileName, string resultFormat)
+    public FileInfo Convert(string oldFilePath, string resultFormat)
     {
-        _ = Directory.CreateDirectory(InputFolder);
         _ = Directory.CreateDirectory(OutputFolder);
 
-        fileName = FormatFileName(fileName);
+        oldFilePath = FormatFileName(oldFilePath);
         resultFormat = FormatFileExtension(resultFormat);
-        var oldFilePath = Path.Combine(InputFolder, fileName);
         var oldByteArray = File.ReadAllBytes(oldFilePath);
 
         var reader = _pluginManager.GetReaderForByteArray(oldByteArray) ??
-            throw new NotSupportedException($"Your file {fileName} format is currently not supported for reading. " +
+            throw new NotSupportedException($"Your file {oldFilePath} format is currently not supported for reading. " +
                 $"Supported formats: {string.Join(", ", _pluginManager.SupportedReaderExtensions)}");
         var oldFileFormat = FormatFileExtension(reader.FileExtension);
         var image = reader.Read(oldByteArray);
 
         var writer = _pluginManager.GetWriterForFileExtension(resultFormat) ??
-            throw new NotSupportedException($"Your file {fileName} format is currently not supported for writing. " +
+            throw new NotSupportedException($"Your goal format {resultFormat} is currently not supported for writing. " +
                 $"Supported formats: {string.Join(", ", _pluginManager.SupportedWriterExtensions)}");
         var newByteArray = writer.Write(image);
 
-        fileName = ChangeFileExtension(fileName, oldFileFormat, resultFormat);
-        var newFilePath = Path.Combine(OutputFolder, fileName);
+        var newFileName = Path.GetFileName(oldFilePath);
+        newFileName = ChangeFileExtension(newFileName, oldFileFormat, resultFormat);
+        var newFilePath = Path.Combine(OutputFolder, newFileName);
         File.WriteAllBytes(newFilePath, newByteArray);
 
         return new FileInfo(newFilePath);

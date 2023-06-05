@@ -1,7 +1,9 @@
-﻿namespace ImageConverter.Core;
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace ImageConverter.Core;
 public static class ValidationMethods
 {
-    public static void ValidateFileName(string fileName)
+    public static void ValidateFileName([NotNull] string? fileName)
     {
         if (string.IsNullOrWhiteSpace(fileName))
         {
@@ -9,7 +11,7 @@ public static class ValidationMethods
         }
     }
 
-    public static void ValidateFileExtension(string fileExtension)
+    public static void ValidateFileExtension([NotNull] string? fileExtension)
     {
         if (string.IsNullOrWhiteSpace(fileExtension))
         {

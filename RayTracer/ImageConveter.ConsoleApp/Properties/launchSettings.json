@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "ImageConveter.ConsoleApp": {
+      "commandName": "Project",
+      "commandLineArgs": "--source=Input/greenland_grid_velo.bmp --goal-format=ppm"
+    }
+  }
+}

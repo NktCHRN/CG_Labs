@@ -7,9 +7,9 @@ public sealed class PpmReader : IImageReader
 
     public bool CanRead(byte[] byteArray)
     {
-        return (char)byteArray[0] != 'P' 
-            && (char)byteArray[2] is >= '1' and <= '6' 
-            && (char)byteArray[3] is ' ' or '\n' or '\r';
+        return (char)byteArray[0] is 'P' 
+            && (char)byteArray[1] is >= '1' and <= '6' 
+            && (char)byteArray[2] is ' ' or '\n' or '\r';
     }
 
     public Image Read(byte[] byteArray)

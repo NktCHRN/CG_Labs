@@ -1,4 +1,5 @@
 ﻿using ImageConverter.Common;
+using System.Text;
 
 namespace ImageConverter.Writer.PPM;
 public sealed class PpmWriter : IImageWriter
@@ -7,23 +8,22 @@ public sealed class PpmWriter : IImageWriter
 
     public byte[] Write(Image image)
     {
-        using var stream = new MemoryStream();
-        using var writer = new StreamWriter(stream);
-        writer.WriteLine("P3");
-        writer.WriteLine($"{image.Width} {image.Height}");
-        writer.WriteLine(byte.MaxValue);
+        var builder = new StringBuilder();
+        builder.AppendLine("P3");
+        builder.AppendLine($"{image.Width} {image.Height}");
+        builder.AppendLine(byte.MaxValue.ToString());
 
         for (var i = 0; i < image.Height; i++)
         {
             for (var j = 0; j < image.Width; j++)
             {
-                writer.Write($"{image[i,j].Red} ");
-                writer.Write($"{image[i, j].Green} ");
-                writer.Write($"{image[i, j].Blue} ");
+                builder.Append($"{image[i,j].Red} ");
+                builder.Append($"{image[i, j].Green} ");
+                builder.Append($"{image[i, j].Blue} ");
             }
-            writer.WriteLine();
+            builder.AppendLine();
         }
 
-        return stream.ToArray();
+        return Encoding.ASCII.GetBytes(builder.ToString());
     }
 }
