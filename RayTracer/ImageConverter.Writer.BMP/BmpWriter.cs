@@ -19,7 +19,7 @@ public sealed class BmpWriter : IImageWriter
         var dataSize = (rowSize + paddingSize) * image.Height;
         var fileSize = _totalHeaderSize + dataSize;
 
-        using var stream = new MemoryStream(fileSize);
+        using var stream = new MemoryStream(fileSize);      // important for GetBuffer usage in the end
         using var writer = new BinaryWriter(stream);
 
         // Write file header
@@ -64,6 +64,6 @@ public sealed class BmpWriter : IImageWriter
             }
         }
 
-        return stream.ToArray();
+        return stream.GetBuffer();
     }
 }
