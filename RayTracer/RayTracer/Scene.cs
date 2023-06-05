@@ -116,7 +116,7 @@ public class Scene
 
         var intersectionVectorNormalized = intersection.Value.Object.GetNormalAt(intersectionPoint);
         var lightCoefficient = (-lightNormalized).DotProduct(intersectionVectorNormalized);
-        return lightCoefficient;
+        return Math.Max(lightCoefficient, 0);
     }
 
     internal bool HasIntersectionWithAnyObject(Ray ray, ISceneObject bypassObject)

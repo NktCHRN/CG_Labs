@@ -24,7 +24,7 @@ scene.AddObject(mesh);
 //scene.AddObject(new Disk(new Vector3F(2, 2F, 0), new Vector3F(90, 6, 0), 7));
 
 var camera = new Camera(new Vector3F(0, 0, -75F), new Vector3F(0, 0, 1), new Vector3F(0, 1, 0), new Vector3F(0), 30);
-var light = new Vector3F(1, 0, 0);
+var light = new Vector3F(0, 0, 1);
 
 var renderingResult = scene.Render(camera, light);
 IOutputWriter consoleWriter = new ConsoleOutputWriter();
