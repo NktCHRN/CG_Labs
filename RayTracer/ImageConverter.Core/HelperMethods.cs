@@ -17,6 +17,8 @@ public static class HelperMethods
 
     public static string ChangeFileExtension(string oldFileName, string oldExtension, string newExtension)
     {
+        oldExtension = $".{oldExtension}";
+
         if (oldFileName.EndsWith(oldExtension, StringComparison.OrdinalIgnoreCase))
         {
             oldFileName = oldFileName.Remove(oldFileName.LastIndexOf(oldExtension, StringComparison.OrdinalIgnoreCase));
