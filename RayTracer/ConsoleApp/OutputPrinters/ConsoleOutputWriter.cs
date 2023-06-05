@@ -11,10 +11,10 @@ public sealed class ConsoleOutputWriter : IOutputWriter
             {
                 var character = matrix[i,j] switch
                 {
-                    < 0 => ' ',
-                    < 0.2F => '.',
-                    < 0.5F => '*',
-                    < 0.8F => 'O',
+                    <= 0 => ' ',
+                    <= 0.2F => '.',
+                    <= 0.5F => '*',
+                    <= 0.8F => 'O',
                     _ => '#'
                 };
                 Console.Write(character);

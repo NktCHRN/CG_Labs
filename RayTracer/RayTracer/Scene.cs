@@ -46,7 +46,7 @@ public class Scene
         var stepDown = planeHeight / _height;
         var stepRight = planeWidth / _width;
 
-        var upperLeftPixelCoords = new Vector3F(-(planeWidth / 2) + stepRight / 2, planeHeight / 2 - stepDown / 2, 1);
+        var upperLeftPixelCoords = new Vector3F(-(planeWidth / 2) + stepRight / 2, planeHeight / 2 - stepDown / 2, -70);
         //var currentScreenPosition = camera.ScreenCenter + camera.Up * verticalScale - camera.Right;
         
         Stopwatch stopwatch = new();
@@ -109,23 +109,23 @@ public class Scene
 
         var intersectionPoint = intersection.Value.Point;
         var reversedLightRay = new Ray(intersectionPoint, intersectionPoint - lightNormalized);
-        if (HasIntersectionWithAnyObject(reversedLightRay))
+        if (HasIntersectionWithAnyObject(reversedLightRay, intersection.Value.Object))
         {
             return 0;
         }
 
         var intersectionVectorNormalized = intersection.Value.Object.GetNormalAt(intersectionPoint);
         var lightCoefficient = (-lightNormalized).DotProduct(intersectionVectorNormalized);
-        return lightCoefficient;
+        return Math.Max(lightCoefficient, 0);
     }
 
-    internal bool HasIntersectionWithAnyObject(Ray ray)
+    internal bool HasIntersectionWithAnyObject(Ray ray, ISceneObject bypassObject)
     {
         foreach (var sceneObject in _sceneObjects)
         {
             var intersectionPoint = sceneObject.GetIntersection(ray);
 
-            if (intersectionPoint is not null)
+            if (intersectionPoint is not null && intersectionPoint.Value.Object != bypassObject)
             {
                 return true;
             }
