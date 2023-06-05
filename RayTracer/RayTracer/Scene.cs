@@ -115,7 +115,7 @@ public class Scene
         }
 
         var intersectionVectorNormalized = intersection.Value.Object.GetNormalAt(intersectionPoint);
-        var lightCoefficient = (-lightNormalized).DotProduct(intersectionVectorNormalized);
+        var lightCoefficient = lightNormalized.DotProduct(intersectionVectorNormalized);
         return Math.Max(lightCoefficient, 0);
     }
 
