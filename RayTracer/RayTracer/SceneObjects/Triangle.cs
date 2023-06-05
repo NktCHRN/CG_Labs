@@ -9,11 +9,11 @@ public class Triangle : ISceneObject
 
     public Intersection? GetIntersection(in Ray ray)
     {
+        const float epsilon = 0.000001F;
+
         //find vector for two edges sharing vertex1
         Vector3F edge1 = _vertices[1].Position - _vertices[0].Position;
         Vector3F edge2 = _vertices[2].Position - _vertices[0].Position;
-
-        Vector3F IntersectionPoint;
 
         //begin calculating determinant - also used to calculate u-parameter
         Vector3F pvec = ray.Direction.CrossProduct(edge2);
@@ -21,7 +21,7 @@ public class Triangle : ISceneObject
         //if determinant is near zero, ray lies in plane of triangle 
         float det = edge1.DotProduct(pvec);
 
-        if (det > -float.Epsilon && det < float.Epsilon)
+        if (det > -epsilon && det < epsilon)
         {
             return null;
         }
@@ -50,8 +50,8 @@ public class Triangle : ISceneObject
 
         // calculate t, ray intersects triangle 
         var distance = invDet * edge2.DotProduct(qvec);
-        IntersectionPoint = ray.StartPoint + ray.Direction * distance;
-        return new Intersection(IntersectionPoint, this);
+        var intersectionPoint = ray.StartPoint + ray.Direction * distance;
+        return new Intersection(intersectionPoint, this);
     }
 
     public Vector3F GetNormalAt(Vector3F point)

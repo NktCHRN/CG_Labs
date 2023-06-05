@@ -46,7 +46,7 @@ public class Scene
         var stepDown = planeHeight / _height;
         var stepRight = planeWidth / _width;
 
-        var upperLeftPixelCoords = new Vector3F(-(planeWidth / 2) + stepRight / 2, planeHeight / 2 - stepDown / 2, 1);
+        var upperLeftPixelCoords = new Vector3F(-(planeWidth / 2) + stepRight / 2, planeHeight / 2 - stepDown / 2, -70);
         //var currentScreenPosition = camera.ScreenCenter + camera.Up * verticalScale - camera.Right;
         
         Stopwatch stopwatch = new();
