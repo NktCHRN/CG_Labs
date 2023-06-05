@@ -109,7 +109,7 @@ public class Scene
 
         var intersectionPoint = intersection.Value.Point;
         var reversedLightRay = new Ray(intersectionPoint, intersectionPoint - lightNormalized);
-        if (HasIntersectionWithAnyObject(reversedLightRay))
+        if (HasIntersectionWithAnyObject(reversedLightRay, intersection.Value.Object))
         {
             return 0;
         }
@@ -119,13 +119,13 @@ public class Scene
         return lightCoefficient;
     }
 
-    internal bool HasIntersectionWithAnyObject(Ray ray)
+    internal bool HasIntersectionWithAnyObject(Ray ray, ISceneObject bypassObject)
     {
         foreach (var sceneObject in _sceneObjects)
         {
             var intersectionPoint = sceneObject.GetIntersection(ray);
 
-            if (intersectionPoint is not null)
+            if (intersectionPoint is not null && intersectionPoint.Value.Object != bypassObject)
             {
                 return true;
             }
