@@ -8,5 +8,5 @@ public interface IPluginManager
     string PluginsFolderName { get; set; }
     void UpdatePlugins();
     IImageReader? GetReaderForByteArray(byte[] byteArray);
-    IImageWriter? GetWriterForFileExtension(string type);
+    IImageWriter? GetWriterForFileExtension(string extension);
 }

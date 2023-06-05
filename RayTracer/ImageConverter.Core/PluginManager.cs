@@ -42,9 +42,9 @@ public sealed class PluginManager : IPluginManager
     public IImageReader? GetReaderForByteArray(byte[] byteArray)
         => _readers.FirstOrDefault(r => r.CanRead(byteArray));
 
-    public IImageWriter? GetWriterForFileExtension(string type)
+    public IImageWriter? GetWriterForFileExtension(string extension)
     {
-        type = type.Trim().ToLower();
-        return _writers.FirstOrDefault(w => w.FileExtension == type);
+        extension = extension.Trim();
+        return _writers.FirstOrDefault(w => string.Equals(w.FileExtension, extension, StringComparison.OrdinalIgnoreCase));
     }
 }
