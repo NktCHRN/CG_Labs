@@ -50,6 +50,12 @@ public class Triangle : ISceneObject
 
         // calculate t, ray intersects triangle 
         var distance = invDet * edge2.DotProduct(qvec);
+
+        if (Math.Round(distance, 6, MidpointRounding.AwayFromZero) <= 0)
+        {
+            return null;
+        }
+
         var intersectionPoint = ray.StartPoint + ray.Direction * distance;
         return new Intersection(intersectionPoint, this);
     }
