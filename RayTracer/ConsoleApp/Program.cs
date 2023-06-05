@@ -1,6 +1,7 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using ConsoleApp.Abstractions;
 using ConsoleApp.OutputPrinters;
+using ImageConverter.Core;
 using RayTracer;
 using RayTracer.SceneObjects;
 
@@ -18,6 +19,6 @@ var light = new Vector3F(1, 0, 0);
 
 var renderingResult = scene.Render(camera, light);
 IOutputWriter consoleWriter = new ConsoleOutputWriter();
-IOutputWriter imageWriter = new ImageOutputWriter();
+IOutputWriter imageWriter = new ImageOutputWriter(new PluginManager());
 consoleWriter.Write(renderingResult);
 imageWriter.Write(renderingResult);

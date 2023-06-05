@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "ImageConveter.ConsoleApp": {
+      "commandName": "Project",
+      "commandLineArgs": "--source=Input/lulz.notmd --goal-format=bmp"
+    }
+  }
+}

@@ -1,43 +1,55 @@
 ﻿using ConsoleApp.Abstractions;
-using System.Runtime.InteropServices;
+using ImageConverter.Common;
+using ImageConverter.Core;
+using ImageConverter.Core.Abstractions;
 
 namespace ConsoleApp.OutputPrinters;
 public sealed class ImageOutputWriter : IOutputWriter
 {
-    private const string ContainerPath = "../../../../ImageConverter/build/Debug/";
-    private const string ImageLibPath = ContainerPath + "ImageConverter_LIB.dll";
+    private readonly IPluginManager _pluginManager;
 
-    [DllImport(ImageLibPath, CharSet = CharSet.Ansi)]
-    private static extern bool Write(byte[] data, int rows, int cols, string path, string ext);
-    [DllImport(ImageLibPath, CharSet = CharSet.Ansi)]
-    private static extern void InitWriterWithPath(string path);
+    public string OutputFolder {get; set;} = "Output";
 
-    public ImageOutputWriter() => InitWriterWithPath(ContainerPath);
+    public ImageOutputWriter(IPluginManager pluginManager)
+    {
+        _pluginManager = pluginManager;
+        _pluginManager.UpdatePlugins();
+    }
 
     public void Write(float[,] matrix)
     {
+        const string fileName = "output.bmp";   // change it in 4th lab
+        var format = Path.GetExtension(fileName);
+        ValidationMethods.ValidateFileExtension(format);
+        format = HelperMethods.FormatFileExtension(format);
+
+        _ = Directory.CreateDirectory(OutputFolder);
+
         int width = matrix.GetLength(1);
         int height = matrix.GetLength(0);
 
-        Byte[] data = new Byte[width * height * 3];
+        var image = new Image(width, height);
 
-        for (var y = 0; y < height; y++)
+        for (var i = 0; i < height; i++)
         {
-            for (var x = 0; x < width; x++)
+            for (var j = 0; j < width; j++)
             {
-                float val = matrix[y, x] * 255;
+                float val = matrix[i, j] * 255;
 
                 byte byteValue = 0;
                 if (val > 0)
                     byteValue = Convert.ToByte(val);
 
-                int index = (width * y + x) * 3;
-                data[index] = byteValue;
-                data[index + 1] = byteValue;
-                data[index + 2] = byteValue;
+                image[i, j] = Color.FromRgb(byteValue, byteValue, byteValue);
             }
         }
 
-        Write(data, width, height, "../../../../test", ImageTypes.BMP);
+        var writer = _pluginManager.GetWriterForFileExtension(format) ??
+            throw new NotSupportedException($"Your output format {format} is currently not supported for writing. " +
+                $"Supported formats: {string.Join(", ", _pluginManager.SupportedWriterExtensions)}");
+        var byteArray = writer.Write(image);
+
+        var filePath = Path.Combine(OutputFolder, fileName);        // consider that path may be absolute
+        File.WriteAllBytes(filePath, byteArray);
     }
 }
