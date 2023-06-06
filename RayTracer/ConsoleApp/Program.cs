@@ -56,6 +56,7 @@ var light10 = new DirectionalLightSource(new Vector3F(0, -0.75F, 0.75F), 1, Colo
 scene.AddLightSource(light10);
 
 
+
 var renderingResult = new Renderer(scene).Render(600, 400);
 IOutputWriter consoleWriter = new ConsoleOutputWriter();
 IOutputWriter imageWriter = new ImageOutputWriter(new PluginManager());
