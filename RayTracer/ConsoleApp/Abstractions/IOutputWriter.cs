@@ -1,5 +1,7 @@
-﻿namespace ConsoleApp.Abstractions;
+﻿using Common;
+
+namespace ConsoleApp.Abstractions;
 public interface IOutputWriter
 {
-    void Write(float[,] matrix);
+    void Write(Image image);
 }

@@ -6,12 +6,4 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-	<ItemGroup>
-		<InternalsVisibleTo Include="$(MSBuildProjectName).Tests" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <ProjectReference Include="..\Common\Common.csproj" />
-	</ItemGroup>
-
 </Project>

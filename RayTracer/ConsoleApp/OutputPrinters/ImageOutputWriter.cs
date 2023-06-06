@@ -1,5 +1,5 @@
-﻿using ConsoleApp.Abstractions;
-using ImageConverter.Common;
+﻿using Common;
+using ConsoleApp.Abstractions;
 using ImageConverter.Core;
 using ImageConverter.Core.Abstractions;
 
@@ -16,7 +16,7 @@ public sealed class ImageOutputWriter : IOutputWriter
         _pluginManager.UpdatePlugins();
     }
 
-    public void Write(float[,] matrix)
+    public void Write(Image image)
     {
         const string fileName = "output.bmp";   // change it in 4th lab
         var format = Path.GetExtension(fileName);
@@ -24,25 +24,6 @@ public sealed class ImageOutputWriter : IOutputWriter
         format = HelperMethods.FormatFileExtension(format);
 
         _ = Directory.CreateDirectory(OutputFolder);
-
-        int width = matrix.GetLength(1);
-        int height = matrix.GetLength(0);
-
-        var image = new Image(width, height);
-
-        for (var i = 0; i < height; i++)
-        {
-            for (var j = 0; j < width; j++)
-            {
-                float val = matrix[i, j] * 255;
-
-                byte byteValue = 0;
-                if (val > 0)
-                    byteValue = Convert.ToByte(val);
-
-                image[i, j] = Color.FromRgb(byteValue, byteValue, byteValue);
-            }
-        }
 
         var writer = _pluginManager.GetWriterForFileExtension(format) ??
             throw new NotSupportedException($"Your output format {format} is currently not supported for writing. " +

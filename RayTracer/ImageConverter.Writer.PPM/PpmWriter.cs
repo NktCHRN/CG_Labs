@@ -1,4 +1,5 @@
-﻿using ImageConverter.Common;
+﻿using Common;
+using ImageConverter.Common;
 using System.Text;
 
 namespace ImageConverter.Writer.PPM;
@@ -17,9 +18,9 @@ public sealed class PpmWriter : IImageWriter
         {
             for (var j = 0; j < image.Width; j++)
             {
-                builder.Append($"{image[i,j].Red} ");
-                builder.Append($"{image[i, j].Green} ");
-                builder.Append($"{image[i, j].Blue} ");
+                builder.Append($"{image[i,j].R} ");
+                builder.Append($"{image[i, j].G} ");
+                builder.Append($"{image[i, j].B} ");
             }
             builder.AppendLine();
         }
