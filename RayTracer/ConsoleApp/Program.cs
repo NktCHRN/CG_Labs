@@ -33,6 +33,27 @@ scene.AddObject(mesh);
 //var light = new DirectionalLightSource(new Vector3F(1, 0, 0), 1, Color.White);
 var light = new AmbientLightSource(1, Color.White);
 scene.AddLightSource(light);
+var light2 = new DirectionalLightSource(new Vector3F(-1, 0, 0), 1, Color.White);
+scene.AddLightSource(light2);
+var light3 = new DirectionalLightSource(new Vector3F(0, 1, 0), 1, Color.White);
+scene.AddLightSource(light3);
+var light4 = new DirectionalLightSource(new Vector3F(0, -1, 0), 1, Color.White);
+scene.AddLightSource(light4);
+
+var light5 = new DirectionalLightSource(new Vector3F(1, 1, 0), 1, Color.White);
+scene.AddLightSource(light5);
+var light6 = new DirectionalLightSource(new Vector3F(-1, -1, 0), 1, Color.White);
+scene.AddLightSource(light6);
+var light7 = new DirectionalLightSource(new Vector3F(-1, 1, 0), 1, Color.White);
+scene.AddLightSource(light7);
+var light8 = new DirectionalLightSource(new Vector3F(1, -1, 0), 1, Color.White);
+scene.AddLightSource(light8);
+
+var light9 = new DirectionalLightSource(new Vector3F(0, 0, 1), 1, Color.White);
+scene.AddLightSource(light9);
+
+var light10 = new DirectionalLightSource(new Vector3F(0, -0.75F, 0.75F), 1, Color.White);
+scene.AddLightSource(light10);
 
 
 var renderingResult = new Renderer(scene).Render(600, 400);
