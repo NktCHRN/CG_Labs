@@ -1,4 +1,6 @@
-﻿namespace ImageConverter.Common;
+﻿using Common;
+
+namespace ImageConverter.Common;
 public interface IImageWriter
 {
     string FileExtension { get; }

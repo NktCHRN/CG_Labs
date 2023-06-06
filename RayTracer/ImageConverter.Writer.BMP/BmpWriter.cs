@@ -1,4 +1,5 @@
-﻿using ImageConverter.Common;
+﻿using Common;
+using ImageConverter.Common;
 
 namespace ImageConverter.Writer.BMP;
 public sealed class BmpWriter : IImageWriter
@@ -47,9 +48,9 @@ public sealed class BmpWriter : IImageWriter
             for (var j = 0; j < image.Width; j++)
             {
                 var pixelValue = image[i, j];
-                writer.Write(pixelValue.Blue);
-                writer.Write(pixelValue.Green);
-                writer.Write(pixelValue.Red);
+                writer.Write(pixelValue.B);
+                writer.Write(pixelValue.G);
+                writer.Write(pixelValue.R);
 
                 if (image.HasAlpha)
                 {

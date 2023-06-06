@@ -19,15 +19,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImageConveter.ConsoleApp", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImageConverter.Core", "ImageConverter.Core\ImageConverter.Core.csproj", "{113FEB15-EB53-4ABA-9B8D-90F5F2D17DBD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageConverter.Reader.PPM", "ImageConverter.Reader.PPM\ImageConverter.Reader.PPM.csproj", "{56E351E6-979C-4D9E-B313-512E22EDE119}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImageConverter.Reader.PPM", "ImageConverter.Reader.PPM\ImageConverter.Reader.PPM.csproj", "{56E351E6-979C-4D9E-B313-512E22EDE119}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageConverter.Writer.PPM", "ImageConverter.Writer.PPM\ImageConverter.Writer.PPM.csproj", "{08823AD6-5AF2-492B-B108-667DEF3F48EA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImageConverter.Writer.PPM", "ImageConverter.Writer.PPM\ImageConverter.Writer.PPM.csproj", "{08823AD6-5AF2-492B-B108-667DEF3F48EA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageConverter.Common", "ImageConverter.Common\ImageConverter.Common.csproj", "{30BAB08C-2DEE-46F0-AFA5-A8F758DC761D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImageConverter.Common", "ImageConverter.Common\ImageConverter.Common.csproj", "{30BAB08C-2DEE-46F0-AFA5-A8F758DC761D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageConverter.Reader.BMP", "ImageConverter.Reader.BMP\ImageConverter.Reader.BMP.csproj", "{57EE5316-08CA-4C12-9786-2D32A1E13BF1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImageConverter.Reader.BMP", "ImageConverter.Reader.BMP\ImageConverter.Reader.BMP.csproj", "{57EE5316-08CA-4C12-9786-2D32A1E13BF1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageConverter.Writer.BMP", "ImageConverter.Writer.BMP\ImageConverter.Writer.BMP.csproj", "{13E3FB0D-47D6-4C80-8379-8BD1F3DC7253}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImageConverter.Writer.BMP", "ImageConverter.Writer.BMP\ImageConverter.Writer.BMP.csproj", "{13E3FB0D-47D6-4C80-8379-8BD1F3DC7253}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{D35F9742-EBD0-440C-8201-7E8FA9249D5D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -285,6 +287,30 @@ Global
 		{13E3FB0D-47D6-4C80-8379-8BD1F3DC7253}.RelWithDebInfo|x64.Build.0 = Release|Any CPU
 		{13E3FB0D-47D6-4C80-8379-8BD1F3DC7253}.RelWithDebInfo|x86.ActiveCfg = Release|Any CPU
 		{13E3FB0D-47D6-4C80-8379-8BD1F3DC7253}.RelWithDebInfo|x86.Build.0 = Release|Any CPU
+		{D35F9742-EBD0-440C-8201-7E8FA9249D5D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D35F9742-EBD0-440C-8201-7E8FA9249D5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D35F9742-EBD0-440C-8201-7E8FA9249D5D}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{D35F9742-EBD0-440C-8201-7E8FA9249D5D}.Debug|x64.Build.0 = Debug|Any CPU
+		{D35F9742-EBD0-440C-8201-7E8FA9249D5D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D35F9742-EBD0-440C-8201-7E8FA9249D5D}.Debug|x86.Build.0 = Debug|Any CPU
+		{D35F9742-EBD0-440C-8201-7E8FA9249D5D}.MinSizeRel|Any CPU.ActiveCfg = Debug|Any CPU
+		{D35F9742-EBD0-440C-8201-7E8FA9249D5D}.MinSizeRel|Any CPU.Build.0 = Debug|Any CPU
+		{D35F9742-EBD0-440C-8201-7E8FA9249D5D}.MinSizeRel|x64.ActiveCfg = Debug|Any CPU
+		{D35F9742-EBD0-440C-8201-7E8FA9249D5D}.MinSizeRel|x64.Build.0 = Debug|Any CPU
+		{D35F9742-EBD0-440C-8201-7E8FA9249D5D}.MinSizeRel|x86.ActiveCfg = Debug|Any CPU
+		{D35F9742-EBD0-440C-8201-7E8FA9249D5D}.MinSizeRel|x86.Build.0 = Debug|Any CPU
+		{D35F9742-EBD0-440C-8201-7E8FA9249D5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D35F9742-EBD0-440C-8201-7E8FA9249D5D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D35F9742-EBD0-440C-8201-7E8FA9249D5D}.Release|x64.ActiveCfg = Release|Any CPU
+		{D35F9742-EBD0-440C-8201-7E8FA9249D5D}.Release|x64.Build.0 = Release|Any CPU
+		{D35F9742-EBD0-440C-8201-7E8FA9249D5D}.Release|x86.ActiveCfg = Release|Any CPU
+		{D35F9742-EBD0-440C-8201-7E8FA9249D5D}.Release|x86.Build.0 = Release|Any CPU
+		{D35F9742-EBD0-440C-8201-7E8FA9249D5D}.RelWithDebInfo|Any CPU.ActiveCfg = Release|Any CPU
+		{D35F9742-EBD0-440C-8201-7E8FA9249D5D}.RelWithDebInfo|Any CPU.Build.0 = Release|Any CPU
+		{D35F9742-EBD0-440C-8201-7E8FA9249D5D}.RelWithDebInfo|x64.ActiveCfg = Release|Any CPU
+		{D35F9742-EBD0-440C-8201-7E8FA9249D5D}.RelWithDebInfo|x64.Build.0 = Release|Any CPU
+		{D35F9742-EBD0-440C-8201-7E8FA9249D5D}.RelWithDebInfo|x86.ActiveCfg = Release|Any CPU
+		{D35F9742-EBD0-440C-8201-7E8FA9249D5D}.RelWithDebInfo|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

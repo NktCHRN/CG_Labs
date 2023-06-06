@@ -1,6 +1,6 @@
 using RayTracer.Utility;
 
-namespace RayTracer.SceneObjects;
+namespace RayTracer.Abstractions;
 public interface ISceneObject
 {
     public Intersection? GetIntersection(in Ray ray);

@@ -1,4 +1,5 @@
-﻿using RayTracer.Utility;
+﻿using RayTracer.Abstractions;
+using RayTracer.Utility;
 
 namespace RayTracer.SceneObjects;
 

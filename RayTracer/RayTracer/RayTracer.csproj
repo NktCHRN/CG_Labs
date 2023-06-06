@@ -10,4 +10,12 @@
 		<InternalsVisibleTo Include="$(MSBuildProjectName).Tests" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <ProjectReference Include="..\Common\Common.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="LightSources\" />
+	</ItemGroup>
+
 </Project>

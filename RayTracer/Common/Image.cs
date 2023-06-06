@@ -1,4 +1,4 @@
-﻿namespace ImageConverter.Common;
+﻿namespace Common;
 public sealed class Image
 {
     private readonly Color[][] _map;

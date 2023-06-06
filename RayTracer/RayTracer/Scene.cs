@@ -1,5 +1,5 @@
 using System.Diagnostics;
-using RayTracer.SceneObjects;
+using RayTracer.Abstractions;
 using RayTracer.Utility;
 namespace RayTracer;
 
@@ -18,16 +18,17 @@ y
 
 public class Scene
 {
-    private readonly int _width;
-    private readonly int _height;
+    private readonly List<ISceneObject> _sceneObjects = new ();
+    public IReadOnlyList<ISceneObject> SceneObjects => _sceneObjects;
 
-    private readonly IList<ISceneObject> _sceneObjects;
+    private readonly List<ILightSource> _lightSources = new ();
+    public IReadOnlyList<ILightSource> LightSources => _lightSources;
 
-    public Scene(int width, int height)
+    public Camera Camera { get; }
+
+    public Scene(Camera camera)
     {
-        _width = width;
-        _height = height;
-        _sceneObjects = new List<ISceneObject>();
+        Camera = camera;
     }
 
     public float[,] Render(Camera camera, Vector3F? light = null)
@@ -137,5 +138,10 @@ public class Scene
     public void AddObject(ISceneObject obj)
     {
         _sceneObjects.Add(obj);
+    }
+
+    public void AddLightSource(ILightSource lightSource)
+    {
+        _lightSources.Add(lightSource);
     }
 }

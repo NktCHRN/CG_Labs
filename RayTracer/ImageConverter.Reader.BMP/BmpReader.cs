@@ -1,4 +1,5 @@
-﻿using ImageConverter.Common;
+﻿using Common;
+using ImageConverter.Common;
 
 namespace ImageConverter.Reader.BMP;
 public sealed class BmpReader : IImageReader

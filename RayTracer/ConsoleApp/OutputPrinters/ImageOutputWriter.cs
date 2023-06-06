@@ -1,5 +1,5 @@
-﻿using ConsoleApp.Abstractions;
-using ImageConverter.Common;
+﻿using Common;
+using ConsoleApp.Abstractions;
 using ImageConverter.Core;
 using ImageConverter.Core.Abstractions;
 
