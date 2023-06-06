@@ -1,15 +1,16 @@
-﻿using ConsoleApp.Abstractions;
+﻿using Common;
+using ConsoleApp.Abstractions;
 
 namespace ConsoleApp.OutputPrinters;
 public sealed class ConsoleOutputWriter : IOutputWriter
 {
-    public void Write(float[,] matrix)
+    public void Write(Image image)
     {
-        for (var i = 0; i < matrix.GetLength(0); i++)
+        for (var i = 0; i < image.Width; i++)
         {
-            for (var j = 0; j < matrix.GetLength(1); j++)
+            for (var j = 0; j < image.Height; j++)
             {
-                var character = matrix[i,j] switch
+                var character = image[j, i].LightCoefficient switch
                 {
                     <= 0 => ' ',
                     <= 0.2F => '.',

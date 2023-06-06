@@ -1,25 +1,10 @@
-using System.Diagnostics;
 using RayTracer.Abstractions;
-using RayTracer.Utility;
 namespace RayTracer;
-
-//On Scene coordinates are:
-/*
-y
-^
-|
-|   z
-|  /
-| /
-|/
-0-------->x
-*/
-//Coordinates 0 0 0 is screen center
 
 public class Scene
 {
     private readonly List<ISceneObject> _sceneObjects = new ();
-    public IReadOnlyList<ISceneObject> SceneObjects => _sceneObjects;
+    public IReadOnlyList<ISceneObject> Objects => _sceneObjects;
 
     private readonly List<ILightSource> _lightSources = new ();
     public IReadOnlyList<ILightSource> LightSources => _lightSources;
@@ -31,117 +16,15 @@ public class Scene
         Camera = camera;
     }
 
-    public float[,] Render(Camera camera, Vector3F? light = null)
-    {
-        ArgumentNullException.ThrowIfNull(camera);
-
-        var matrix = new float[_height, _width];
-
-        var verticalScale = MathF.Tan(CGMath.DegToRad(camera.VerticalFieldOfView / 2));
-        var heightToWidthCoefficient = _width / (float)_height;
-        var planeHeight = 1 * verticalScale * 2;
-        var planeWidth = planeHeight * heightToWidthCoefficient;
-
-        camera.RightCorrection = heightToWidthCoefficient;
-
-        var stepDown = planeHeight / _height;
-        var stepRight = planeWidth / _width;
-
-        var upperLeftPixelCoords = new Vector3F(-(planeWidth / 2) + stepRight / 2, planeHeight / 2 - stepDown / 2, -70);
-        //var currentScreenPosition = camera.ScreenCenter + camera.Up * verticalScale - camera.Right;
-        
-        Stopwatch stopwatch = new();
-        stopwatch.Start();
-        Parallel.For(0, _height, i =>
-        {
-            for (var j = 0; j < _width; j++)
-            {
-                var ray = new Ray(camera.Position, upperLeftPixelCoords + new Vector3F(stepRight * j, -stepDown * i, 0));
-                var nearestIntersection = GetIntersectionWithClosestObject(ray);
-
-                matrix[i,j] = GetLightCoefficient(nearestIntersection, light); 
-            }
-        });
-        stopwatch.Stop();
-        Console.WriteLine("Render Execution Time: " + stopwatch.Elapsed);
-
-        return matrix;
-    }
-
-    internal Intersection? GetIntersectionWithClosestObject(Ray ray)
-    {
-        var (hitDistance, closestIntersection) = (float.PositiveInfinity, (Intersection?)null);
-
-        foreach (var sceneObject in _sceneObjects)
-        {
-            var intersection = sceneObject.GetIntersection(ray);
-
-            if (intersection is null)
-            {
-                continue;
-            }
-
-            Vector3F intersectionVector = intersection.Value.Point - ray.StartPoint;
-            var distance = intersectionVector.Length;
-
-            if (distance < hitDistance)
-            {
-                hitDistance = distance;
-                closestIntersection = intersection;
-            }
-        }
-
-        return closestIntersection;
-    }
-
-    private float GetLightCoefficient(Intersection? intersection, Vector3F? light)
-    {
-        if (intersection is null)
-        {
-            return 0;
-        }
-
-        if (light is null)
-        {
-            return 1;
-        }
-
-        var lightNormalized = light.Value.Normalized;
-
-        var intersectionPoint = intersection.Value.Point;
-        var reversedLightRay = new Ray(intersectionPoint, intersectionPoint - lightNormalized);
-        if (HasIntersectionWithAnyObject(reversedLightRay, intersection.Value.Object))
-        {
-            return 0;
-        }
-
-        var intersectionVectorNormalized = intersection.Value.Object.GetNormalAt(intersectionPoint);
-        var lightCoefficient = (-lightNormalized).DotProduct(intersectionVectorNormalized);
-        return Math.Max(lightCoefficient, 0);
-    }
-
-    internal bool HasIntersectionWithAnyObject(Ray ray, ISceneObject bypassObject)
-    {
-        foreach (var sceneObject in _sceneObjects)
-        {
-            var intersectionPoint = sceneObject.GetIntersection(ray);
-
-            if (intersectionPoint is not null && intersectionPoint.Value.Object != bypassObject)
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
     public void AddObject(ISceneObject obj)
     {
+        ArgumentNullException.ThrowIfNull(obj);
         _sceneObjects.Add(obj);
     }
 
     public void AddLightSource(ILightSource lightSource)
     {
+        ArgumentNullException.ThrowIfNull(_lightSources);
         _lightSources.Add(lightSource);
     }
 }

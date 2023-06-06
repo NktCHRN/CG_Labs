@@ -21,25 +21,25 @@ public sealed class Image
         HasAlpha = hasAlpha;
     }
 
-    public Color this[int i, int j]
+    public Color this[int row, int column]
     {
         get
         {
-            if (i < 0 || i >= Height)
-                throw new ArgumentOutOfRangeException(nameof(i));
-            if (j < 0 || j >= Width)
-                throw new ArgumentOutOfRangeException(nameof(j));
+            if (row < 0 || row >= Height)
+                throw new ArgumentOutOfRangeException(nameof(row));
+            if (column < 0 || column >= Width)
+                throw new ArgumentOutOfRangeException(nameof(column));
 
-            return _map[i][j];
+            return _map[row][column];
         }
         set
         {
-            if (i < 0 || i >= Height)
-                throw new ArgumentOutOfRangeException(nameof(i));
-            if (j < 0 || j >= Width)
-                throw new ArgumentOutOfRangeException(nameof(j));
+            if (row < 0 || row >= Height)
+                throw new ArgumentOutOfRangeException(nameof(row));
+            if (column < 0 || column >= Width)
+                throw new ArgumentOutOfRangeException(nameof(column));
 
-            _map[i][j] = value;
+            _map[row][column] = value;
         }
     }
 }

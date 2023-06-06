@@ -12,10 +12,24 @@ public readonly struct Color
 
     public readonly float LightCoefficient { get; private init; } = 1.0F;
 
-    public static Color White => FromRgb(byte.MaxValue, byte.MaxValue, byte.MaxValue);
-    public static Color Black => FromRgb(0, 0, 0);
+    public static Color White
+        => new()
+        {
+            LightCoefficient = 1,
+            R = byte.MaxValue,
+            G = byte.MaxValue,
+            B = byte.MaxValue,
+        };
+    public static Color Black 
+        => new()
+        {
+            LightCoefficient = 0,
+            R = 0,
+            G = 0,
+            B = 0,
+        };
 
-    public static Color FromShadowedRgb(float lightCoefficient, byte red, byte green, byte blue)
+    public static Color FromShadowedColor(float lightCoefficient, Color color)
     {
         if (lightCoefficient is < 0 or > 1)
         {
@@ -24,9 +38,10 @@ public readonly struct Color
 
         return new()
         {
-            R = red,
-            G = green,
-            B = blue,
+            Alpha = color.Alpha,
+            R = (byte)Math.Round(color.R * lightCoefficient, MidpointRounding.AwayFromZero),
+            G = (byte)Math.Round(color.G * lightCoefficient, MidpointRounding.AwayFromZero),
+            B = (byte)Math.Round(color.B * lightCoefficient, MidpointRounding.AwayFromZero),
             LightCoefficient = lightCoefficient
         };
     }

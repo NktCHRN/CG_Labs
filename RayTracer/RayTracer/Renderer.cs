@@ -1,21 +1,36 @@
 ﻿using Common;
-using RayTracer.Abstractions;
 using RayTracer.Utility;
 using System.Diagnostics;
 
 namespace RayTracer;
 public sealed class Renderer
 {
-    public Image Render(Scene scene, int width, int height)
+    private Scene _scene;
+    public Scene Scene
     {
-        var matrix = new float[height, width];
+        get => _scene;
+        set
+        {
+            ArgumentNullException.ThrowIfNull(value);
+            _scene = value;
+        }
+    }
 
-        var verticalScale = MathF.Tan(CGMath.DegToRad(camera.VerticalFieldOfView / 2));
+    public Renderer(Scene scene)
+    {
+        _scene = scene;
+    }
+
+    public Image Render(int width, int height)
+    {
+        var image = new Image(width, height);
+
+        var verticalScale = MathF.Tan(CGMath.DegToRad(_scene.Camera.VerticalFieldOfView / 2));
         var heightToWidthCoefficient = width / (float)height;
         var planeHeight = 1 * verticalScale * 2;
         var planeWidth = planeHeight * heightToWidthCoefficient;
 
-        scene.Camera.RightCorrection = heightToWidthCoefficient;
+        _scene.Camera.RightCorrection = heightToWidthCoefficient;
 
         var stepDown = planeHeight / height;
         var stepRight = planeWidth / width;
@@ -27,25 +42,35 @@ public sealed class Renderer
         stopwatch.Start();
         Parallel.For(0, height, i =>
         {
-            for (var j = 0; j < _width; j++)
+            for (var j = 0; j < width; j++)
             {
-                var ray = new Ray(camera.Position, upperLeftPixelCoords + new Vector3F(stepRight * j, -stepDown * i, 0));
+                var ray = new Ray(_scene.Camera.Position, upperLeftPixelCoords + new Vector3F(stepRight * j, -stepDown * i, 0));
                 var nearestIntersection = GetIntersectionWithClosestObject(ray);
 
-                matrix[i, j] = GetLightCoefficient(nearestIntersection, light);
+                image[i, j] = Color.Black;
+
+                if (nearestIntersection is null)
+                {
+                    continue;
+                }
+
+                foreach (var lightSource in _scene.LightSources)
+                {
+                    image[i, j] += lightSource.GetLightCoefficient(nearestIntersection.Value, _scene.Objects);
+                }
             }
         });
         stopwatch.Stop();
         Console.WriteLine("Render Execution Time: " + stopwatch.Elapsed);
 
-        return matrix;
+        return image;
     }
 
     internal Intersection? GetIntersectionWithClosestObject(Ray ray)
     {
         var (hitDistance, closestIntersection) = (float.PositiveInfinity, (Intersection?)null);
 
-        foreach (var sceneObject in _sceneObjects)
+        foreach (var sceneObject in _scene.Objects)
         {
             var intersection = sceneObject.GetIntersection(ray);
 

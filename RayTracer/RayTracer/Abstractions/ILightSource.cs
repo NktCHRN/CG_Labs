@@ -1,7 +1,8 @@
-﻿using RayTracer.Utility;
+﻿using Common;
+using RayTracer.Utility;
 
 namespace RayTracer.Abstractions;
 public interface ILightSource
 {
-    float GetLightCoefficient(Intersection? intersection);
+    Color GetLightCoefficient(Intersection intersection, IEnumerable<ISceneObject> sceneObjects);
 }
