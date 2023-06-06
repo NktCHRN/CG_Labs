@@ -16,9 +16,7 @@ public sealed class PluginManager : IPluginManager
     public void UpdatePlugins()
     {
         _readers = new();
-        _writers = new();
-
-        var files = Directory.GetFiles(PluginsFolderName)
+        _writers = new();        var files = Directory.GetFiles(PluginsFolderName)
             .Where(f => f.EndsWith(".dll"));
         foreach (var file in files)
         {

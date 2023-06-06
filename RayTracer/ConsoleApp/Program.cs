@@ -30,7 +30,8 @@ var scene = new Scene(camera);
 
 scene.AddObject(mesh);
 
-var light = new DirectionalLightSource(new Vector3F(1, 0, 0), 1, Color.White);
+//var light = new DirectionalLightSource(new Vector3F(1, 0, 0), 1, Color.White);
+var light = new AmbientLightSource(1, Color.White);
 scene.AddLightSource(light);
 var light2 = new DirectionalLightSource(new Vector3F(-1, 0, 0), 1, Color.White);
 scene.AddLightSource(light2);
@@ -53,6 +54,7 @@ scene.AddLightSource(light9);
 
 var light10 = new DirectionalLightSource(new Vector3F(0, -0.75F, 0.75F), 1, Color.White);
 scene.AddLightSource(light10);
+
 
 var renderingResult = new Renderer(scene).Render(600, 400);
 IOutputWriter consoleWriter = new ConsoleOutputWriter();
