@@ -32,8 +32,8 @@ public sealed class PointLightSource : ILightSource
     {
 
         var intersectionPoint = intersection.Point;
-        var lightDirection = (_position - intersectionPoint).Normalized;
-        var lightRay = new Ray(intersectionPoint, lightDirection);
+        var lightDirection = (intersectionPoint - _position).Normalized;
+        var lightRay = new Ray(intersectionPoint, _position);
 
         if (HasIntersectionWithAnyObject(lightRay, sceneObjects, intersection.Object))
         {
