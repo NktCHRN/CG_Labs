@@ -19,8 +19,10 @@
 
 	<!--Building and copying default writer plugins-->
 	<Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-		<Exec Command="&quot;$(DevEnvDir)devenv&quot; &quot;$(SolutionDir)RayTracer.sln&quot; /Build $(configuration) /project &quot;$(SolutionDir)$(PpmWriter)\$(PpmWriter).csproj&quot;&#xD;&#xA;&#xD;&#xA;			xcopy &quot;$(SolutionDir)$(PpmWriter)\$(OutDir)\*&quot; &quot;$(ProjectDir)$(OutDir)Plugins&quot; /Y /I /E" />
-		<Exec Command="&quot;$(DevEnvDir)devenv&quot; &quot;$(SolutionDir)RayTracer.sln&quot; /Build $(configuration) /project &quot;$(SolutionDir)$(BmpWriter)\$(BmpWriter).csproj&quot;&#xD;&#xA;&#xD;&#xA;			xcopy &quot;$(SolutionDir)$(BmpWriter)\$(OutDir)\*&quot; &quot;$(ProjectDir)$(OutDir)Plugins&quot; /Y /I /E" />
+		<Exec Command="dotnet build --configuration $(configuration) &quot;$(SolutionDir)$(PpmWriter)\$(PpmWriter).csproj&quot;" />
+        <Exec Command="cp -R &quot;$(SolutionDir)$(PpmWriter)/$(OutDir)&quot; &quot;$(ProjectDir)$(OutDir)Plugins&quot;" />
+        <Exec Command="dotnet build --configuration $(configuration) &quot;$(SolutionDir)$(BmpWriter)\$(BmpWriter).csproj&quot;" />
+        <Exec Command="cp -R &quot;$(SolutionDir)$(BmpWriter)/$(OutDir)&quot; &quot;$(ProjectDir)$(OutDir)Plugins&quot;" />
 	</Target>
 
 </Project>
