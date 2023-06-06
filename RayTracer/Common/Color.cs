@@ -1,10 +1,14 @@
 ﻿namespace Common;
 public readonly struct Color
 {
+    public Color()
+    {
+    }
+
     public readonly byte Alpha { get; private init; } = byte.MaxValue;
-    public readonly byte R { get; private init; }
-    public readonly byte G { get; private init; }
-    public readonly byte B { get; private init; }
+    public readonly byte R { get; private init; } = 0;
+    public readonly byte G { get; private init; } = 0;
+    public readonly byte B { get; private init; } = 0;
 
     public readonly float LightCoefficient { get; private init; } = 1.0F;
 
