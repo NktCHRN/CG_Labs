@@ -40,7 +40,7 @@ public sealed class PointLightSource : ILightSource
             return Color.Black;
         }
 
-        var intersectionVectorNormalized= intersection.Object.GetNormalAt(intersectionPoint);
+        var intersectionVectorNormalized = intersection.Object.GetNormalAt(intersectionPoint);
         var lightCoefficient = (-lightDirection).DotProduct(intersectionVectorNormalized);
         lightCoefficient = Math.Max(lightCoefficient, 0);
         lightCoefficient *= _intensity;
