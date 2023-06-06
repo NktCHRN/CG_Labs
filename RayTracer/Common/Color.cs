@@ -1,5 +1,5 @@
 ﻿namespace Common;
-public readonly struct Color
+public readonly record struct Color
 {
     public Color()
     {
