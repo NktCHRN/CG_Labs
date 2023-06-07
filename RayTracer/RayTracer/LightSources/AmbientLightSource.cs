@@ -2,24 +2,20 @@
 using RayTracer.Abstractions;
 using RayTracer.Utility;
 
-
 namespace RayTracer.LightSources;
 
-public sealed class AmbientLightSource : ILightSource
+public sealed class AmbientLightSource : BaseLightSource
 {
 
-    private readonly float _intensity;
-
-    private readonly Color _color;
+    private readonly Random random = new Random();
+    private const int _raysCount = 50; 
 
     public AmbientLightSource(float intensity) : this(intensity, Color.White)
     { }
-    
 
-    public AmbientLightSource(float intensity, Color color)
+
+    public AmbientLightSource(float intensity, Color color) : base(intensity, color)
     {
-        _color = color;
-        _intensity = intensity;
 
         if (intensity is < 0 or > 1)
         {
@@ -27,13 +23,35 @@ public sealed class AmbientLightSource : ILightSource
         }
     }
 
-    public Color GetLightCoefficient(Intersection intersection, IEnumerable<ISceneObject> sceneObjects)
+    public Vector3F SampleLight()
+    {
+        float u = (float)random.NextDouble();
+        float v = (float)random.NextDouble();
+
+        float theta = 2 * MathF.PI * u;
+        float phi = MathF.Acos(2 * v - 1);
+
+        float x = MathF.Cos(theta) * MathF.Sin(phi);
+        float y = MathF.Sin(theta) * MathF.Sin(phi);
+        float z = MathF.Cos(phi);
+
+        return new Vector3F(x, y, z);
+    }
+
+    public override Color GetLightCoefficient(Intersection intersection, IEnumerable<ISceneObject> sceneObjects)
     {
 
-        var lightCoefficient = 1.0f;
-        lightCoefficient *= _intensity;
-        return Color.FromShadowedColor(lightCoefficient, _color);
+        float lightCoefficient = 0;
 
+        for (int i = 0; i < _raysCount; i++)
+        {
+            Vector3F randRay = SampleLight();
+            lightCoefficient += ProcessDirection(randRay, intersection, sceneObjects);
+        }
+
+        lightCoefficient /= _raysCount;
+
+        return Color.FromShadowedColor(lightCoefficient, _color);
     }
 
 }
