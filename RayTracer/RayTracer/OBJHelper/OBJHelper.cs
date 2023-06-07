@@ -88,18 +88,6 @@ public class OBJHelper
             };
         }
 
-        Console.WriteLine($"Nr of vertices: {verticies.Length}");
-
-        Console.WriteLine($"vertex_positions_incdicies: {vertex_positions_incdicies.Count}");
-        Console.WriteLine($"vertex_texcoords_incdicies: {vertex_texcoords_incdicies.Count}");
-        Console.WriteLine($"vertex_normals_incdicies: {vertex_normals_incdicies.Count}");
-
-        Console.WriteLine($"vertex_positions: {vertex_positions.Count}");
-        Console.WriteLine($"vertex_texcoords: {vertex_texcoords.Count}");
-        Console.WriteLine($"vertex_normals: {vertex_normals.Count}");
-
-        Console.WriteLine("OBJ file is loaded!");
-
         return verticies;
     }
 }

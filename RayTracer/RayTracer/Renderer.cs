@@ -1,51 +1,45 @@
 ﻿using Common;
+using RayTracer.Abstractions;
 using RayTracer.Utility;
 using System.Diagnostics;
 
 namespace RayTracer;
-public sealed class Renderer
+public sealed class Renderer : IRenderer
 {
-    private Scene _scene;
-    public Scene Scene
+    public int Width { get; set; }
+    public int Height { get; set; }
+
+    public Renderer(int width, int height)
     {
-        get => _scene;
-        set
-        {
-            ArgumentNullException.ThrowIfNull(value);
-            _scene = value;
-        }
+        Width = width;
+        Height = height;
     }
 
-    public Renderer(Scene scene)
+    public Image Render(Scene scene)
     {
-        _scene = scene;
-    }
+        var image = new Image(Width, Height);
 
-    public Image Render(int width, int height)
-    {
-        var image = new Image(width, height);
-
-        var verticalScale = MathF.Tan(CGMath.DegToRad(_scene.Camera.VerticalFieldOfView / 2));
-        var heightToWidthCoefficient = width / (float)height;
+        var verticalScale = MathF.Tan(CGMath.DegToRad(scene.Camera.VerticalFieldOfView / 2));
+        var heightToWidthCoefficient = Width / (float)Height;
         var planeHeight = 1 * verticalScale * 2;
         var planeWidth = planeHeight * heightToWidthCoefficient;
 
-        _scene.Camera.RightCorrection = heightToWidthCoefficient;
+        scene.Camera.RightCorrection = heightToWidthCoefficient;
 
-        var stepDown = planeHeight / height;
-        var stepRight = planeWidth / width;
+        var stepDown = planeHeight / Height;
+        var stepRight = planeWidth / Width;
 
         var upperLeftPixelCoords = new Vector3F(-(planeWidth / 2) + stepRight / 2, planeHeight / 2 - stepDown / 2, -70);
         //var currentScreenPosition = camera.ScreenCenter + camera.Up * verticalScale - camera.Right;
 
         Stopwatch stopwatch = new();
         stopwatch.Start();
-        Parallel.For(0, height, i =>
+        Parallel.For(0, Height, i =>
         {
-            for (var j = 0; j < width; j++)
+            for (var j = 0; j < Width; j++)
             {
-                var ray = new Ray(_scene.Camera.Position, upperLeftPixelCoords + new Vector3F(stepRight * j, -stepDown * i, 0));
-                var nearestIntersection = GetIntersectionWithClosestObject(ray);
+                var ray = new Ray(scene.Camera.Position, upperLeftPixelCoords + new Vector3F(stepRight * j, -stepDown * i, 0));
+                var nearestIntersection = GetIntersectionWithClosestObject(ray, scene.Objects);
 
                 image[i, j] = Color.Black;
 
@@ -54,9 +48,9 @@ public sealed class Renderer
                     continue;
                 }
 
-                foreach (var lightSource in _scene.LightSources)
+                foreach (var lightSource in scene.LightSources)
                 {
-                    image[i, j] += lightSource.GetLightCoefficient(nearestIntersection.Value, _scene.Objects);
+                    image[i, j] += lightSource.GetLightCoefficient(nearestIntersection.Value, scene.Objects);
                 }
             }
         });
@@ -66,11 +60,11 @@ public sealed class Renderer
         return image;
     }
 
-    internal Intersection? GetIntersectionWithClosestObject(Ray ray)
+    internal static Intersection? GetIntersectionWithClosestObject(Ray ray, IEnumerable<ISceneObject> sceneObjects)
     {
         var (hitDistance, closestIntersection) = (float.PositiveInfinity, (Intersection?)null);
 
-        foreach (var sceneObject in _scene.Objects)
+        foreach (var sceneObject in sceneObjects)
         {
             var intersection = sceneObject.GetIntersection(ray);
 

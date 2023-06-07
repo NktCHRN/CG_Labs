@@ -45,7 +45,7 @@ public class Mesh : BaseSceneObject, ISceneObject
 
     public Vector3F GetNormalAt(Vector3F point)
     {
-        throw new NotImplementedException();
+        throw new NotSupportedException();
     }
 
     public TransformationMatrix3D Transformation { get => new TransformationMatrix3D().TranslatedBy(Position).RotatedBy(Rotation); }

@@ -78,6 +78,8 @@ StyleCopReport.xml
 *.ilk
 *.meta
 *.obj
+!RayTracer/RayTracer/PredifinedInput/*
+
 *.iobj
 *.pch
 *.pdb
