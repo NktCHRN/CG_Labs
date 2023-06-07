@@ -27,9 +27,9 @@ public sealed class PointLightSource : BaseLightSource
     {
 
         var intersectionPoint = intersection.Point;
-        var direction = (intersectionPoint - _position);
+        var direction = intersectionPoint - _position;
 
-        var lightCoefficient = ProcessDirection(intersectionPoint - _position, intersection, sceneObjects);
+        var lightCoefficient = ProcessDirection(direction, intersection, sceneObjects);
         return Color.FromShadowedColor(lightCoefficient, _color);
     }
 }
