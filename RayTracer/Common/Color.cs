@@ -29,6 +29,13 @@ public readonly record struct Color
             B = 0,
         };
 
+    public static Color Red => FromRgb(255, 0, 0);
+    public static Color Green => FromRgb(0, 255, 0);
+    public static Color Blue => FromRgb(0, 0, 255);
+    public static Color Yellow => FromRgb(255, 255, 0);
+    public static Color Cyan => FromRgb(0, 255, 255);
+    public static Color Magenta => FromRgb(255, 0, 255);
+
     public static Color FromShadowedColor(float lightCoefficient, Color color)
     {
         if (lightCoefficient is < 0 or > 1)

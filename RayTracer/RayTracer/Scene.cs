@@ -16,6 +16,13 @@ public class Scene
         Camera = camera;
     }
 
+    public Scene(Camera camera, IList<ISceneObject> sceneObjects, IList<ILightSource> lightSources)
+    {
+        Camera = camera;
+        _sceneObjects.AddRange(sceneObjects);
+        _lightSources.AddRange(lightSources);
+    }
+
     public void AddObject(ISceneObject obj)
     {
         ArgumentNullException.ThrowIfNull(obj);

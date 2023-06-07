@@ -22,10 +22,10 @@ public class RendererTests
         var light = new AmbientLightSource(1, Color.White);
         scene.AddLightSource(light);
 
-        var sut = new Renderer(scene);
+        var sut = new Renderer(60, 40);
 
         // Act
-        var image = sut.Render(60, 40);
+        var image = sut.Render(scene);
 
         // Assert
         Assert.NotNull(image);
@@ -50,10 +50,8 @@ public class RendererTests
         expectedPoint.Y -= expectedNearestObject.Radius;
         var expected = new Intersection(expectedPoint, expectedNearestObject);
 
-        var sut = new Renderer(scene);
-
         // Act
-        var actual = sut.GetIntersectionWithClosestObject(ray);
+        var actual = Renderer.GetIntersectionWithClosestObject(ray, scene.Objects);
 
         // Assert
         Assert.Equal(expected, actual);

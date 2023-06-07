@@ -1,36 +1,33 @@
 ﻿using Common;
 using ConsoleApp.Abstractions;
-using ImageConverter.Core;
-using ImageConverter.Core.Abstractions;
+using ImageConverter.Common;
 
 namespace ConsoleApp.OutputPrinters;
 public sealed class ImageOutputWriter : IOutputWriter
 {
-    private readonly IPluginManager _pluginManager;
+    private readonly IImageWriter _imageWriter;
 
     public string OutputFolder {get; set;} = "Output";
 
-    public ImageOutputWriter(IPluginManager pluginManager)
+    public string FileName { get; set; }
+
+    public ImageOutputWriter(IImageWriter imageWriter, string fileName)
     {
-        _pluginManager = pluginManager;
-        _pluginManager.UpdatePlugins();
+        _imageWriter = imageWriter;
+        FileName = fileName;
     }
 
     public void Write(Image image)
     {
-        const string fileName = "output.bmp";   // change it in 4th lab
-        var format = Path.GetExtension(fileName);
-        ValidationMethods.ValidateFileExtension(format);
-        format = HelperMethods.FormatFileExtension(format);
-
         _ = Directory.CreateDirectory(OutputFolder);
 
-        var writer = _pluginManager.GetWriterForFileExtension(format) ??
-            throw new NotSupportedException($"Your output format {format} is currently not supported for writing. " +
-                $"Supported formats: {string.Join(", ", _pluginManager.SupportedWriterExtensions)}");
-        var byteArray = writer.Write(image);
+        var byteArray = _imageWriter.Write(image);
 
-        var filePath = Path.Combine(OutputFolder, fileName);        // consider that path may be absolute
+        var filePath = Path.GetFileName(FileName) == FileName ? Path.Combine(OutputFolder, FileName) : FileName;
         File.WriteAllBytes(filePath, byteArray);
+
+        var fileInfo = new FileInfo(filePath);
+
+        Console.WriteLine($"Your output file is located in {Environment.NewLine}{fileInfo.FullName}");
     }
 }
