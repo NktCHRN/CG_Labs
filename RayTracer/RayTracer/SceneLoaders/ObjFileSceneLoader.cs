@@ -16,7 +16,7 @@ public sealed class ObjFileSceneLoader : ISceneLoader
         var mesh = new Mesh(vertices);
         var predefinedLight = new ILightSource[]
         {
-            new AmbientLightSource(0.25F, Color.White),
+            new AmbientLightSource(0.5F, Color.White),
             new DirectionalLightSource(new Vector3F(1, -1, 0), 1, Color.White),
             new DirectionalLightSource(new Vector3F(-1, -1, 0), 1, Color.White)
         };
